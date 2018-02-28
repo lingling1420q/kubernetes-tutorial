@@ -59,6 +59,7 @@ Docker EE是Docker CE，在某些系统上获得authentication，并由Docker In
 * [centos安装](https://docs.docker.com/install/linux/docker-ce/centos/)
 
 #### 安装Minikube
+MiniKube 是使用 Go 语言开发的，所以安装其实很方便，一是通过下载基于不同平台早已编译好的二级制文件安装，二是可以编译源文件安装。
 
 * Mac安装
 ```bash
