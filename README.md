@@ -306,3 +306,6 @@ http://127.0.0.1:30000/
 ```bash
 export http_proxy='socks5:127.0.0.1:1003
 ```
+
+License
+This is free software distributed under the terms of the MIT license
