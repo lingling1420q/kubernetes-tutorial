@@ -36,7 +36,7 @@ Kubernetes是为生产环境而设计的容器调度管理系统，对于负载�
 
 但是Docker企业版(EE)和Docker社区版(CE)版本有何不同呢？
 <p align="center">
-<img width="300" align="center" src="src/images/3.jpg" />
+<img width="600" align="center" src="src/images/3.jpg" />
 </p>
 
 首先安装docker环境，这个可以根据电脑系统的不同，选择不同的安装方式。
