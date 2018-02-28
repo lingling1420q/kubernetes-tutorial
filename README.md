@@ -91,3 +91,9 @@ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(cur
 
 kubectl -h
 ```
+
+#### 启动minikube
+
+```bash
+sudo minikube start
+```
