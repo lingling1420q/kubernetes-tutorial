@@ -67,3 +67,14 @@ brew cask install minikube
 
 minikube -h
 ```
+
+* Linux 安装
+```bash
+# 下载v0.24.1版本
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.24.1/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+
+# 也可以下载最新版，但可能和本文执行环境不一致，会有坑
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+
+minikube -h
+```
