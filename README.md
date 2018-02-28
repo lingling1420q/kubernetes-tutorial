@@ -28,10 +28,17 @@ Kubernetes是为生产环境而设计的容器调度管理系统，对于负载�
 12. Annotation : 相对于label来说可以容纳更大的键值对，它对我们来说可能是不可读的数据，只是为了存储不可识别的辅助数据，尤其是一些被工具或系统扩展用来操作的数据.
 
 
-#### 安装docker
+#### 安装Docker 
+
+这里需要说明下Docker在2016年很早的时候就明确了将会在企业级方面重点跟进。而在短短的一年时间之内推出的1.12和1.13的版本在功能上确实是很大的进步。而在2017年的3月1号之后，Docker的版本命名开始发生变化，同时将CE版本和EE版本进行分开，而这些也是突然发现docker1.13的安装脚本不好用了才发现的，一起简单来看一下具体情况吧。
+
+但是Docker CE和Docker EE版本有何不同呢？
+
 
 <p align="center">
 <img width="300" align="center" src="src/images/2.jpg" />
 </p>
 
-首先安装docker环境，这个可以根据电脑系统的不同，选择不同的安装方式。[docker安装文档](https://docs.docker.com/install/)
+首先安装docker环境，这个可以根据电脑系统的不同，选择不同的安装方式。
+[mac安装]()
+[docker安装文档](https://docs.docker.com/install/)
