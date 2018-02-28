@@ -36,21 +36,17 @@ Kubernetes是为生产环境而设计的容器调度管理系统，对于负载�
 
 但是Docker企业版(EE)和Docker社区版(CE)版本有何不同呢？
 
-1. Docker CE是简单的经典OSS Docker引擎。
-  Docker Engine已经重新命名为Docker Community Edition，顾名思义，这是一个自己动手的，社区支持的Docker版本，免费提供。
-  社区版将提供两个版本：Edge和Stable。 Edge将会每月发布最新的function。 稳定将按季度发布。 虽然Edge将会收到针对当前版本的安全更新和错误修复，但稳定版本将在初始版本发布后的四个月内得到类似的更新。 此更新周期将为用户提供足够大的窗口来计划从旧版本升级。
+* Docker CE是简单的经典OSS Docker引擎。
+Docker Engine已经重新命名为Docker Community Edition，顾名思义，这是一个自己动手的，社区支持的Docker版本，免费提供。
+社区版将提供两个版本：Edge和Stable。 Edge将会每月发布最新的function。 稳定将按季度发布。 虽然Edge将会收到针对当前版本的安全更新和错误修复，但稳定版本将在初始版本发布后的四个月内得到类似的更新。 此更新周期将为用户提供足够大的窗口来计划从旧版本升级。
+虽然这两个版本都针对不同的受众，但在源代码级别上没有太大的差别。 墨西拿说：“Docker EE和CE都是基于开放源码的Docker项目，Docker项目是由Docker的合作伙伴和贡献者共同开发的，这就形成了所有Docker CE和EE版本的开放模块化核心。
 
-  虽然这两个版本都针对不同的受众，但在源代码级别上没有太大的差别。 墨西拿说：“Docker EE和CE都是基于开放源码的Docker项目，Docker项目是由Docker的合作伙伴和贡献者共同开发的，这就形成了所有Docker CE和EE版本的开放模块化核心。
-
-2. Docker还提供了一个authentication计划来帮助第三方供应商确保他们的产品与Docker EE一起工作。
-  Docker企业版有三个版本：基本版，标准版和高级版。 基本版附带Docker平台，支持和authentication，而标准版和高级版则增加了附加function，如容器pipe理（Docker Datacenter）和Docker安全扫描。
-
-  Docker EE由阿里巴巴，Canonical，HPE，IBM，Microsoft和区域合作伙伴networking提供支持。 那些想testingDocker EE的人可以从官方网站免费下载试用版。
-
-  Docker还提供了一个authentication计划来帮助第三方供应商确保他们的产品与Docker EE一起工作。
-
-
+* Docker还提供了一个authentication计划来帮助第三方供应商确保他们的产品与Docker EE一起工作。
+Docker企业版有三个版本：基本版，标准版和高级版。 基本版附带Docker平台，支持和authentication，而标准版和高级版则增加了附加function，如容器pipe理（Docker Datacenter）和Docker安全扫描。
+Docker EE由阿里巴巴，Canonical，HPE，IBM，Microsoft和区域合作伙伴networking提供支持。 那些想testingDocker EE的人可以从官方网站免费下载试用版。
+Docker还提供了一个authentication计划来帮助第三方供应商确保他们的产品与Docker EE一起工作。
 Docker EE是Docker CE，在某些系统上获得authentication，并由Docker Inc.提供支持。
+
 <p align="center">
 <img width="600" align="center" src="src/images/3.jpg" />
 </p>
