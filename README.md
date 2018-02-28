@@ -34,4 +34,4 @@ Kubernetes是为生产环境而设计的容器调度管理系统，对于负载�
 <img width="300" align="center" src="src/images/2.jpg" />
 </p>
 
-首先安装docker环境，这个可以根据电脑系统的不同，选择不同的安装方式。docker https://docs.docker.com/install/
+首先安装docker环境，这个可以根据电脑系统的不同，选择不同的安装方式。[docker安装文档](https://docs.docker.com/install/)
