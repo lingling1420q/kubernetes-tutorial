@@ -57,3 +57,13 @@ Docker EE是Docker CE，在某些系统上获得authentication，并由Docker In
 * [Unbantu安装](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 * [Windows安装](https://docs.docker.com/docker-for-windows/install/)
 * [centos安装](https://docs.docker.com/install/linux/docker-ce/centos/)
+
+#### 安装Minikube
+
+* Mac安装
+```linux
+# 如未安装cask，自行搜索 brew安装cask
+brew cask install minikube
+
+minikube -h
+```
