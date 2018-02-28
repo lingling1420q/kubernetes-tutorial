@@ -100,7 +100,7 @@ sudo minikube start
 首次启动会下载localkube，下载过程可能会失败，会有如下提示，
 
 ```bash
-Starting local Kubernetes v1.9.0 cluster...
+Starting local Kubernetes v1.8.0 cluster...
 Starting VM...
 Downloading Minikube ISO
  60.70 MB / 110.01 MB [====================>-----------------------]  46.21% 14s
@@ -117,7 +117,7 @@ Please enter your response [Y/n]:
 这个过程中如果下载成功，但是报了诸如VBoxManage not found这样的错误：
 
 ```bash
-Starting local Kubernetes v1.9.0 cluster...
+Starting local Kubernetes v1.8.0 cluster...
 Starting VM...
 Downloading Minikube ISO
  140.01 MB / 140.01 MB [============================================] 100.00% 0s
@@ -135,4 +135,14 @@ To opt out of these messages, run the command:
 ================================================================================
 Please enter your response [Y/n]:
 ```
+出了这样的问题的解决办法是安装 VirtualBox（用windows或者mac）再重新启动，但是如果你是Linux，也可以执行如下命令启动minikube，此时就不需要安装VirtualBox了。
 
+minikube默认需要虚拟机来初始化kunernetes环境，但是使用Linux系统的用户是不需要的，可以在minikube start后追加–vm-driver=none参数来使用自己的环境。
+
+```bash
+# linux 下独有，不依赖虚拟机启动
+sudo minikube start --vm-driver=none
+
+# 如果是Mac or Windows，安装VirtualBox后再重新start即可
+sudo minikube start
+```
