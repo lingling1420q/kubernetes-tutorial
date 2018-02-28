@@ -97,3 +97,20 @@ kubectl -h
 ```bash
 sudo minikube start
 ```
+首次启动会下载localkube，下载过程可能会失败，会有如下提示，
+
+```bash
+Starting local Kubernetes v1.8.0 cluster...
+Starting VM...
+Downloading Minikube ISO
+ 64.70 MB / 140.01 MB [====================>-----------------------]  46.21% 14s
+E0105 14:06:03.884826   10434 start.go:150] Error starting host: Error attempting to cache minikube ISO from URL: Error downloading Minikube ISO: failed to download: failed to download to temp file: failed to copy contents: read tcp 10.0.2.15:47048->172.217.24.16:443: read: connection reset by peer.
+
+================================================================================
+An error has occurred. Would you like to opt in to sending anonymized crash
+information to minikube to help prevent future errors?
+To opt out of these messages, run the command:
+    minikube config set WantReportErrorPrompt false
+================================================================================
+Please enter your response [Y/n]:
+```
