@@ -33,7 +33,7 @@ Kubernetes是为生产环境而设计的容器调度管理系统，对于负载�
 * [安装Kubectl](#安装Kubectl)
 * [启动minikube](#启动minikube)
 * [启动容器服务](#启动容器服务)
-* [查看状态](#查看状态)
+* [检查状态](#查看状态)
 * [重新启动服务](#重新启动服务)
 * [发布服务](#发布服务)
 * [启动dashboard管理后台](#启动dashboard管理后台)
@@ -201,7 +201,7 @@ sudo kubectl run kube-nginx --image=nginx:latest --port=80
 deployment "kube-nginx" created
 ```
 
-#### 查看状态
+#### 检查状态
 
 ```bash
 sudo kubectl get pods
@@ -214,6 +214,7 @@ kube-nginx-5dc6b8dddc-bj6w6     1/1       Running   0          29s
 ```bash 
 sudo minikube logs
 ```
+
 日志中出现 failed pulling image… 则是因为镜像拉取失败导致服务创建失败，可能是因为墙的问题！
 
 ```bash
@@ -228,6 +229,15 @@ docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0
 
 # 本地命名为 gcr.io/google_containers/pause-amd64:3.0
 docker tag registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0 gcr.io/google_containers/pause-amd64:3.0
+```
+查看状态
+
+```bash
+sudo minikube status
+
+minikube: Running
+cluster: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 127.0.0.1
 ```
 
 #### 重新启动服务
