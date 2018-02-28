@@ -146,3 +146,36 @@ sudo minikube start --vm-driver=none
 # 如果是Mac or Windows，安装VirtualBox后再重新start即可
 sudo minikube start
 ```
+如果你安装了虚拟机，或者你在Linux下使用了minikube start --vm-driver=none，并且下载完毕，会有如下提示运行成功
+
+```bash
+Starting local Kubernetes v1.8.0 cluster...
+Starting VM...
+Getting VM IP address...
+Moving files into cluster...
+Downloading localkube binary
+ 148.25 MB / 148.25 MB [============================================] 100.00% 0s
+ 0 B / 65 B [----------------------------------------------------------]   0.00%
+ 65 B / 65 B [======================================================] 100.00% 0sSetting up certs...
+Connecting to cluster...
+Setting up kubeconfig...
+Starting cluster components...
+Kubectl is now configured to use the cluster.
+===================
+WARNING: IT IS RECOMMENDED NOT TO RUN THE NONE DRIVER ON PERSONAL WORKSTATIONS
+    The 'none' driver will run an insecure kubernetes apiserver as root that may leave the host vulnerable to CSRF attacks
+
+When using the none driver, the kubectl config and credentials generated will be root owned and will appear in the root home directory.
+You will need to move the files to the appropriate location and then set the correct permissions.  An example of this is below:
+
+    sudo mv /root/.kube $HOME/.kube # this will write over any previous configuration
+    sudo chown -R $USER $HOME/.kube
+    sudo chgrp -R $USER $HOME/.kube
+
+    sudo mv /root/.minikube $HOME/.minikube # this will write over any previous configuration
+    sudo chown -R $USER $HOME/.minikube
+    sudo chgrp -R $USER $HOME/.minikube
+
+This can also be done automatically by setting the env var CHANGE_MINIKUBE_NONE_USER=true
+Loading cached images from config file.
+```
