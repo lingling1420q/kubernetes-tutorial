@@ -61,7 +61,7 @@ Docker EE是Docker CE，在某些系统上获得authentication，并由Docker In
 #### 安装Minikube
 
 * Mac安装
-```linux
+```bash
 # 如未安装cask，自行搜索 brew安装cask
 brew cask install minikube
 
