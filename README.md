@@ -100,11 +100,11 @@ sudo minikube start
 首次启动会下载localkube，下载过程可能会失败，会有如下提示，
 
 ```bash
-Starting local Kubernetes v1.8.0 cluster...
+Starting local Kubernetes v1.9.0 cluster...
 Starting VM...
 Downloading Minikube ISO
- 64.70 MB / 140.01 MB [====================>-----------------------]  46.21% 14s
-E0105 14:06:03.884826   10434 start.go:150] Error starting host: Error attempting to cache minikube ISO from URL: Error downloading Minikube ISO: failed to download: failed to download to temp file: failed to copy contents: read tcp 10.0.2.15:47048->172.217.24.16:443: read: connection reset by peer.
+ 60.70 MB / 110.01 MB [====================>-----------------------]  46.21% 14s
+E0106 14:06:03.884826   10434 start.go:150] Error starting host: Error attempting to cache minikube ISO from URL: Error downloading Minikube ISO: failed to download: failed to download to temp file: failed to copy contents: read tcp 10.0.2.15:47048->172.217.24.16:443: read: connection reset by peer.
 
 ================================================================================
 An error has occurred. Would you like to opt in to sending anonymized crash
@@ -114,3 +114,25 @@ To opt out of these messages, run the command:
 ================================================================================
 Please enter your response [Y/n]:
 ```
+这个过程中如果下载成功，但是报了诸如VBoxManage not found这样的错误：
+
+```bash
+Starting local Kubernetes v1.9.0 cluster...
+Starting VM...
+Downloading Minikube ISO
+ 140.01 MB / 140.01 MB [============================================] 100.00% 0s
+E0106 11:10:00.035369   10474 start.go:150] Error starting host: Error creating host: Error executing step: Running precreate checks.
+: VBoxManage not found. Make sure VirtualBox is installed and VBoxManage is in the path.
+
+ Retrying.
+E0106 14:10:00.035780   10474 start.go:156] Error starting host:  Error creating host: Error executing step: Running precreate checks.
+: VBoxManage not found. Make sure VirtualBox is installed and VBoxManage is in the path
+================================================================================
+An error has occurred. Would you like to opt in to sending anonymized crash
+information to minikube to help prevent future errors?
+To opt out of these messages, run the command:
+    minikube config set WantReportErrorPrompt false
+================================================================================
+Please enter your response [Y/n]:
+```
+
