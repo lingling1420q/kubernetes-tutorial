@@ -207,3 +207,102 @@ sudo minikube logs
 2月 28 11:16:42 etcd-host1 localkube[21771]: E0228 11:16:42.817937   21771 remote_image.go:108] PullImage "gcr.io/google-containers/kube-addon-manager:v6.4-beta.2" from image service failed: rpc error: code = Unknown desc = Error response from daemon: Get https://gcr.io/v2/: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
 2月 28 11:16:42 etcd-host1 localkube[21771]: E0228 11:16:42.818010   21771 kuberuntime_image.go:50] Pull image "gcr.io/google-containers/kube-addon-manager:v6.4-beta.2" failed: rpc error: code = Unknown desc = Error response from daemon: Get https://gcr.io/v2/: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
 ```
+解决的方法就是用本地镜像去替代
+
+```bash
+# 下载阿里云镜像
+docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0
+
+# 本地命名为 gcr.io/google_containers/pause-amd64:3.0
+docker tag registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0 gcr.io/google_containers/pause-amd64:3.0
+```
+
+#### 重新启动服务
+这里我增加了 –image-pull-policy=IfNotPresent 参数，这个表明优先使用本地镜像，不从远端拉取
+```bash
+sudo kubectl run kube-nginx999 --image=nginx:latest --port=80 --image-pull-policy=IfNotPresent
+```
+如果提示已经存在，换个名字重新执行。这时候查看服务状态应该是如下Running状态代表创建成功，但此时还不能访问容器。
+
+```bash
+ NAMESPACE       NAME                            READY     STATUS    RESTARTS   AGE
+ default         kube-nginx-5dc6b8dddc-bj6w6     1/1       Running   0          29s
+```
+#### 发布服务
+```bash
+sudo kubectl expose deployment kube-nginx --type=NodePort
+service "kube-nginx" exposed
+```
+
+#### 服务地址
+
+```bash
+sudo minikube service kube-nginx --url
+http://127.0.0.1:31511
+```
+这里展示的地址即启动的nginx容器服务地址，访问http://127.0.0.1:31511 于是便出现nginx首页，服务成功启动.
+
+
+#### 启动dashboard管理后台
+dashboard是kubernetes提供的容器服务管理后台，可视化界面，用来进行机器负载，集群管理，镜像扩容，配置数据等相关操作
+
+启动dashboard
+```bash
+# 打印出管理后台地址
+sudo minikube dashboard --url
+
+# 用下面写法，会自动打开默认浏览器
+sudo minikube dashboard
+```
+如果初次可能会报下面的两种错误之一：
+```bash
+# 第一种错误
+Could not find finalized endpoint being pointed to by kubernetes-dashboard: Error validating service: Error getting service kubernetes-dashboard: services "kubernetes-dashboard" not found
+
+# 第二种错误
+Waiting, endpoint for service is not ready yet...
+Waiting, endpoint for service is not ready yet...
+```
+仔细查看log，你就会找到错误的原因，因为镜像拉取的时候便失败了。
+解决方法如下，将所有kubernetes需要的镜像全部用阿里源下载到本地，然后命名为gcr.io…，以便minikube不从远端去下载。
+
+如果你不确定应该将tag重命名为什么的话，可以执行sudo grep ‘image’ -R /etc/kubernetes看到默认情况下需要的镜像名以及版本号，你可以去[阿里云镜像](https://dev.aliyun.com/search.html)搜索下载，然后命名为上面配置中定义的tag即可，你也可以在阿里云下载1.2然后重命名为1.3。
+
+```bash
+docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/kubernetes-dashboard-amd64:v1.7.1
+docker tag registry.cn-hangzhou.aliyuncs.com/google-containers/kubernetes-dashboard-amd64:v1.7.1 gcr.io/google_containers/kubernetes-dashboard-amd64:v1.8.0
+
+docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/kube-addon-manager:v6.4-beta.2
+docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/kube-addon-manager:v6.4-beta.2 gcr.io/google-containers/kube-addon-manager:v6.4-beta.2
+
+docker pull registry.cn-shenzhen.aliyuncs.com/gcrio/k8s-dns-kube-dns-amd64:latest
+docker tag registry.cn-shenzhen.aliyuncs.com/gcrio/k8s-dns-kube-dns-amd64:latest gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.5
+
+docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/k8s-dns-dnsmasq-nanny-amd64:1.14.5
+docker tag registry.cn-hangzhou.aliyuncs.com/google-containers/k8s-dns-dnsmasq-nanny-amd64:1.14.5 gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.5
+
+docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/k8s-dns-sidecar-amd64:1.14.5
+docker tag registry.cn-hangzhou.aliyuncs.com/google-containers/k8s-dns-sidecar-amd64:1.14.5 gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.5
+
+docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/storage-provisioner:v1.8.1
+docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/storage-provisioner:v1.8.1 gcr.io/k8s-minikube/storage-provisioner:v1.8.1
+```
+
+#### 重启minikube
+```bash
+sudo minikube stop
+sudo minikube start [--vm-driver=none] # linux没装virtualbox的情况下需要加上后面的参数
+```
+然后执行
+```bash
+sudo minikube dashboard --url
+
+http://127.0.0.1:30000/
+```
+直接访问，便可以看到kubernetes的dashboard后台。
+
+#### 科学上网
+如果你下载时提示下载错误，基本上是墙的问题，所以科学上网很重要，你也可以在终端里执行下面命令，让curl wget等命令也会走代理，快速下载.
+```bash
+export http_proxy='socks5:127.0.0.1:1003
+```
