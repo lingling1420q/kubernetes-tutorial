@@ -179,3 +179,31 @@ You will need to move the files to the appropriate location and then set the cor
 This can also be done automatically by setting the env var CHANGE_MINIKUBE_NONE_USER=true
 Loading cached images from config file.
 ```
+#### 启动一个容器服务
+
+```bash
+# kube-nginx是要定义的容器名称 nginx:latest表明要用nginx镜像 --port=80表明容器对外暴露80端口
+sudo kubectl run kube-nginx --image=nginx:latest --port=80
+
+deployment "kube-nginx" created
+```
+
+#### 查看状态
+
+```bash
+sudo kubectl get pods
+
+NAME                            READY     STATUS    RESTARTS   AGE
+kube-nginx-5dc6b8dddc-bj6w6     1/1       Running   0          29s
+```
+如果你的服务一直是containerCreating状态，没有变化，那就是创建实例出现问题，直接查看log日志。
+
+```bash 
+sudo minikube logs
+```
+日志中出现 failed pulling image… 则是因为镜像拉取失败导致服务创建失败，可能是因为墙的问题！
+
+```bash
+2月 28 11:16:42 etcd-host1 localkube[21771]: E0228 11:16:42.817937   21771 remote_image.go:108] PullImage "gcr.io/google-containers/kube-addon-manager:v6.4-beta.2" from image service failed: rpc error: code = Unknown desc = Error response from daemon: Get https://gcr.io/v2/: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+2月 28 11:16:42 etcd-host1 localkube[21771]: E0228 11:16:42.818010   21771 kuberuntime_image.go:50] Pull image "gcr.io/google-containers/kube-addon-manager:v6.4-beta.2" failed: rpc error: code = Unknown desc = Error response from daemon: Get https://gcr.io/v2/: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+```
