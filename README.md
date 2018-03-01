@@ -323,12 +323,11 @@ sudo minikube dashboard --url
 
 http://127.0.0.1:30000/
 ```
+直接访问，便可以看到kubernetes的dashboard后台。
 
 <p align="center">
 <img width="700" align="center" src="src/images/5.jpg" />
 </p>
-
-直接访问，便可以看到kubernetes的dashboard后台。
 
 #### 科学上网
 如果你下载时提示下载错误，基本上是墙的问题，所以科学上网很重要，你也可以在终端里执行下面命令，让curl wget等命令也会走代理，快速下载.
