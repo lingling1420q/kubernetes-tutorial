@@ -317,11 +317,17 @@ sudo minikube stop
 sudo minikube start [--vm-driver=none] # linux没装virtualbox的情况下需要加上后面的参数
 ```
 然后执行
+
 ```bash
 sudo minikube dashboard --url
 
 http://127.0.0.1:30000/
 ```
+
+<p align="center">
+<img width="700" align="center" src="src/images/5.jpg" />
+</p>
+
 直接访问，便可以看到kubernetes的dashboard后台。
 
 #### 科学上网
