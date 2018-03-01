@@ -77,20 +77,20 @@ MiniKube 是使用 Go 语言开发的，所以安装其实很方便，一是通�
 * Mac安装
 ```bash
 # 如未安装cask，自行搜索 brew安装cask
-brew cask install minikube
+> brew cask install minikube
 
-minikube -h
+> minikube -h
 ```
 
 * Linux 安装
 ```bash
 # 下载v0.24.1版本
-curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.24.1/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+> curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.24.1/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
 
-# 也可以下载最新版，但可能和本文执行环境不一致，会有坑
-curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+# 也可以下载最新版
+> curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
 
-minikube -h
+> minikube -h
 ```
 
 #### 安装Kubectl
@@ -100,15 +100,15 @@ kubernetes通过kube-apiserver作为整个集群管理的入口。Apiserver是�
 因而kubectl是一个用于操作kubernetes集群的命令行接口,通过利用kubectl的各种命令可以实现各种功能,是在使用kubernetes中非常常用的工具。
 
 ```bash
-curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+> curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 
-kubectl -h
+> kubectl -h
 ```
 
 #### 启动minikube
 
 ```bash
-sudo minikube start
+> sudo minikube start
 ```
 首次启动会下载localkube，下载过程可能会失败，会有如下提示，
 
@@ -154,10 +154,10 @@ minikube默认需要虚拟机来初始化kunernetes环境，但是使用Linux系
 
 ```bash
 # linux 下独有，不依赖虚拟机启动
-sudo minikube start --vm-driver=none
+> sudo minikube start --vm-driver=none
 
 # 如果是Mac or Windows，安装VirtualBox后再重新start即可
-sudo minikube start
+> sudo minikube start
 ```
 如果你安装了虚拟机，或者你在Linux下使用了minikube start --vm-driver=none，并且下载完毕，会有如下提示运行成功
 
@@ -196,7 +196,7 @@ Loading cached images from config file.
 
 ```bash
 # kube-nginx是要定义的容器名称 nginx:latest表明要用nginx镜像 --port=80表明容器对外暴露80端口
-sudo kubectl run kube-nginx --image=nginx:latest --port=80
+> sudo kubectl run kube-nginx --image=nginx:latest --port=80
 
 deployment "kube-nginx" created
 ```
@@ -204,7 +204,7 @@ deployment "kube-nginx" created
 #### 检查状态
 
 ```bash
-sudo kubectl get pods
+> sudo kubectl get pods
 
 NAME                            READY     STATUS    RESTARTS   AGE
 kube-nginx-5dc6b8dddc-bj6w6     1/1       Running   0          29s
@@ -225,15 +225,15 @@ sudo minikube logs
 
 ```bash
 # 下载阿里云镜像
-docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0
+> docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0
 
 # 本地命名为 gcr.io/google_containers/pause-amd64:3.0
-docker tag registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0 gcr.io/google_containers/pause-amd64:3.0
+> docker tag registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0 gcr.io/google_containers/pause-amd64:3.0
 ```
 查看状态
 
 ```bash
-sudo minikube status
+> sudo minikube status
 
 minikube: Running
 cluster: Running
@@ -243,7 +243,7 @@ kubectl: Correctly Configured: pointing to minikube-vm at 127.0.0.1
 #### 重新启动服务
 这里我增加了 –image-pull-policy=IfNotPresent 参数，这个表明优先使用本地镜像，不从远端拉取
 ```bash
-sudo kubectl run kube-nginx999 --image=nginx:latest --port=80 --image-pull-policy=IfNotPresent
+> sudo kubectl run kube-nginx999 --image=nginx:latest --port=80 --image-pull-policy=IfNotPresent
 ```
 如果提示已经存在，换个名字重新执行。这时候查看服务状态应该是如下Running状态代表创建成功，但此时还不能访问容器。
 
@@ -253,14 +253,14 @@ sudo kubectl run kube-nginx999 --image=nginx:latest --port=80 --image-pull-polic
 ```
 #### 发布服务
 ```bash
-sudo kubectl expose deployment kube-nginx --type=NodePort
+> sudo kubectl expose deployment kube-nginx --type=NodePort
 service "kube-nginx" exposed
 ```
 
 #### 服务地址
 
 ```bash
-sudo minikube service kube-nginx --url
+> sudo minikube service kube-nginx --url
 http://127.0.0.1:31511
 ```
 这里展示的地址即启动的nginx容器服务地址，访问http://127.0.0.1:31511 于是便出现nginx首页，服务成功启动.
@@ -272,10 +272,10 @@ dashboard是kubernetes提供的容器服务管理后台，可视化界面，用�
 启动dashboard
 ```bash
 # 打印出管理后台地址
-sudo minikube dashboard --url
+> sudo minikube dashboard --url
 
 # 用下面写法，会自动打开默认浏览器
-sudo minikube dashboard
+> sudo minikube dashboard
 ```
 如果初次可能会报下面的两种错误之一：
 ```bash
@@ -292,34 +292,34 @@ Waiting, endpoint for service is not ready yet...
 如果你不确定应该将tag重命名为什么的话，可以执行sudo grep ‘image’ -R /etc/kubernetes看到默认情况下需要的镜像名以及版本号，你可以去[阿里云镜像](https://dev.aliyun.com/search.html)搜索下载，然后命名为上面配置中定义的tag即可，你也可以在阿里云下载1.2然后重命名为1.3。
 
 ```bash
-docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/kubernetes-dashboard-amd64:v1.7.1
+> docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/kubernetes-dashboard-amd64:v1.7.1
 docker tag registry.cn-hangzhou.aliyuncs.com/google-containers/kubernetes-dashboard-amd64:v1.7.1 gcr.io/google_containers/kubernetes-dashboard-amd64:v1.8.0
 
-docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/kube-addon-manager:v6.4-beta.2
+> docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/kube-addon-manager:v6.4-beta.2
 docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/kube-addon-manager:v6.4-beta.2 gcr.io/google-containers/kube-addon-manager:v6.4-beta.2
 
-docker pull registry.cn-shenzhen.aliyuncs.com/gcrio/k8s-dns-kube-dns-amd64:latest
+> docker pull registry.cn-shenzhen.aliyuncs.com/gcrio/k8s-dns-kube-dns-amd64:latest
 docker tag registry.cn-shenzhen.aliyuncs.com/gcrio/k8s-dns-kube-dns-amd64:latest gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.5
 
-docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/k8s-dns-dnsmasq-nanny-amd64:1.14.5
+> docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/k8s-dns-dnsmasq-nanny-amd64:1.14.5
 docker tag registry.cn-hangzhou.aliyuncs.com/google-containers/k8s-dns-dnsmasq-nanny-amd64:1.14.5 gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.5
 
-docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/k8s-dns-sidecar-amd64:1.14.5
+> docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/k8s-dns-sidecar-amd64:1.14.5
 docker tag registry.cn-hangzhou.aliyuncs.com/google-containers/k8s-dns-sidecar-amd64:1.14.5 gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.5
 
-docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/storage-provisioner:v1.8.1
+> docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/storage-provisioner:v1.8.1
 docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/storage-provisioner:v1.8.1 gcr.io/k8s-minikube/storage-provisioner:v1.8.1
 ```
 
 #### 重启minikube
 ```bash
-sudo minikube stop
-sudo minikube start [--vm-driver=none] # linux没装virtualbox的情况下需要加上后面的参数
+> sudo minikube stop
+> sudo minikube start [--vm-driver=none] # linux没装virtualbox的情况下需要加上后面的参数
 ```
 然后执行
 
 ```bash
-sudo minikube dashboard --url
+> sudo minikube dashboard --url
 
 http://127.0.0.1:30000/
 ```
@@ -332,7 +332,7 @@ http://127.0.0.1:30000/
 #### 科学上网
 如果你下载时提示下载错误，基本上是墙的问题，所以科学上网很重要，你也可以在终端里执行下面命令，让curl wget等命令也会走代理，快速下载.
 ```bash
-export http_proxy='socks5:127.0.0.1:1003
+> export http_proxy='socks5:127.0.0.1:1003'
 ```
 
 License
