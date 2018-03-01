@@ -212,7 +212,7 @@ kube-nginx-5dc6b8dddc-bj6w6     1/1       Running   0          29s
 如果你的服务一直是containerCreating状态，没有变化，那就是创建实例出现问题，直接查看log日志。
 
 ```bash 
-sudo minikube logs
+> sudo minikube logs
 ```
 
 日志中出现 failed pulling image… 则是因为镜像拉取失败导致服务创建失败，可能是因为墙的问题！
