@@ -154,6 +154,7 @@ minikube默认需要虚拟机来初始化kunernetes环境，但是使用Linux系
 
 ```bash
 # linux 下独有，不依赖虚拟机启动
+> sudo minikube delete
 > sudo minikube start --vm-driver=none
 
 # 如果是Mac or Windows，安装VirtualBox后再重新start即可
@@ -207,7 +208,7 @@ deployment "kube-nginx" created
 > sudo kubectl get pods
 
 NAME                            READY     STATUS    RESTARTS   AGE
-kube-nginx-5dc6b8dddc-bj6w6     1/1       Running   0          29s
+kube-nginx-5dc6b8dddc-bj6w6     0/1       Running   0          29s
 ```
 如果你的服务一直是containerCreating状态，没有变化，那就是创建实例出现问题，直接查看log日志。
 
