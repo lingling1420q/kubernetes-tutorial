@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   # This service is meant to be used by clients of the database. It exposes a ClusterIP that will
-  # automatically load balance connections to the different database pods.
+  # automatically load balance connections to the different database service.
   name: cockroachdb-public
   labels:
     app: cockroachdb
@@ -81,9 +81,9 @@ spec:
       # Init containers are run only once in the lifetime of a pod, before
       # it's started up for the first time. It has to exit successfully
       # before the pod's main containers are allowed to start.
-      # This particular init container does a DNS lookup for other pods in
+      # This particular init container does a DNS lookup for other service in
       # the set to help determine whether or not a cluster already exists.
-      # If any other pods exist, it creates a file in the cockroach-data
+      # If any other service exist, it creates a file in the cockroach-data
       # directory to pass that information along to the primary container that
       # has to decide what command-line flags to use when starting CockroachDB.
       # This only matters when a pod's persistent volume is empty - if it has
