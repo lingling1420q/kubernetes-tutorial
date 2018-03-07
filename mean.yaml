@@ -5,7 +5,7 @@ metadata:
   name: mean
   namespace: default
   generation: 1
-  annotations:
+  annotations:  #自定义注解列表
     deployment.kubernetes.io/revision: '1'
 spec:
   replicas: 1
