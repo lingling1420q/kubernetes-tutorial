@@ -20,7 +20,12 @@
 <img width="700" align="center" src="../images/9.jpg" />
 </p>
 
+因而k8s的集群编排被分为四种：
 
+* 无状态应用 = Services + Volumes + Deployment;
+* 有状态应用 = Services + Volumes + StatefulSet;
+* 守护型应用 = Services + Volumes + DaemonSet;
+* 批处理应用 = Services + Volumes + CronJob/Job ;
 
 
 
