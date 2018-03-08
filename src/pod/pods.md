@@ -33,83 +33,77 @@ Pod可以单独创建。由于Pods没有可控的生命周期，如果他们进�
 
 #### Pods定义详解
 ```bash
-apiVersion: v1            //版本
-kind: pod                 //类型，pod
-metadata:                 //元数据
-  name: String            //元数据，pod的名字
-  namespace: String       //元数据，pod的命名空间
-  labels:                 //元数据，标签列表
-    - name: String        //元数据，标签的名字
-  annotations:            //元数据,自定义注解列表
-    - name: String        //元数据,自定义注解名字
-spec:                     //pod中容器的详细定义
-  containers:             //pod中的容器列表，可以有多个容器
-  - name: String
-    image: String         //容器中的镜像
-    imagesPullPolicy: [Always|Never|IfNotPresent]//获取镜像的策略
-    command: [String]     //容器的启动命令列表（不配置的话使用镜像内部的命令）
-    args: [String]        //启动参数列表
-    workingDir: String    //容器的工作目录
-    volumeMounts:         //挂载到到容器内部的存储卷设置
-    - name: String
-      mountPath: String
-      readOnly: boolean
-    ports:                //容器需要暴露的端口号列表
-    - name: String
-      containerPort: int  //容器要暴露的端口
-      hostPort: int       //容器所在主机监听的端口（容器暴露端口映射到宿主机的端口）
-      protocol: String
-    env:                  //容器运行前要设置的环境列表
-    - name: String
-      value: String
-    resources:            //资源限制
-      limits:
-        cpu: Srting
-        memory: String
-      requeste:
-        cpu: String
-        memory: String
-    livenessProbe:         //pod内容器健康检查的设置
-      exec:
-        command: [String]
-      httpGet:             //通过httpget检查健康
-        path: String
-        port: number
-        host: String
-        scheme: Srtring
-        httpHeaders:
-        - name: Stirng
-          value: String 
-      tcpSocket:           //通过tcpSocket检查健康
-        port: number
-      initialDelaySeconds: 0//首次检查时间
-      timeoutSeconds: 0     //检查超时时间
-      periodSeconds: 0      //检查间隔时间
-      successThreshold: 0
-      failureThreshold: 0
-      securityContext:      //安全配置
-        privileged: falae
-    restartPolicy: [Always|Never|OnFailure]//重启策略
-    nodeSelector: object    //节点选择
-    imagePullSecrets:
-    - name: String
-    hostNetwork: false      //是否使用主机网络模式，默认否
-  volumes:                  //在该pod上定义共享存储卷
-  - name: String
-    meptyDir: {}
-    hostPath:
-      path: string
-    secret:                 //类型为secret的存储卷
-      secretName: String
-      item:
-      - key: String
-        path: String
-    configMap:             //类型为configMap的存储卷
-      name: String
-      items:
-      - key: String
-        path: String
-
+---
+kind: Deployment  #指定创建资源的角色/类型
+apiVersion: extensions/v1beta1 #指定api版本，此值必须在kubectl apiversion中
+metadata:   #资源的元数据/属性
+  name: mean #资源的名字，在同一个namespace中必须唯一
+  namespace: default
+  generation: 1 # 用于标识当前对象目标状态的代别；
+  annotations:  #自定义注解列表
+    deployment.kubernetes.io/revision: '1'  #自定义注解名字
+spec:   #specification of the resource content 指定该资源的内容
+  replicas: 1 #副本数量
+  selector:
+    matchLabels:
+      app: mean
+  template:  #这里Pod的定义
+    metadata:
+      name: mean
+      creationTimestamp: #当前对象创建的日期时间时间戳；
+      labels:
+        app: mean
+    spec:
+      containers:
+      - name: mean  #容器的名字
+        image: nginx #容器使用的镜像地址
+        resources: {}  #资源管理
+        terminationMessagePath: "/dev/termination-log"
+        terminationMessagePolicy: File
+        imagePullPolicy: Always #[Always|Never|IfNotPresent]获取镜像的策略
+        command: {}    #容器的启动命令列表（不配置的话使用镜像内部的命令）
+        workingDir: String #容器的工作目录
+        securityContext:
+          privileged: false
+        volumeMounts:        #挂载到到容器内部的存储卷设置
+            - name: String    #挂载设备的名字
+              mountPath: String  #挂载到容器的某个路径下
+              readOnly: boolean
+      volumes:                #定义一组挂载设备
+      - name: String          #定义一个挂载设备的名字
+          hostPath:
+            path:String       #挂载设备类型为hostPath，路径为宿主机下的/opt,这里设备类型支持很多种
+      restartPolicy: Always   #表明该容器一直运行，默认k8s的策略，在此容器退出后，会立即创建一个相同的容器
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 1
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+  - type: Available
+    status: 'True'
+    lastUpdateTime: '2018-03-06T09:03:59Z'
+    lastTransitionTime: '2018-03-06T09:03:59Z'
+    reason: MinimumReplicasAvailable
+    message: Deployment has minimum availability.
+  - type: Progressing
+    status: 'True'
+    lastUpdateTime: '2018-03-06T09:03:59Z'
+    lastTransitionTime: '2018-03-06T09:03:54Z'
+    reason: NewReplicaSetAvailable
+    message: ReplicaSet "mean-657b4c98d4" has successfully progressed.
 ```
 
 #### Kubernetes核心组件
