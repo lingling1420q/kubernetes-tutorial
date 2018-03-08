@@ -41,7 +41,7 @@ Kubernetes是为生产环境而设计的容器调度管理系统，对于负载�
 * [科学上网](#科学上网)
 * [Services](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/service/service.md)
 * [Pods](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/pod/pods.md)
-* [Arrange]()
+* [Arrange](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/service/arrange.md)
 
 
 #### 安装Docker 

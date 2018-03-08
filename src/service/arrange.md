@@ -1,4 +1,4 @@
-#### arrange
+#### arrange编排
 
 在容器环境中，编排通常涉及到三个方面:
 
@@ -20,6 +20,13 @@
 <img width="700" align="center" src="../images/9.jpg" />
 </p>
 
+因而k8s的集群编排被分为四种：
+
+* 无状态应用 = Services + Volumes + Deployment;
+* 有状态应用 = Services + Volumes + StatefulSet;
+* 守护型应用 = Services + Volumes + DaemonSet;
+* 批处理应用 = Services + Volumes + CronJob/Job ;
+
 一个简单的例子
 
 我们来考虑这么一个简单的例子，一个需要使用到数据库的 API 服务在 Kubernetes 中应该如何表示: 
@@ -30,6 +37,7 @@
 <p align="center">
 <img width="700" align="center" src="../images/10.jpg" />
 </p>
+
 
 
 
