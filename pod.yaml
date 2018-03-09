@@ -1,17 +1,37 @@
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
-  name: kube100-site
-  labels:
-    app: web
+  name: pod
+  namespace: default
 spec:
-  containers:
-    - name: front-end
-      image: nginx
-      ports:
-        - containerPort: 80
-    - name: flaskapp-demo
-      image: jcdemo/flaskapp
-      ports:
-        - containerPort: 5000
+ replicas: 1 #副本数量
+  selector:
+    matchLabels:
+      app: pod
+  template:  #这里Pod的定义
+    metadata:
+      name: pod
+      creationTimestamp: #当前对象创建的日期时间时间戳；
+      labels:
+        app: pod
+    spec:
+      containers:
+        - name: front-end
+          image: nginx
+          ports:
+            - containerPort: 80
+        - name: flaskapp-demo
+          image: jcdemo/flaskapp
+          resources:
+              limits:  #CPU限制设置为1,内存限制200M
+                memory: "200Mi"
+                cpu: "1"
+              requests:  #容器申请0.5个CPU,内存请求200M
+                memory: "200Mi"
+                cpu: "0.5"
+          ports:
+            - containerPort: 5000
+          securityContext:
+                allowPrivilegeEscalation: false
+
