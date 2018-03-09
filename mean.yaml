@@ -31,11 +31,11 @@ spec:   #specification of the resource content 指定该资源的内容
         securityContext:
           privileged: false
         volumeMounts:        #挂载到到容器内部的存储卷设置
-            - name: String    #挂载设备的名字
-              mountPath: String  #挂载到容器的某个路径下
+            - name: data    #挂载设备的名字
+              mountPath: /usr/share/nginx/html  #挂载到容器的某个路径下
               readOnly: boolean
       volumes:                #定义一组挂载设备
-      - name: String          #定义一个挂载设备的名字
+      - name: data          #定义一个挂载设备的名字
           hostPath:
             path:String       #挂载设备类型为hostPath，路径为宿主机下的/opt,这里设备类型支持很多种
       restartPolicy: Always   #表明该容器一直运行，默认k8s的策略，在此容器退出后，会立即创建一个相同的容器
@@ -59,13 +59,13 @@ status:
   conditions:
   - type: Available
     status: 'True'
-    lastUpdateTime: '2018-03-06T09:03:59Z'
-    lastTransitionTime: '2018-03-06T09:03:59Z'
+    lastUpdateTime: ''
+    lastTransitionTime: ''
     reason: MinimumReplicasAvailable
     message: Deployment has minimum availability.
   - type: Progressing
     status: 'True'
-    lastUpdateTime: '2018-03-06T09:03:59Z'
-    lastTransitionTime: '2018-03-06T09:03:54Z'
+    lastUpdateTime: ''
+    lastTransitionTime: ''
     reason: NewReplicaSetAvailable
     message: ReplicaSet "mean-657b4c98d4" has successfully progressed.
