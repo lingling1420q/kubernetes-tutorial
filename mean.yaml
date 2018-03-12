@@ -34,6 +34,13 @@ spec:   #specification of the resource content 指定该资源的内容
             - name: data    #挂载设备的名字
               mountPath: /usr/share/nginx/html  #挂载到容器的某个路径下
               readOnly: boolean
+        livenessProbe:
+              httpGet:
+              # Path to probe; should be cheap, but representative of typical behavior
+              path: /index.html
+              port: 80
+              initialDelaySeconds: 30
+              timeoutSeconds: 1
       volumes:                #定义一组挂载设备
       - name: data          #定义一个挂载设备的名字
           hostPath:

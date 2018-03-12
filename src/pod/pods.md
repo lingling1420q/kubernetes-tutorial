@@ -201,6 +201,63 @@ Secret是用来保存和传递密码、密钥、认证凭证这些敏感信息�
 
 #### pods 
 
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+   name: "" #pod的命名
+   labels:  #标签
+     name: "" #标签名字可用于分组
+   namespace: ""  #该pod的命名空间
+   annotations: []  #自定义注解列表
+   generateName: ""  #生成唯一名称的前缀
+spec:
+   replicas: 1 #副本数量
+   selector:
+     matchLabels:
+       app: mean
+   template:  #这里Pod的定义
+     metadata:
+       name: mean
+       creationTimestamp: #当前对象创建的日期时间时间戳；
+       labels:
+         app: mean 
+     spec:
+       containers:
+       - name: mean  #容器的名字
+         image: nginx #容器使用的镜像地址
+         resources: {}  #资源管理
+         terminationMessagePath: "/dev/termination-log"
+         terminationMessagePolicy: File
+         imagePullPolicy: Always #[Always|Never|IfNotPresent]获取镜像的策略
+         command: {}    #容器的启动命令列表（不配置的话使用镜像内部的命令）
+         workingDir: String #容器的工作目录
+         securityContext:
+           privileged: false
+         volumeMounts:        #挂载到到容器内部的存储卷设置
+           - name: data    #挂载设备的名字
+             mountPath: /usr/share/nginx/html  #挂载到容器的某个路径下
+             readOnly: boolean
+       volumes:                #定义一组挂载设备
+       - name: data          #定义一个挂载设备的名字
+         emptyDir: {} #本地磁盘存储
+           hostPath:  #预先存在的主机文件或目录,这通常用于绑定到主机的特权系统守护进程或其他代理。
+             path:String       #挂载设备类型为hostPath，路径为宿主机下的/opt,这里设备类型支持很多种
+       restartPolicy: Always   #表明该容器一直运行，默认k8s的策略，在此容器退出后，会立即创建一个相同的容器
+       terminationGracePeriodSeconds: 30
+       dnsPolicy: ClusterFirst
+       securityContext: {}
+       schedulerName: default-scheduler
+   strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 25%
+       maxSurge: 25%
+   revisionHistoryLimit: 10
+   progressDeadlineSeconds: 600
+
+```
+
 
 License
 This is free software distributed under the terms of the MIT license
