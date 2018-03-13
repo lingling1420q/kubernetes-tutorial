@@ -1,37 +1,55 @@
 ---
-apiVersion: extensions/v1beta1
 kind: Deployment
+apiVersion: extensions/v1beta1
 metadata:
   name: pod
   namespace: default
+  generation: 1
+  labels:
+    run: pod
+  annotations:
+    deployment.kubernetes.io/revision: '1'
 spec:
- replicas: 1 #副本数量
+  replicas: 1
   selector:
     matchLabels:
-      app: pod
-  template:  #这里Pod的定义
+      run: pod
+  template:
     metadata:
-      name: pod
-      creationTimestamp: #当前对象创建的日期时间时间戳；
+      creationTimestamp:
       labels:
-        app: pod
+        run: pod
     spec:
       containers:
-        - name: front-end
-          image: nginx
-          ports:
-            - containerPort: 80
-        - name: flaskapp-demo
-          image: jcdemo/flaskapp
-          resources:
-              limits:  #CPU限制设置为1,内存限制200M
-                memory: "200Mi"
-                cpu: "1"
-              requests:  #容器申请0.5个CPU,内存请求200M
-                memory: "200Mi"
-                cpu: "0.5"
-          ports:
-            - containerPort: 5000
-          securityContext:
-                allowPrivilegeEscalation: false
-
+      - name: pod
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: "/dev/termination-log"
+        terminationMessagePolicy: File
+        imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+status:
+  observedGeneration: 1
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+  - type: Available
+    status: 'True'
+    lastUpdateTime: '2018-03-08T10:36:01Z'
+    lastTransitionTime: '2018-03-08T10:36:01Z'
+    reason: MinimumReplicasAvailable
+    message: Deployment has minimum availability.
