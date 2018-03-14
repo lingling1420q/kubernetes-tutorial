@@ -255,6 +255,7 @@ kubectl: Correctly Configured: pointing to minikube-vm at 127.0.0.1
  NAMESPACE       NAME                            READY     STATUS    RESTARTS   AGE
  default         kube-nginx-5dc6b8dddc-bj6w6     1/1       Running   0          29s
 ```
+
 #### 发布服务
 ```bash
 > sudo kubectl expose deployment kube-nginx --type=NodePort
@@ -268,7 +269,6 @@ service "kube-nginx" exposed
 http://127.0.0.1:31511
 ```
 这里展示的地址即启动的nginx容器服务地址，访问http://127.0.0.1:31511 于是便出现nginx首页，服务成功启动.
-
 
 #### 启动dashboard管理后台
 dashboard是kubernetes提供的容器服务管理后台，可视化界面，用来进行机器负载，集群管理，镜像扩容，配置数据等相关操作
