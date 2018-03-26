@@ -213,7 +213,7 @@ metadata:
    generateName: ""  #生成唯一名称的前缀
 spec:
    replicas: 1 #副本数量
-   selector:
+   selector: #通过标签选择器，客户端/用户可以识别一组对象。标签选择器是Kubernetes中的核心分组原语。
      matchLabels:
        app: mean
    template:  #这里Pod的定义
