@@ -1,34 +1,3 @@
-```
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: pod
-spec:
-  capacity:
-    storage: 1Mi
-  accessModes:
-    - ReadWriteMany
-  pod:
-    # FIXME: use the right IP
-    server: 07e644a3a8-rme57.cn-hangzhou.nas.aliyuncs.com
-    path: "/"
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: nfs
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: ""
-  resources:
-    requests:
-      storage: 1Mi
-```
-
-
-```
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -47,9 +16,9 @@ spec:
           image: nginx:1.8                      # 容器镜像
           volumeMounts:
           # name must match the volume name below
-            - name: pod
-              mountPath: "/pod"
+            - name: nfs
+              mountPath: "/mnt"
       volumes:
-      - name: pod
+      - name: nfs
         persistentVolumeClaim:
-          claimName: pod
+          claimName: nfs
