@@ -1,12 +1,12 @@
 ---
 apiVersion: v1 #指定api版本，此值必须在kubectl apiversion中
-kind: Service  #指定创建资源的角色/类型
+kind: Secret  #指定创建资源的角色/类型
 metadata:
   namespace: default
   name: nginx-pod
   labels:
     app: nginx
-spec:
+spce:
   type: NodePort
   selector:
     app: nginx
