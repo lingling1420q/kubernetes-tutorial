@@ -15,7 +15,7 @@ spce:
     targetPort: 80
     nodePort: 30000
 ---
-kind: Deployment  #指定创建资源的角色/类型
+kind: Deployment
 apiVersion: extensions/v1beta1 #指定api版本，此值必须在kubectl apiversion中
 metadata:   #资源的元数据/属性
   name: nginx #资源的名字，在同一个namespace中必须唯一
