@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: agent
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: agent
+    spec:
+      containers:
+      - name: agent
+        image: drone/drone:0.8
+        imagePullPolicy: Always
+        command:
+          - "/drone"
+          - "agent"
+        volumeMounts:
+          - mountPath: /var/run/docker.sock
+            name: docker-socket
+        env:
+          - name: "DRONE_SERVER"
+            value: ws://drone-server:8000/ws/broker
+          - name: "DRONE_SECRET"
+            value: XsJnj4DmzuXBKkcgHeUAJQxq
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
