@@ -13,7 +13,7 @@ services:
       - DRONE_GITLAB=true
       - DRONE_GITLAB_CLIENT=0cae7786c94dfbb49d55a9eaa1fcc4b5d99793dcdef6004e264d5624fae1d322
       - DRONE_GITLAB_SECRET=8a2f096e5f59ba172e4ec237ac7530437d46b500398931eeae86c284db4b803a
-      - DRONE_GITLAB_URL=http://code.sunmi.com/
+      - DRONE_GITLAB_URL={DRONE_GITLAB_URL}
       - DRONE_SECRET=${DRONE_SECRET}
   drone-agent:
     image: drone/drone:0.7

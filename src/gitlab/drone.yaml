@@ -14,10 +14,10 @@ services:
     environment:
       - DRONE_OPEN=true
       - DRONE_ADMIN=drone,mritd
-      - DRONE_HOST=http://172.21.0.1/
+      - DRONE_HOST={DRONE_HOST}
       - DRONE_GITLAB=true
       - DRONE_GITLAB_PRIVATE_MODE=true
-      - DRONE_GITLAB_URL=http://172.21.0.1/
+      - DRONE_GITLAB_URL={DRONE_GITLAB_URL}
       - DRONE_GITLAB_CLIENT=76155ab75bafd73d4ebfe0a02d9d6284a032f7d8667d558e3f929a64805d1fa1
       - DRONE_GITLAB_SECRET=6957b06f53b80d4dd17051ceb36f9139ae83b9077e345a404f476e317b0c8f3d
       - DRONE_SECRET=${DRONE_SECRET}
@@ -30,7 +30,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      - DRONE_SERVER=172.21.0.1:9000
+      - DRONE_SERVER={DRONE_SERVER}
       - DRONE_SECRET=${DRONE_SECRET}
 
 volumes:
