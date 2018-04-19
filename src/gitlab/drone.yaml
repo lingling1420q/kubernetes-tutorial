@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  drone-server:
+    image: drone/drone:0.8-alpine
+    container_name: drone-server
+
+    ports:
+      - 8000:8000
+      - 9000:9000
+    volumes:
+      - data:/var/lib/drone/
+    restart: always
+    environment:
+      - DRONE_OPEN=true
+      - DRONE_ADMIN=drone,mritd
+      - DRONE_HOST=http://172.21.0.1/
+      - DRONE_GITLAB=true
+      - DRONE_GITLAB_PRIVATE_MODE=true
+      - DRONE_GITLAB_URL=http://172.21.0.1/
+      - DRONE_GITLAB_CLIENT=76155ab75bafd73d4ebfe0a02d9d6284a032f7d8667d558e3f929a64805d1fa1
+      - DRONE_GITLAB_SECRET=6957b06f53b80d4dd17051ceb36f9139ae83b9077e345a404f476e317b0c8f3d
+      - DRONE_SECRET=${DRONE_SECRET}
+
+  drone-agent:
+    image: drone/agent:0.8
+    container_name: drone-agent
+    command: agent
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DRONE_SERVER=172.21.0.1:9000
+      - DRONE_SECRET=${DRONE_SECRET}
+
+volumes:
+  data:

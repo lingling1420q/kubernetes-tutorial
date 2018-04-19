@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitlab
+  labels:
+    app: gitlab
+spec:
+  ports:
+    - name: gitlab-ui
+      port: 80
+      protocol: TCP
+      targetPort: 30080
+      nodePort: 30080
+    - name: gitlab-ssh
+      port: 22
+      protocol: TCP
+      targetPort: 22
+      nodePort: 30022
+  selector:
+    app: gitlab
+    tier: frontend
+  type: NodePort
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gitlab
+  labels:
+    app: gitlab
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: gitlab
+        tier: frontend
+    spec:
+      containers:
+        - image: twang2218/gitlab-ce-zh:10.6.2
+          name: gitlab
+          ports:
+            - containerPort: 30080
+              name: file-gitlab
+          volumeMounts:
+            - name: file-gitlab
+              mountPath: /home/git/data:rw
+      volumes:
+        - name: file-gitlab
+          persistentVolumeClaim:
+            claimName: file-gitlab
+
