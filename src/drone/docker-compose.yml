@@ -1,28 +1,32 @@
-version: '2'
+version: '3'
 
 services:
   drone-server:
-    image: drone/drone:0.7
+    image: drone/drone:0.8
+    container_name: drone-server
     ports:
-      - 80:8000
+      - 127.0.0.1:8000:8000
     volumes:
-      - /var/lib/drone:/var/lib/drone/
+      - /var/lib/drone:/var/lib/drone
     restart: always
     environment:
       - DRONE_OPEN=true
+      - DRONE_ADMIN=drone,mritd
+      - DRONE_HOST=http://172.21.0.1
       - DRONE_GITLAB=true
-      - DRONE_GITLAB_CLIENT=0cae7786c94dfbb49d55a9eaa1fcc4b5d99793dcdef6004e264d5624fae1d322
-      - DRONE_GITLAB_SECRET=8a2f096e5f59ba172e4ec237ac7530437d46b500398931eeae86c284db4b803a
-      - DRONE_GITLAB_URL={DRONE_GITLAB_URL}
-      - DRONE_SECRET=${DRONE_SECRET}
+      - DRONE_GITLAB_PRIVATE_MODE=true
+      - DRONE_GITLAB_URL=http://code.sunmi.com/
+      - DRONE_GITLAB_CLIENT=970fd89011a6dcbdd563f67e4a0ae1624c8781dd3f0491ac8fab1e14a591bc1f
+      - DRONE_GITLAB_SECRET=2b13d446e39f1cc352c24ac0beacc2e2074c2990835b17ac55a246d093560bf5
+      - DRONE_SECRET=drone
+
   drone-agent:
-    image: drone/drone:0.7
+    image: drone/agent:0.8
+    container_name: drone-agent
     command: agent
     restart: always
-    depends_on:
-      - drone-server
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      - DRONE_SERVER=ws://drone-server:8000/ws/broker
-      - DRONE_SECRET=${DRONE_SECRET}
+      - DRONE_SERVER=http://172.21.0.1:8000
+      - DRONE_SECRET=drone

@@ -1,7 +1,3 @@
-workspace:
-  base: /go/src
-  path: https://github.com/KeKe-Li/fetch
-
 clone:
   git:
     image: plugins/git

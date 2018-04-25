@@ -1,0 +1,107 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+    name: drone
+spec:
+    selector:
+        matchLabels:
+            app: drone
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                app: drone
+        spec:
+            containers:
+              - name: drone
+                image: drone/drone:0.8
+                env:
+                  - name: DRONE_OPEN
+                    value: false
+                  - name: DRONE_ADMIN
+                    value: KeKe-Li
+                  - name: DRONE_HOST
+                    value: http://drone.change.io/
+                  - name: DRONE_GITHUB
+                    value: true
+                  - name: DRONE_GITHUB_CLIENT
+                    value: 8c3b141e8081d7858ec8
+                  - name: DRONE_GITHUB_SECRET
+                    value: 386a9f06fcbe3fc1b6ce0e022eceaaa4acc7e373
+                  - name: DRONE_SECRET
+                    value: XsJnj4DmzuXBKkcgHeUAJQxq
+                ports:
+                - containerPort: 8000
+                  name: drone-web-port
+                - containerPort: 9000
+                volumeMounts:
+                - mountPath: /var/lib/drone
+                  name: drone-db
+            volumes:
+            - name: drone-db
+              hostPath:
+                path: /var/lib/drone
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: drone
+    labels:
+        apps: drone
+spec:
+    ports:
+    - name: http
+      port: 80
+      targetPort: drone-web-port
+      protocol: TCP
+    - name: agent
+      port: 9000
+    selector:
+      app: drone
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+    name: drone-agent
+spec:
+    selector:
+        matchLabels:
+            app: drone-agent
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                app: drone-agent
+        spec:
+            containers:
+              - name: drone-agent
+                image: drone/agent:0.8
+                args: ["agent"]
+                env:
+                  - name: DRONE_SERVER
+                    value: ws://drone-server:8000/ws/broker
+                  - name: DRONE_SECRET
+                    value: XsJnj4DmzuXBKkcgHeUAJQxq
+                volumeMounts:
+                  - mountPath: /var/run/docker.sock
+                    name: docker-socket
+            volumes:
+              - name: docker-socket
+                hostPath:
+                    path: /var/run/docker.sock
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: drone
+    annotations:
+        kubernetes.io/ingress.class: traefik
+spec:
+    rules:
+      - host: "<your-drone-URL>"
+        http:
+            paths:
+              - path: /
+                backend:
+                    serviceName: drone
+                    servicePort: http

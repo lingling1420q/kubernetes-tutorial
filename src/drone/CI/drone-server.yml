@@ -1,45 +1,47 @@
+#server用来处理任务分发
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: server
+  name: drone-server
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: server
+        name: drone-server
     spec:
       containers:
-      - name: server
+      - name: drone-server
         image: drone/drone:0.8
         imagePullPolicy: Always
         env:
-          - name: "DRONE_HOST"
-            value: http://drone.change.io/
-          - name: "DRONE_OPEN"
-            value: false
-          - name: "DRONE_GITHUB"
+          - name: DRONE_HOST
+            value: http://172.21.0.1/authorize
+          - name: DRONE_OPEN
+            value: "true"
+          - name: DRONE_GITLAB
             value: true
-          - name: "DRONE_GITHUB_CLIENT"
-            value: 8c3b141e8081d7858ec8
-          - name: "DRONE_GITHUB_SECRET"
-            value: 386a9f06fcbe3fc1b6ce0e022eceaaa4acc7e373
-          - name: "DRONE_SECRET"
-            value: XsJnj4DmzuXBKkcgHeUAJQxq
+          - name: DRONE_GITLAB_CLIENT
+            value: 0cae7786c94dfbb49d55a9eaa1fcc4b5d99793dcdef6004e264d5624fae1d322
+          - name: DRONE_GITLAB_SECRET
+            value: 8a2f096e5f59ba172e4ec237ac7530437d46b500398931eeae86c284db4b803a
+          - name: DRONE_SECRET
+            value: {DRONE_SECRET}
         volumeMounts:
         - mountPath: /var/lib/drone
-          name: drone-lib
+          name: file-drone
       volumes:
-      - name: drone-lib
+      - name: file-drone
         hostPath:
+          # directory location on host
           path: /var/lib/drone
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: server
+  name: drone-server
   labels:
-    name: server
+    name: drone-server
 spec:
   type: LoadBalancer
   ports:
@@ -47,4 +49,4 @@ spec:
       port: 80
       targetPort: 8000
   selector:
-    name: server
+    name: drone-server

@@ -1,16 +1,20 @@
+#Agent 用来执行自动化构建任务
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: agent
+  name: agent-server
+  labels:
+    name: agent-server
+  namespace: default                               # namespace
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: agent
+        name: agent-server
     spec:
       containers:
-      - name: agent
+      - name: agent-server
         image: drone/drone:0.8
         imagePullPolicy: Always
         command:
@@ -18,13 +22,13 @@ spec:
           - "agent"
         volumeMounts:
           - mountPath: /var/run/docker.sock
-            name: docker-socket
+            name: file-agent
         env:
           - name: "DRONE_SERVER"
             value: ws://drone-server:8000/ws/broker
           - name: "DRONE_SECRET"
             value: XsJnj4DmzuXBKkcgHeUAJQxq
       volumes:
-        - name: docker-socket
+        - name: file-agent
           hostPath:
             path: /var/run/docker.sock
