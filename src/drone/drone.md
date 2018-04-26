@@ -80,7 +80,7 @@ services:
 配置文件完成之后，我们就可以使用以下命令启动服务了：
 
 ```bash
- > docker-compose  up
+ > docker-compose  up -d
 ```
 
 docker-compose 会自动帮我们去下载镜像并根据配置初始化容器。一切就绪之后，我们使用 <host>:3800 就可以访问到 drone 了。
