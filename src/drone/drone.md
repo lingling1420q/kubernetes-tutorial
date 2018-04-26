@@ -1,4 +1,11 @@
 #### Drone 集成到Gitlab
+
+在配置文件中，我们设置 docker-compose.yml 的格式为 2 号版本，定义两种服务。
+
+drone-server ：使用 drone/drone:0.8.2 版本镜像，将启动监听 3800 上的主 Drone 服务容器，9000 端口来开放给 Agent。我们将在容器内挂载 /etc/drone 目录，以便 drone 可以保留数据。配置服务自动重新启动，并添加一些环境变量。
+drone-agent：使用 drone/agent:0.8.2 版本镜像，将 docker 启动句柄挂载到容器 /var/run/docker.sock 文件中，以便 drone 可以使用 docker 来执行镜像构建任务。环境变量中需要配置 drone server 的地址以及 server 的密钥，以便于 server 进行通信。
+
+
 Drone 支持 GitLab，使用下面的环境变量来配置使用 GitLab。
 ```docker-compose
 version: '2'
@@ -7,9 +14,10 @@ services:
   drone-server:
     image: drone/drone:0.7
     ports:
-      - 80:8000
+     - 3800:8000
+     - 9000
     volumes:
-      - /var/lib/drone:/var/lib/drone/
+      - /etc/drone:/var/lib/drone/
     restart: always
     environment:
       - DRONE_OPEN=true
