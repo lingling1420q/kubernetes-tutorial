@@ -47,8 +47,11 @@ services:
 #### 配置
 下面是所有的配置选项。一般来说，使用默认配置可以满足绝大部分的安装需求：
 ````markdown
+
 * DRONE_GITLAB=true
   true 使用 GitLab
+* DRONE_ADMIN=drone
+  drone注册后的管理员用户  
 * DRONE_GITLAB_URL=https://gitlab.com
   GitLab Server 地址
 * DRONE_GITLAB_CLIENT
@@ -156,6 +159,69 @@ server {
 ```bash
  > systemctl status drone
 ```
+
+#### Drone CI 配置文件
+Drone CI 对一个项目进行 CI 构建取决于两个因素，第一必须保证该项目在 Drone 控制面板中开启了构建(构建按钮开启)，第二保证项目根目录下存在 .drone.yml；满足这两点后每次提交 Drone 就会根据 .drone.yml 中配置进行按步骤构建；本示例中 .drone.yml 配置如下
+
+```yaml
+clone:
+  git:
+    image: plugins/git
+
+pipeline:
+
+  backend:
+    image: reg.mritd.me/base/build:2.1.5
+    commands:
+      - gradle --no-daemon clean assemble
+    when:
+      branch:
+        event: [ push, pull_request ]
+        include: [ master ]
+        exclude: [ develop ]
+
+#  rebuild-cache:
+#    image: drillster/drone-volume-cache
+#    rebuild: true
+#    mount:
+#      - ./build
+#    volumes:
+#      - /data/drone/$DRONE_COMMIT_SHA:/cache
+
+  docker:
+    image: mritd/docker-kubectl:v1.8.8
+    commands:
+      - bash build_image.sh
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+
+
+# Pipeline Conditions
+branches:
+  include: [ master, feature/* ]
+  exclude: [ develop, test/* ]
+```
+
+Drone CI 配置文件为 docker compose 的超集，Drone CI 构建思想是使用不同的阶段定义完成对 CI 流程的整体划分，然后每个阶段内定义不同的任务(task)，
+这些任务所有操作无论是 build、package 等全部由单独的 Docker 镜像完成，同时以 plugins 开头的 image 被解释为内部插件；其他的插件实际上可以看做为标准的 Docker image
+
+
+第一段 clone 配置声明了源码版本控制系统拉取方式，具体参见 cloning部分，定义后 Drone CI 将自动拉取源码
+
+此后的 pipeline 配置段为定义整个 CI 流程段，该段中可以自定义具体 task，比如后端构建可以取名字为 backend，前端构建可以叫做 frontend；中间可以穿插辅助的如打包 docker 镜像等 task；同 GitLab CI 一样，
+Agent 在使用 Docker 进行构建时必然涉及到拉取私有镜像，Drone CI 想要拉取私有镜像目前仅能通过 cli 命令行进行设置，而且仅针对项目级设置(全局需要企业版…这也行)
+ 
+ ```bash
+ drone registry add --repository drone/DroneCI-TestProject --hostname reg.mritd.me --username gitlab --password 123456
+
+ ``` 
+在构建时需要注意一点，Drone CI 不同的 task 之间共享源码文件，也就是说如果你在第一个task中对源码或者编译后的发布物做了什么更改,
+在下一个 task 中同样可见，Drone CI 并没有 GitLab CI 在每个 task 中都进行还原的机制
+  
+除此之外，某些特殊性的挂载行为默认也是不被允许的，需要在 Drone CI 中对项目做 Trusted 设置.  
+  
+  
   
 #### 问题
 
