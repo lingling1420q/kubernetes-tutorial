@@ -112,5 +112,57 @@ server {
 
 
 #### 进程守护
+刚才使用 docker-compose up 命令启动如果退出终端了之后服务就会停止，所以我们需要后台执行。我们可以直接使用 nohup 方法启动：
 
+```bash
+ > nohup docker-compose -f docker-compose.yml up &
+```
+除了使用 nohup 之外，我们还可以使用 systemctl 来启动进程。我们创建一个 drone.service 服务文件：
+
+```bash
+ > vim /etc/systemd/system/drone.service
+ 
+ [Unit]
+ Description=Drone server
+ After=docker.service nginx.service
+ [Service]
+ Restart=always
+ ExecStart=/usr/local/bin/docker-compose -f /etc/drone/docker-compose.yml up
+ ExecStop=/usr/local/bin/docker-compose -f /etc/drone/docker-compose.yml stop
+ [Install]
+ WantedBy=multi-user.target
+```
+
+第一部分告诉 systemd 在 Docker 和 Nginx 可用之后启动此服务。
+ 第二部分告诉 init 系统在发生故障时自动重新启动服务。 
+ 然后，它使用 Docker Compose 和我们之前创建的配置文件定义启动和停止 Drone 服务的命令。 
+最后，最后一节定义了如何使服务在启动时启动。完成后保存文件并使用如下命令启动服务：
+
+```bash
+ > systemctl start drone
+```
+使用如下命令可以查看服务启动状态：  
+
+```bash
+ > systemctl status drone
+```
   
+#### 问题
+
+至此 drone 的安装就结束了。不过我在具体使用的过程中有两个属于安装的小问题，在此记录一下：  
+
+1. 容器无法访问网络
+
+一台服务器上安装，访问后发现无法连接 Github 内部的所有网络服务都不正常。 
+
+docker nat 的问题.
+
+2. 构建任务无故退出
+
+实际使用过程中我发现我的构建任务总是莫名其妙就失败，提示我被 killed 掉，并显示 exit code 137。
+最开始我一直在查 137 退出码，发现就是 kill -9 的退出，不明所以。
+后来偶然尝试以 docker killed 为关键词搜索，才发现原来是内存爆了 docker 执行 OOM 把容器杀掉了。
+
+#### 总结
+
+这样我们的安装过程就结束了，访问 drone，使用对应仓库的账户登录。如果是 Github 的话会使用 OAuth 连接到 Github 进行授权申请
