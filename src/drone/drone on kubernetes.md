@@ -41,3 +41,195 @@ data:
   agent.healthcheck: "true"
 
 ```
+Secret文件，主要是存放一些秘钥之类的。不过这里也是有坑的，这个secret用于server和angent通信，设置不对就会构建项目一直处于pending状态。切记k8s中，secret需要base64。
+
+```bash
+echo -n "yourpassword" | base64
+eW91cnBhc3N3b3Jk
+```
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: drone-secrets
+  namespace: devops
+data:
+  server.secret: eW91cnBhc3N3b3Jk
+
+```
+drone-server的Deployment和Service和Ingress。此处为了简单，用了sqlite数据库，真正生产环境建议用mysql或是pgsql。
+即使用sqlite，也应该挂载到ceph中，保证数据的安全。这里直接hostpath。kubernetes中，应该做到存储和计算的分离。
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: drone-server
+  namespace: devops
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: drone-server
+    spec:
+      nodeSelector:
+        net-type: external
+      containers:
+      - image: drone/drone:latest
+        imagePullPolicy: Always
+        name: drone-server
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        - containerPort: 9000
+          protocol: TCP
+        volumeMounts:
+          # Persist our configs in an SQLite DB in here
+          - name: drone-server-sqlite-db
+            mountPath: /var/lib/drone
+        resources:
+          requests:
+            cpu: 40m
+            memory: 32Mi
+        env:
+        - name: DRONE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: drone-config
+              key: server.host
+        - name: DRONE_OPEN
+          valueFrom:
+            configMapKeyRef:
+              name: drone-config
+              key: server.open
+        - name: DRONE_DATABASE_DRIVER
+          valueFrom:
+            configMapKeyRef:
+              name: drone-config
+              key: server.database.driver
+        - name: DRONE_DATABASE_DATASOURCE
+          valueFrom:
+            configMapKeyRef:
+              name: drone-config
+              key: server.database.datasource
+        - name: DRONE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: drone-secrets
+              key: server.secret
+        - name: DRONE_GOGS
+          valueFrom:
+            configMapKeyRef:
+              name: drone-config
+              key: server.remote.gogs
+        - name: DRONE_GOGS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: drone-config
+              key: server.remote.gogs.url
+        - name: DRONE_GOGS_PRIVATE_MODE
+          valueFrom:
+            configMapKeyRef:
+              name: drone-config
+              key: server.remote.gogs.private.mode
+        - name: DRONE_DEBUG
+          valueFrom:
+            configMapKeyRef:
+              name: drone-config
+              key: server.debug
+      volumes:
+        - name: drone-server-sqlite-db
+          hostPath:
+            path: /var/lib/drone
+```
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: drone-service
+  namespace: devops
+spec:
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8000
+  - name: grpc
+    protocol: TCP
+    port: 9000
+    targetPort: 9000
+  selector:
+    app: drone-server
+```
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: drone-ingress
+  namespace: devops
+spec:
+  rules:
+  - host: drone.xxx.com
+    http:
+      paths:
+      - backend:
+          serviceName: drone-service
+          servicePort: 80
+        path: /
+```
+
+agent的部署文件了，replicas: 1 该项可以设置agent的数量，扩容起来特别方便。server和agent通过grpc的方式进行通信，主要端口是9000。
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: drone-agent
+  namespace: devops
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: drone-agent
+    spec:
+      nodeSelector:
+        net-type: external
+      containers:
+      - image: drone/agent:latest
+        imagePullPolicy: Always
+        name: drone-agent
+        volumeMounts:
+          # Enables Docker in Docker
+          - name: docker-socket
+            mountPath: /var/run/docker.sock
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 3000
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        env:
+        - name: DRONE_SERVER
+          value: drone-service:9000
+        # issue: https://github.com/drone/drone/issues/2048
+        - name: DOCKER_API_VERSION
+          value: "1.24"
+        - name: DRONE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: drone-secrets
+              key: server.secret
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
+```
+所有都部署到devops命名空间下就可以.
