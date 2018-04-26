@@ -1,8 +1,7 @@
-clone:
-  git:
-    image: plugins/git
-    depth: 50
-    tags: true
+# in the project path
+workspace:
+  base: /srv/drone-demo
+  path: .
 
 pipeline:
   backend:
@@ -16,12 +15,3 @@ pipeline:
        - npm install
        - npm run test
        - npm run build
-  deploy:
-    image: quay.io/honestbee/drone-kubernetes
-    kubernetes_server: http://rancher.test.sunmi.cn:8080
-    kubernetes_token: CXHVLJSDKJFS...
-    namespace: app
-    deployment: my-deployment
-    repo: myorg/myrepo
-    container: my-container
-    tag: mytag
