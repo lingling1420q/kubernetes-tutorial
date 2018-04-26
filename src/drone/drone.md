@@ -46,7 +46,7 @@ services:
 
 #### 配置
 下面是所有的配置选项。一般来说，使用默认配置可以满足绝大部分的安装需求：
-
+````markdown
 * DRONE_GITLAB=true
   true 使用 GitLab
 * DRONE_GITLAB_URL=https://gitlab.com
@@ -63,6 +63,8 @@ services:
   设置 true 来取消 SSL 检查
 * DRONE_GITLAB_PRIVATE_MODE=false
   如果 GitLab 以 private 私有模式运行，应设置为 true
+
+````
 
 #### 注册应用程序
 在 GitLab 上注册一个应用，并生成一个客户端和密钥。访问账户设置（account settings）页面，选择 Applications 页面，点击 New Application 。
