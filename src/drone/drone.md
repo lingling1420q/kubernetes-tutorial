@@ -16,7 +16,7 @@ services:
       - DRONE_GITLAB=true
       - DRONE_GITLAB_CLIENT={DRONE_GITLAB_CLIENT}
       - DRONE_GITLAB_SECRET={DRONE_GITLAB_SECRET}
-      - DRONE_GITLAB_URL={DRONE_GITLAB_URL}
+      - DRONE_GITLAB_URL=http://gitlab.test.com
       - DRONE_SECRET=${DRONE_SECRET}
   drone-agent:
     image: drone/drone:0.7
@@ -30,6 +30,11 @@ services:
       - DRONE_SERVER=ws://drone-server:8000/ws/broker
       - DRONE_SECRET=${DRONE_SECRET}
 ```
+其中的通信密钥相当于 drone 的密码，最好为一个长传的随机字串防止被破解。可以在命令行中使用一下内容生成：
+```bash
+ > LC_ALL=C </dev/urandom tr -dc A-Za-z0-9 | head -c 65 && echo
+```
+
 
 #### 配置
 下面是所有的配置选项。一般来说，使用默认配置可以满足绝大部分的安装需求：
@@ -57,5 +62,55 @@ services:
 使用下面的认证回调 URL（Authorization callback URL），请修改域名为自定义域名： http://drone.mycompany.com/authorize
 
 
+#### 启动服务
+
+配置文件完成之后，我们就可以使用以下命令启动服务了：
+
+```bash
+ > docker-compose  up
+```
+
+docker-compose 会自动帮我们去下载镜像并根据配置初始化容器。一切就绪之后，我们使用 <host>:3800 就可以访问到 drone 了。
+
+#### 配置 Nginx
+
+我们配置下 Nginx 做下反向代理就可以了，以下是具体的 nginx 配置文件示例：
+```markdown
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+server {
+    listen 80;
+    server_name ci.eming.li;
+    set $drone_port 3800;
+    location / {
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $http_host;
+        proxy_pass http://127.0.0.1:$drone_port;
+        proxy_redirect off;
+        proxy_http_version 1.1;
+        proxy_buffering off;
+        chunked_transfer_encoding off;
+    }
+    location ~* /ws {
+        proxy_pass http://127.0.0.1:$drone_port;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_read_timeout 86400;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $http_host;
+    }
+}
+
+```
+修改 server_name 和 $drone_port 为正确的值即可，最后记得别忘了重启 Nginx 服务。
+这样我们就能直接使用 http://gitlab.test.com来访问 drone 了。
+
+
+#### 进程守护
 
   
