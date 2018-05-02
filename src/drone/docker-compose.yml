@@ -14,7 +14,7 @@ services:
       - DRONE_OPEN=true
       # admin
       - DRONE_ADMIN=drone,mritd
-      # Drone可公开访问的地址
+      # Drone可公开访问的地址,Drone的安装服务器, 不需要端口
       - DRONE_HOST=http://127.0.0.1/
       # 配置 Git 仓库，只能同时使用一种仓库
       # Gitlab 仓库需要配置上问申请到的 client id 和 client secret
