@@ -1,6 +1,7 @@
 #### Drone 使用
 
-.drone.yml
+需要单独为每一个项目编写.drone.yml文件 用来表述在代码提交后需要执行哪些操作.
+下面go项目为例编写.drone.yml文件.
 
 ````yaml
 workspace:
