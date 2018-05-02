@@ -22,7 +22,7 @@ services:
       - DRONE_GITLAB_URL=http://code.sunmi.com
       - DRONE_GITLAB_CLIENT=00a851d002740dad0fb8a9a0ddff944f3c55790f28b412f0664bd2bd4839d16b
       - DRONE_GITLAB_SECRET=3d170aeac1c6d095b77814d5516a6de03a91958bf6778a835b714b99743d92ad
-      # Drone Server 和 Agent 的通信密钥
+      # Drone Server 和 Agent 的通信密钥,随意填写
       - DRONE_SECRET={DRONE_SECRET}
   drone-agent:
     image: drone/agent:0.8.2
