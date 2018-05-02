@@ -15,13 +15,13 @@ services:
       # admin
       - DRONE_ADMIN=drone,mritd
       # Drone可公开访问的地址
-      - DRONE_HOST=http://172.16.0.128
+      - DRONE_HOST=http://127.0.0.1/
       # 配置 Git 仓库，只能同时使用一种仓库
       # Gitlab 仓库需要配置上问申请到的 client id 和 client secret
       - DRONE_GITLAB=true
-      - DRONE_GITLAB_URL=http://172.16.0.128:30000
-      - DRONE_GITLAB_CLIENT=533ee3e59e7123105dcf2800c482b4402414cc8b9569ab5b0ef8cfac11014612
-      - DRONE_GITLAB_SECRET=64a188c3ceee64c32acf420d9aee626d5146fd08561cc8d17582280b71ee56d8ss
+      - DRONE_GITLAB_URL=http://code.sunmi.com
+      - DRONE_GITLAB_CLIENT=00a851d002740dad0fb8a9a0ddff944f3c55790f28b412f0664bd2bd4839d16b
+      - DRONE_GITLAB_SECRET=3d170aeac1c6d095b77814d5516a6de03a91958bf6778a835b714b99743d92ad
       # Drone Server 和 Agent 的通信密钥
       - DRONE_SECRET={DRONE_SECRET}
   drone-agent:
@@ -35,6 +35,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       # 配置 SERVER 地址
-      - DRONE_SERVER=http://172.16.0.128:9000
+      - DRONE_SERVER=drone-server:9000
       # 配置与 SERVER 通信的密钥，需要与 Server 配置的保持一致
       - DRONE_SECRET={DRONE_SECRET}
