@@ -52,5 +52,40 @@ pipeline:
 
 * workspace
 
-其中workspace指定pipeline的工作目录, 上例中我们会在build中pwd看到当前目录是/go/src/spike, 
-为什么我们需要指定到/go目录下, 因为在golang:1.9的镜像中, go_path就是/go, 我们要go build当然要在go_path下执行.
+workspace指定pipeline的工作目录, 我们会在build中pwd看到当前目录是/go/src/spike, 
+为什么我们需要指定到/go目录下, 因为在golang:1.9的镜像中, gopath就是/go, 我们要go build当然要在gopath下执行.
+
+* build
+
+build步骤很简单只是go build.如果用go包管理glide把依赖vender提交了，那么就可以省去go get了.
+docker在构建的时候都是以一个空白镜像golang:1.9作为基础的, 如果不提交vendor就需要每次构建都go get, 十分耗时.
+当然还有办法就是提交一个已经按照好go包的基础镜像到registry里, 在build中的image就换成你提交的镜像. 相比之下更简单的方法就是提交vendor目录.
+
+* publish
+
+publish使用到了plugins/docker插件, 这个插件是drone写的, 用于发布docker镜像. 它的作用就是构建一个镜像, 并push到registry.
+
+需要配置的值有:
+
+1. registry: 仓库registry, 如hub.docker.com的registry地址是https://index.docker.io/v1/.
+
+2. repo: 在docker仓库下的项目名称.
+
+3. secrets: drone用于传递密钥的实现方式
+
+在plugins/docker插件中, 构建项目镜像是通过Dockerfile来的, 所以我们还需要在项目根编写一个Dockerfile.
+
+```dockerfile
+
+FROM alpine:latest
+
+COPY gokit_start /
+
+WORKDIR /
+
+ENTRYPOINT ["./gokit_start"]
+
+```
+ENTRYPOINT是容器启动后的运行入口, "./gokit_start"是示例项目build后的二进制文件.
+
+* deply
