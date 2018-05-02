@@ -1,13 +1,12 @@
 #### Drone 使用
 
-需要单独为每一个项目编写.drone.yml文件 用来表述在代码提交后需要执行哪些操作.
-下面go项目为例编写.drone.yml文件.
+.drone.yml
 
 ````yaml
 workspace:
   base: /go
   # 指定git clone到的地方, 应该放在gopath下, 才能正常编译
-  path: src/git.zhuzi.me/zzjz/drone-test
+  path: src/spike
 
 pipeline:
   build-develop:
@@ -38,8 +37,8 @@ pipeline:
   rancher-develop:
     image: peloton/drone-rancher
     url: http://rancher.bysir.store/v1
-    access_key: "xxx"
-    secret_key: "xxx"
+    access_key: ""
+    secret_key: ""
     service: app/drone-test
     # 为了使rancher能拉取到私有镜像, 需要在rancher控制面板"基础架构->镜像库"添加这个私有镜像库
     docker_image: registry-internal.cn-hangzhou.aliyuncs.com/zhuzi/drone-test:test
@@ -50,3 +49,8 @@ pipeline:
       branch: develop
 
 ````
+
+* workspace
+
+其中workspace指定pipeline的工作目录, 上例中我们会在build中pwd看到当前目录是/go/src/spike, 
+为什么我们需要指定到/go目录下, 因为在golang:1.9的镜像中, go_path就是/go, 我们要go build当然要在go_path下执行.
