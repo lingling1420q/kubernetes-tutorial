@@ -89,3 +89,8 @@ ENTRYPOINT ["./gokit_start"]
 ENTRYPOINT是容器启动后的运行入口, "./gokit_start"是示例项目build后的二进制文件.
 
 * deply
+
+发布流程就是通过SSH登陆上要部署程序的服务器pull下刚刚publish的镜像并启动.
+
+登陆SSH就需要配置ssh_key或者ssh_password, 更多详情看appleboy/ssh这个插件的文档, 这里推荐使用ssh_key,
+ 我们需要在drone的secrets添加一项ssh_key值为私钥, 然后我们将与之匹配的公钥放在服务器上.ssh/authorized_keys里, 这样就能使用ssh_key登陆上服务器并执行script.
