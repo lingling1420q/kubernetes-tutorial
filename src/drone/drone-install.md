@@ -39,7 +39,7 @@ services:
       - DRONE_SECRET=${DRONE_SECRET}
 ```
 其中的通信密钥相当于 drone 的密码，最好为一个长传的随机字串防止被破解。可以在命令行中使用一下内容生成：
-```bash
+```markdown
  > LC_ALL=C </dev/urandom tr -dc A-Za-z0-9 | head -c 65 && echo
 ```
 
