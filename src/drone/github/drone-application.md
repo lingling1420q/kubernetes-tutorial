@@ -1,7 +1,6 @@
 #### Drone 使用
 
 .drone.yml
-
 ````yaml
 workspace:
   base: /go
