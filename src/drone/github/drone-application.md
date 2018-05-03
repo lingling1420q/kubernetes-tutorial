@@ -47,7 +47,13 @@ pipeline:
     when:
       branch: develop
 
-````
+
+```
+这个pipeline主要是：
+* build: 编译go项目为可执行文件
+* publish: 将可执行文件通过Dockerfile打包并发布到仓库
+* rancher: 调用rancher的api实现一个应用的升级. 使用到了一个第三方插件peloton/drone-rancher.
+
 
 * workspace
 
