@@ -32,6 +32,7 @@ Kubernetes是为生产环境而设计的容器调度管理系统，对于负载�
 
 #### 搭建目录
 * [安装Docker](#安装Docker)
+* [Docker命令详解](https://github.com/KeKe-Li/docker-directive/blob/master/README.md)
 * [安装Minikube](#安装Minikube)
 * [安装Kubectl](#安装Kubectl)
 * [启动minikube](#启动minikube)
