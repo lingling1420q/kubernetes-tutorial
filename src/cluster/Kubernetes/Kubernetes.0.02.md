@@ -1,7 +1,7 @@
 #### 使用Rancher部署Kubernetes集群(上)
 
 <p align="center">
-<img width="100%" align="center" src="../../images/17.jpg" />
+<img width="100" align="center" src="../../images/17.jpg" />
 </p>
 
 众所周知Kubernetres虽然很好但是安装部署很复杂,
