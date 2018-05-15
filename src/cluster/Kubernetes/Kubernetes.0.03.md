@@ -1,5 +1,9 @@
 #### 使用Rancher部署Kubernetes集群(下)
 
+<p align="center">
+<img width="280" align="center" src="../../images/17.jpg" />
+</p>
+
 目前创建K8S集群的安装程序最受欢迎的有Kops，Kubespray，kubeadm，rancher，以及个人提供的脚本集等。
 
 - Kops和Kubespary在国外用的比较多，没有处理中国的网络问题，没法使用。
