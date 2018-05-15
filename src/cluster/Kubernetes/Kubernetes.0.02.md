@@ -1,4 +1,4 @@
-#### Kubernetes 使用Rancher部署K8S集群(搭建Rancher)
+#### 使用Rancher部署Kubernetes集群(上)
 
 <p align="center">
 <img width="100%" align="center" src="../../images/17.jpg" />
