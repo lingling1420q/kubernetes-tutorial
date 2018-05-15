@@ -1,4 +1,4 @@
-# Dockerfile构建镜像
+#### Dockerfile构建镜像
 
 <p align="center">
 <img width="100%" align="center" src="../../images/12.jpg" />
@@ -8,7 +8,7 @@
 
 Docker官方Git地址:[https://github.com/moby/moby](https://github.com/moby/moby)
 
-## 1.DockerFile介绍
+#### 1.DockerFile介绍
 
 以hub.docker中的项目来说,一般作者都会存放这个image对应的Dockerfile,我们也可以直接使用Dockerfile来生成自己的nginx镜像
 
@@ -20,7 +20,7 @@ Docker官方Git地址:[https://github.com/moby/moby](https://github.com/moby/mob
 <img width="100%" align="center" src="../../images/14.jpg" />
 </p>
 
-## 2.编译自己的nginx
+#### 2.编译自己的nginx
 
 Dockerfile可以基于任何镜像的技术上搭建环境,可以基于别人做好的镜像比如Nginx,也可以基于基础镜像比如centos等,这里基于nginx镜像构建出本地的nginx:local并且运行镜像不在启动nginx只是输出一条nginx
 
@@ -40,7 +40,7 @@ nginx
 ```
 
 
-## 3.Dockerfile 语法
+#### 3.Dockerfile 语法
 
 使用以下的语法可以实现各种各样的镜像
 
@@ -62,6 +62,6 @@ nginx
 - ENTRYPOIN：与CMD类似，指定容器运行时默认命令。ENTRYPOINT和CMD的区别，在于运行容器时，镜像后的命令参数，ENTRYPOINT是拼接，CMD是覆盖
 - USER：为容器的运行和RUN CMD ENTRYPOINT等指令的运行 指定用户或者UID
 - ONBUILD：触发器指令，父镜像中不会执行，只有在子镜像中才会执行。 
-给一个例子
+
 
 
