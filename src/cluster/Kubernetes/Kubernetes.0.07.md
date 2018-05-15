@@ -1,5 +1,7 @@
-#### Kubernetes中的Volume
-
+#### Kubernetes中的 Volume
+<p align="center">
+<img width="260" align="center" src="../../images/11.jpg" />
+</p>
 
 Docker是无状态的不管被销毁多少次都会恢复到最初的状态,但是这就意味着在程序过程中产生的配置也好文件也好会丢失,对于Docker我们经常会使用磁盘挂载的方式来保存一些重要的内容,比如运行在Docker下的数据库的源数据,比如程序的日志文件等,在K8S中也提供同样的配置方式
 
