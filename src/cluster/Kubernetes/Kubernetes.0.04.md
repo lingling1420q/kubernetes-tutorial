@@ -1,4 +1,4 @@
-# Kubernetes Pod和Deployment
+#### Kubernetes Pod和Deployment
 
 Kubernetes中有各种各样的组件,对于容器来说Kubernetes最小的单元是由Pod进行组成的,但是我们在使用过程中经常会使用到Deployment来部署我们的应用,其中究竟区别在哪里,我们今天就来一同探索
 
@@ -7,7 +7,7 @@ Kubernetes官方Git地址:[https://github.com/kubernetes/kubernetes](https://git
 
 > PS:本系列中使用 KubernetesV1.8 RancherV1.6.14  
 
-## 1.Pod最小的单元
+#### 1.Pod最小的单元
 
 Pod封装了一个或多个应用程序的容器(比如nginx等),存储资源,唯一的网络IP以及管理容器的一些选项
 Pod标示的是一个部署单元,可以理解为Kubernetes中的应用程序的单个实例,它可能由单个容器组成,也可能由少量紧密耦合并共享资源的容器组成。
@@ -39,9 +39,18 @@ myapp-pod   1/1       Running   0          8s
 ```
 
 可以在web页面中查看到具体的pod(UI上称为容器组)
-![](Kubernetes(%E5%9B%9B)%20-%20Pod%E5%92%8CDeployment/524A058D-9C8B-4643-A8E8-5B00AF577011.png)
+
+<p align="center">
+<img width="100%" align="center" src="../../images/50.jpg" />
+</p>
+
 查看日志可以看到
-![](Kubernetes(%E5%9B%9B)%20-%20Pod%E5%92%8CDeployment/674DC856-FB8B-4080-9BE8-3C0A35788A1C.png)
+
+<p align="center">
+<img width="100%" align="center" src="../../images/51.jpg" />
+</p>
+
+
 删除Pod
 ```
 > kubectl delete -f myapp-pod.yaml
@@ -76,15 +85,21 @@ nginx-mysql-pod   2/2       Running   0          1m
 
 在ui中就可以看到一个Pod下运行着两个容器
 
-![](Kubernetes(%E5%9B%9B)%20-%20Pod%E5%92%8CDeployment/5470F8B3-D9B0-4344-BB76-9B847FFA77F9.png)
+<p align="center">
+<img width="100%" align="center" src="../../images/52.jpg" />
+</p>
 
 通过运行命令可以进入到那个容器的终端,这里选择mysql容器
 
-![](Kubernetes(%E5%9B%9B)%20-%20Pod%E5%92%8CDeployment/799F18C7-B95B-48F4-8641-A54572C554DD.png)
+<p align="center">
+<img width="100%" align="center" src="../../images/53.jpg" />
+</p>
 
 这里系统没有curl这里安装好了curl访问本地80端口,能访问到nginx容器的内容(这里证明了在一个Pod下的网络是共享的)
 
-![](Kubernetes(%E5%9B%9B)%20-%20Pod%E5%92%8CDeployment/F074AA73-9C77-4357-8129-FB72BC0E26EA.png)
+<p align="center">
+<img width="100%" align="center" src="../../images/54.jpg" />
+</p>
 
 ## 2.Deployment部署
 
@@ -128,7 +143,9 @@ nginx-deployment   1         1         1            1           2m
 
 因为使用deployment会部署很多个Pod所以Pod的名字后面会带一串随机数避免重复
 
-![](Kubernetes(%E5%9B%9B)%20-%20Pod%E5%92%8CDeployment/DD8C0497-051E-4610-8F79-2F4757778875.png)
+<p align="center">
+<img width="100%" align="center" src="../../images/55.jpg" />
+</p>
 
 扩容
 ```

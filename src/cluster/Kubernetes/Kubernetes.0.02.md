@@ -1,4 +1,4 @@
-# Kubernetes 使用Rancher部署K8S集群(搭建Rancher)
+#### Kubernetes 使用Rancher部署K8S集群(搭建Rancher)
 
 <p align="center">
 <img width="100%" align="center" src="../../images/17.jpg" />
@@ -13,7 +13,7 @@ Rancher官方地址: [https://www.cnrancher.com/](https://www.cnrancher.com/)
 
 > PS:本系列中使用 KubernetesV1.8 RancherV1.6.14  
 
-## 1.安装Rancher
+#### 1.安装Rancher
 
 这里使用三台机器来搭建Kubernetes集群
 - K8S-M  172.168.0.128
@@ -52,7 +52,7 @@ docker pull rancher/server:v1.6.14
 <img width="100%" align="center" src="../../images/19.jpg" />
 </p>
 
-## 2 外挂数据库目录(按需)
+#### 2 外挂数据库目录(按需)
 
 在Rancher Server容器中，如果你想使用一个主机上的卷来持久化数据库，如下命令可以在启动Rancher时挂载MySQL的数据卷。
 ```bash
@@ -61,7 +61,7 @@ docker pull rancher/server:v1.6.14
 
 使用这条命令，数据库就会持久化在主机上。如果你有一个现有的Rancher Server容器并且想挂在MySQL的数据卷，可以参考官方的Rancher升级介绍。
 
-### Rancher使用外部数据库
+#### Rancher使用外部数据库
 除了使用内部的数据库，你可以启动一个Rancher Server并使用一个外部的数据库。启动命令与之前一样，但添加了一些额外的参数去说明如何连接你的外部数据库。
 
 > 注意：在你的外部数据库中，只需要提前创建数据库名和数据库用户。Rancher会自动创建Rancher所需要的数据库表。  
@@ -80,7 +80,7 @@ docker run -d --restart=unless-stopped -p 8080:8080 rancher/server \
     --db-host myhost.example.com --db-port 3306 --db-user username --db-pass password --db-name cattle
 ```
 
-## 3 权限管理
+#### 3 权限管理
 
 机制的小伙伴都注意到了现在登录到Rancher不需要任何用户名密码,Rancher的用户体系需要自己开启
 
@@ -105,7 +105,7 @@ docker run -d --restart=unless-stopped -p 8080:8080 rancher/server \
 <img width="100%" align="center" src="../../images/23.jpg" />
 </p>
 
-## 4 Rancher多节点HA部署
+#### 4 Rancher多节点HA部署
 
 在高可用(HA)的模式下运行Rancher Server与使用外部数据库运行Rancher Server一样简单，需要暴露一个额外的端口，添加额外的参数到启动命令中，并且运行一个外部的负载均衡就可以了。
 
@@ -128,7 +128,7 @@ HA部署需求
 
 > 注意：目前Rancher中并不支持Docker for Mac  
 
-## 5.大规模部署建议
+#### 5.大规模部署建议
 
 - 每一个Rancher Server节点需要有4 GB 或者8 GB的堆空间，意味着需要8 GB或者16 GB内存
 - MySQL数据库需要有高性能磁盘
@@ -147,7 +147,7 @@ HA部署需求
 
 > 注意：你可以使用 docker run rancher/server --help 获得命令的帮助信息  
 
-### HA模式下的RANCHER SERVER节点
+#### HA模式下的RANCHER SERVER节点
 如果你的Rancher Server节点上的IP修改了，你的节点将不再存在于Rancher HA集群中。你必须停止在--advertise-address配置了不正确IP的Rancher Server容器并启动一个使用正确IP地址的Rancher Server的容器。
 
 

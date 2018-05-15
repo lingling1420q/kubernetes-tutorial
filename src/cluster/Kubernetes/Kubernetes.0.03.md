@@ -1,4 +1,4 @@
-# Kubernetes(使用Rancher部署K8S集群(搭建Kubernetes)
+#### Kubernetes(使用Rancher部署K8S集群(搭建Kubernetes)
 
 目前创建K8S集群的安装程序最受欢迎的有Kops，Kubespray，kubeadm，rancher，以及个人提供的脚本集等。
 
@@ -6,15 +6,13 @@
 - kubeadm是Kubernetes官方提供的k8s部署工具，不过不支持HA，且支持的docker版本、K8S版本也有限，因此无法作为生产级安装程序。
 - Rancher2016年的新起之秀，可以做到极简快速部署管理Docker，并支持多种编排方式：Cattle、Kubernetes、Mesos、Swarm等。通过修改镜像库的方式可以实现在国内的使用。所以我们选择Rancher作为Docker管理部署框架。(因为对于Kubernetes也是容器化的方式运行所以容灾恢复比在物理机优秀)
 
-附上:
-
 Kubernetes官方文档:[https://kubernetes.io/docs/reference/](https://kubernetes.io/docs/reference/)
 Kubernetes官方Git地址:[https://github.com/kubernetes/kubernetes](https://github.com/kubernetes/kubernetes)
 Rancher官方地址: [https://www.cnrancher.com/](https://www.cnrancher.com/)  
 
 本系列中使用 KubernetesV1.8 RancherV1.6.14  
 
-## 1. 配置K8S环境模板
+#### 1. 配置K8S环境模板
 
 如果大家直接创建一个K8S的环境会发现根本无法初始化,主要原因是K8S相关的Docker包是存放到**gcr.io**下面,https://cloud.google.com/container-registry , 在国内访问google是一件很痛苦的事情所以第一件事情就要解决墙带来的痛苦,所以我们需要使用国内的K8S源
 
@@ -77,7 +75,7 @@ kubernetes-helm命名空间：rancher_cn
 </p>
 
 
-## 2.创建一个K8S集群
+#### 2.创建一个K8S集群
 
 这里统一使用的都是Centos7.4系统,Docker-17.03.02-ce版本
 
@@ -152,7 +150,7 @@ kubernetes-helm命名空间：rancher_cn
 现在就有三台正常的主机了,通过上面菜单的KUBERNETES中的仪表盘可以进入到kubernetes-dashboard
 
 
-## 3. 尝试使用K8S
+#### 3. 尝试使用K8S
 
 <p align="center">
 <img width="100%" align="center" src="../../images/45.jpg" />
