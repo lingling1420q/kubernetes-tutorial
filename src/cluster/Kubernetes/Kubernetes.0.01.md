@@ -1,7 +1,7 @@
 #### Kubernetes容器管理 
 
 <p align="center">
-<img width="100%" align="center" src="../../images/11.jpg" />
+<img width="60" align="center" src="../../images/11.jpg" />
 </p>
 
 虽然Docker已经很强大了,但是在实际使用上还是有诸多不便,比如集群管理,资源调度文件管理等等,那么在这样一个百花齐放的容器时代涌现出了很多解决方案,比如Swarm,Mesos,Kubernetes等等,其中谷歌开源的Kubernetes是作为老大哥的存在,从本节开始将介绍如何打造自己的Kubernetes,并且了解它各个组件的用途
