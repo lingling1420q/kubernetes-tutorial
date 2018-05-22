@@ -3,7 +3,6 @@
 <p align="center">
 <img width="200" align="center" src="../../images/12.jpg" />
 </p>
-
 现在几乎所有的image都是通过Dockerfile生成出来的,使用Dockerfile可以让我们很轻松的构建出一个镜像,我们如果需要部署自己的程序常常也可会Dockerfile把代码和环境构建成一个image进行使用
 
 Docker官方Git地址:[https://github.com/moby/moby](https://github.com/moby/moby)
