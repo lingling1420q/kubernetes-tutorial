@@ -1,5 +1,9 @@
 #### Docker编排工具Docker-compose
 
+<p align="center">
+<img width="200" align="center" src="../../images/12.jpg" />
+</p>
+
 #### 1.docker-compose 安装
 
 ```
