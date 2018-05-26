@@ -3,9 +3,11 @@
 <p align="center">
 <img width="200" align="center" src="../../images/12.jpg" />
 </p>
+
 现在几乎所有的image都是通过Dockerfile生成出来的,使用Dockerfile可以让我们很轻松的构建出一个镜像,我们如果需要部署自己的程序常常也可会Dockerfile把代码和环境构建成一个image进行使用
 
-Docker官方Git地址:[https://github.com/moby/moby](https://github.com/moby/moby)
+* [Ｄocker官网](https://github.com/moby/moby)
+* [Docker命令详解](https://github.com/KeKe-Li/docker-directive)
 
 #### 1.DockerFile介绍
 
@@ -43,6 +45,7 @@ nginx
 
 使用以下的语法可以实现各种各样的镜像
 
+```Docker
 - FROM：指定父镜像，可以通过添加多个FROM，在同一个Dockerfile中创建多个镜像
 - MAINTAINER：维护者信息，可选
 - RUN：用来修改镜像的命令，可以用来安装程序，当一条RUN完成后，会在当前的镜像上创建一个新的镜像层，接下来的指令会在新的镜像层上执行。有2种形式。 
@@ -61,6 +64,7 @@ nginx
 - ENTRYPOIN：与CMD类似，指定容器运行时默认命令。ENTRYPOINT和CMD的区别，在于运行容器时，镜像后的命令参数，ENTRYPOINT是拼接，CMD是覆盖
 - USER：为容器的运行和RUN CMD ENTRYPOINT等指令的运行 指定用户或者UID
 - ONBUILD：触发器指令，父镜像中不会执行，只有在子镜像中才会执行。 
+```
 
 
 
