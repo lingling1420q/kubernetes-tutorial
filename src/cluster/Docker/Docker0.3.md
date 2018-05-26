@@ -1,5 +1,9 @@
 #### Docker应用容器引擎介绍与搭建
 
+<p align="center">
+<img width="200" align="center" src="../../images/12.jpg" />
+</p>
+
 #### 1. 为什么Docker会火
 - 截止到现在Docker在github上的star数有48570
 - 阿里云,腾讯云,AWS,都推出了自己的Docker平台
@@ -116,8 +120,7 @@ docker通过运行hello-world 映像验证安装是否正确。
 Hello from Docker!
 ```
 
-#### 3 总结
-第一步已经完成已经可以使用Docker环境了,下一步我们需要熟悉Docker相关的一些命令
+
 
 
 
