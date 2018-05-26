@@ -4,7 +4,7 @@
 <img width="200" align="center" src="../../images/12.jpg" />
 </p>
 
-现在几乎所有的image都是通过Dockerfile生成出来的,使用Dockerfile可以让我们很轻松的构建出一个镜像,我们如果需要部署自己的程序常常也可会Dockerfile把代码和环境构建成一个image进行使用
+使用dokcer可以加速本地开发和构建，开发人员可以构建、运行并分享Docker容器，容器可以在开发环境中构建，然后轻松地提交到测试环境中，并最终进入生产环境.
 
 * [Docker官网](https://github.com/moby/moby)
 * [Docker命令详解](https://github.com/KeKe-Li/docker-directive)
