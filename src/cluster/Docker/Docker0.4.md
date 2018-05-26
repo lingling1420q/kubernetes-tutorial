@@ -1,4 +1,4 @@
-#### Docker编排工具Docker-compose
+#### 编排工具　Docker-compose
 
 <p align="center">
 <img width="200" align="center" src="../../images/12.jpg" />
