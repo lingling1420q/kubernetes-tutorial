@@ -1,5 +1,9 @@
 ####  Docker使用命令和技巧
 
+<p align="center">
+<img width="200" align="center" src="../../images/12.jpg" />
+</p>
+
 
 #### docker容器生命周期管理
 
