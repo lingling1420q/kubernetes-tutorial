@@ -1,7 +1,7 @@
 #### kubernetes-tutorial 
 
 <p align="center">
-<img width="300" align="center" src="src/images/11.jpg" />
+<img width="280" align="center" src="src/images/11.jpg" />
 </p>
 
 #### 搭建本地kubernetes集群
