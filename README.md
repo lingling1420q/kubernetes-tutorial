@@ -118,6 +118,7 @@ kubernetes通过kube-apiserver作为整个集群管理的入口。Apiserver是�
 ```bash
 > sudo minikube start
 ```
+
 首次启动会下载localkube，下载过程可能会失败，会有如下提示，
 
 ```bash
