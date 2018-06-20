@@ -57,7 +57,7 @@ persistentvolumeclaim "mysql-pv-claim" created
 
 
 <p align="center">
-<img width="100%" align="center" src="../../images/60.jpg" />
+<img width="200" align="center" src="../../images/60.jpg" />
 </p>
 
 
