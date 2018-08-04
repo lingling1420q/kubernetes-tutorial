@@ -4,7 +4,7 @@
 <img width="200" align="center" src="../../images/12.jpg" />
 </p>
 
-使用dokcer可以加速本地开发和构建，开发人员可以构建、运行并分享Docker容器，容器可以在开发环境中构建，然后轻松地提交到测试环境中，并最终进入生产环境.
+dokcer容器化开发可以加速本地开发和构建，开发人员可以构建、运行并分享Docker容器，容器可以在开发环境中构建，然后轻松地提交到测试环境中，并最终进入生产环境.
 
 * [Docker官网](https://github.com/moby/moby)
 * [Docker命令详解](https://github.com/KeKe-Li/docker-directive)
