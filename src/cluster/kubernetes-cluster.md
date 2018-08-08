@@ -19,7 +19,7 @@ kubernetes集群搭建包括最后集合gitlab和Drone Ci实现打包和更新�
 * [Kubernetes中的Service](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/cluster/Kubernetes/Kubernetes.0.05.md)
 * [Kubernetes中的Secret和私有仓库认证](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/cluster/Kubernetes/Kubernetes.0.06.md)
 * [Kubernetes中的Volume](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/cluster/Kubernetes/Kubernetes.0.07.md)
-
+* [Kubernetes从入门到熟练应用](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/cluster/Kubernetes/Kubernetes.0.08.md)
 
 #### kubernetes集群搭建
 
