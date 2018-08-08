@@ -1,207 +1,25 @@
 #### Kubernetes从入门到熟练应用
+
 <p align="center">
 <img width="260" align="center" src="../../images/11.jpg" />
 </p>
 
-Docker是无状态的不管被销毁多少次都会恢复到最初的状态,但是这就意味着在程序过程中产生的配置也好文件也好会丢失,对于Docker我们经常会使用磁盘挂载的方式来保存一些重要的内容,比如运行在Docker下的数据库的源数据,比如程序的日志文件等,在K8S中也提供同样的配置方式
+当今三大主流调度系统的比较与分析,为何选择kubernetes作为调度系统:
 
-> PS: 磁盘使用中1.8 和 1.9存在差异,1.8需要创建PersistentVolume在创建之后才能创建PersistentVolumeClaim,1.9之后只需要创建PersistentVolumeClaim就可以了  
+目前的容器编排调度工具中kubernetes是领导者，在我们深入学习和探讨kubernetes之前，我们比较下当今三大主流调度系统:Docker Swarm, Kuberentes和Messos的不同之处看看为何kubernetes可以成为当今容器编排调度工具的领导者。
 
+* Docker Swarm
 
-Kubernetes官方文档:[https://kubernetes.io/docs/reference/](https://kubernetes.io/docs/reference/)
+Docker Swarm是Docker公司的容器编排系统,使用的是标准Docker API，容器使用命令和docker命令是一套，简单方便。Docker Swarm基本架构是也是简单直接，每个主机运行一个Docker Swarm代理，一个主机运行一个Docker Swarm管理者，这个管理者负责指挥和调度这些主机上的容器，Docker Swarm以高可用性模式运行，Docker Swarm中的一个节点充当其他节点的管理器，包括调度程序和服务发现组件的容器。 Docker Swarm的优点和缺点都是使用标准的Docker接口，因为使用简单，容易集成到现有系统，所以在支持复杂的调度系统时候就会比较困难了，特别是在定制的接口中实现的调度。这也许就是成也在Docker，败也在Docker的原因所在。
 
-Kubernetes官方Git地址:[https://github.com/kubernetes/kubernetes](https://github.com/kubernetes/kubernetes)
+* Kubernetes
 
-> PS:本系列中使用 KubernetesV1.8 RancherV1.6.14  
+Kubernetes作为一个容器集群管理系统，用于管理云平台中多个主机上的容器的应用，Kubernetes的目标是让部署容器化的应用简单并且高效（powerful）,Kubernetes提供了应用部署，规划，更新，维护的一整套完整的机制。 Kubernetes没有固定要求容器的格式，但是Kubernetes使用它自己的API和命令行接口（CLI）来进行容器编排。 除了Docker容器之外, Kubernetes还支持其他多种容器，如rkt——最初由CoreOS创建，现在是Cloud Native Computing Foundation(CNCF)基金会托管的项目。 Kubernetes 是自成体系的管理工具，可以实现容器调度，资源管理，服务发现，健康检查，自动伸缩，更新升级等，也可以在应用模版配置中指定副本数量，服务要求（IO优先，性能优先等），资源使用区间，标签（Labels等）来匹配特定要求达到预期状态等，这些特征便足以征服开发者，再加上Kubernetes有一个非常活跃的社区。它为用户提供了更多的选择以方便用户扩展编排容器来满足他们的需求。但是由于Kubernetes使用了自己的API，所以命令系统是另外一套系统，这也是kubernetes门槛比较高的原因所在。
 
-#### 1.本地磁盘
+* Apache Mesos
 
-```
-> vim local-pv.yaml
+Apache Mesos是一个分布式系统内核的开源集群管理器，Mesos的出现早于Docker Swarm和Kubernetes。再加上Marathon，一个用于基于容器的应用程序的编排框架，它为Docker Swarm和Kubernetes提供了一个有效的替代方案。Mesos同时可以使用其他框架来同时支持容器化和非容器化的工作负载。
 
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: local-pv-1
-  labels:
-    type: local
-spec:
-  capacity:
-    storage: 20Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /tmp/data/pv-1
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: redis-pv-claim
-  labels:
-    app: redis
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
+Apache Mesos能够在同样的集群机器上运行多种分布式系统类型，可以更加动态高效的共享资源。而且Messos也提供服务失败检查，服务发布，服务跟踪，服务监控，资源管理和资源共享。Messos可以扩展伸缩到数千个节点。 如果你拥有很多的服务器而且想构建一个大的集群的时候，Mesos就派上用场了。很多的现代化可扩展性的数据处理应用都可以在Mesos上运行，包括大数据框架Hadoop、Kafka、Spark。 但是大而全，往往就是对应的复杂和困难，这一点体现在Messos上是完全正确,与Docker和Docker Swarm 使用同一种API不同的，Mesos和Marathon都有自己的API，这使得它们比其他编排系统更加的复杂。 Apache Mesos是混合环境的完美编配工具，由于它包含容器和非容器的应用,虽然Messos很稳定，但是它的使用户快速学习应用变得更加困难，这也是在应用和部署场景下难于推广的原因之一。
 
-> kubectl create -f local-pv.yaml
-persistentvolume "local-pv-1" created
-persistentvolumeclaim "mysql-pv-claim" created
-```
-
-<p align="center">
-<img width="100%" align="center" src="../../images/59.jpg" />
-</p>
-
-
-<p align="center">
-<img width="200" align="center" src="../../images/60.jpg" />
-</p>
-
-
-然后我们就可以对对进行进行挂载了
-
-```
-> vim volume-local.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: volume-local-pod
-spec:
-  containers:
-  - name: mypod
-    image: redis
-    volumeMounts:                         # 磁盘挂载
-      - name: redis-pv-claim
-        mountPath: "/etc/redis"
-  volumes:                                  # 磁盘挂载别称定义
-  - name: redis-pv-claim
-    persistentVolumeClaim:
-      claimName: redis-pv-claim
-> kubectl create -f volume-local.yaml
-pod "volume-local-pod" created
-```
-
-<p align="center">
-<img width="100%" align="center" src="../../images/61.jpg" />
-</p>
-
-这个时候容器的节点在K8S-S1上我们看一下是否保存到了K8S-S1的磁盘上了吗
-
-<p align="center">
-<img width="100%" align="center" src="../../images/62.jpg" />
-</p>
-
-
-#### 2.NAS网络盘
-但是这样做有一个很大的弊端,如果这个Pod重启可能会被调度到其他的节点上,那么对应挂载盘的就会情况,这里有两种方式解决,第一种就是固定Pod运行的节点,在就是使用共享磁盘(首先你需要创建一个NAS盘)
-
-一般用的比较频繁的就是NAS盘作为挂载盘,用法如下
-
-```
-> vim nfs-pv.yaml
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: nfs-pv
-spec:
-  capacity:
-    storage: 5Gi
-  accessModes:
-    - ReadWriteMany
-  nfs:
-    server: xxxxxx.cn-hangzhou.nas.aliyuncs.com   # nfs的地址
-    path: "/"                                     # nfs的挂载目录(一定需要有这个文件目录)
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: nfs-pv
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: ""
-  resources:
-    requests:
-      storage: 5Gi
-
-> kubectl create -f nfs-pv.yaml
-persistentvolume "nfs-pv" created
-persistentvolumeclaim "nfs-pv" created
-```
-
-我们创建两个Pod共享一个NAS盘
-
-```
-> vim volume-nfs.yaml
-apiVersion: extensions/v1beta1 
-kind: Deployment
-metadata:
-  name: volume-nfs
-spec:
-  replicas: 2  
-  template:
-    metadata:
-      labels:                                   # 容器的标签 可和service关联
-        app: volume-nfs
-    spec:
-      containers:
-      - name: mypod
-        image: redis
-        volumeMounts:                         # 磁盘挂载
-          - name: nfs-pv
-            mountPath: "/etc/redis"
-      volumes:                                  # 磁盘挂载别称定义
-      - name: nfs-pv
-        persistentVolumeClaim:
-          claimName: php-general-test
-> kubectl create -f volume-nfs.yaml
-deployment "volume-nfs" created
-```
-
-两个Pod分别在不同的节点中
-
-<p align="center">
-<img width="100%" align="center" src="../../images/63.jpg" />
-</p>
-
-<p align="center">
-<img width="100%" align="center" src="../../images/64.jpg" />
-</p>
-
-<p align="center">
-<img width="100%" align="center" src="../../images/65.jpg" />
-</p>
-
-
-#### 3. 其他Volume支持类型
-
-具体使用明细可以参考官方文档: [Volumes | Kubernetes](https://v1-8.docs.kubernetes.io/docs/concepts/storage/volumes/)
-
-- awsElasticBlockStore
-- azureDisk
-- azureFile
-- cephfs
-- downwardAPI
-- emptyDir
-- fc （光纤通道）
-- flocker
-- gcePersistentDisk
-- gitRepo
-- glusterfs
-- hostPath
-- iscsi
-- local
-- nfs
-- persistentVolumeClaim
-- projected
-- portworxVolume
-- quobyte
-- rbd
-- scaleIO
-- secret
-- storageos
-- vsphereVolume
-
+大部分的应用程序我们在部署的时候都会适当的添加监控，对于运行载体容器则更应该如此。kubernetes提供了 liveness probes来检查我们的应用程序。它是由节点上的kubelet定期执行的。
