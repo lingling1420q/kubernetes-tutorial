@@ -8,7 +8,6 @@ kubernetes是一个开源的，用于管理云平台中多个主机上的容器�
 kubernetes集群搭建包括最后集合gitlab和Drone Ci实现打包和更新应用镜像，部署，后续会继续完善。
 
 #### 搭建目录
-
 * [Docker应用容器引擎介绍与搭建](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/cluster/Docker/Docker0.1.md)
 * [Docker使用命令和技巧](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/cluster/Docker/Docker0.2.md)
 * [Docker编排工具Docker-compose](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/cluster/Docker/Docker0.3.md)
