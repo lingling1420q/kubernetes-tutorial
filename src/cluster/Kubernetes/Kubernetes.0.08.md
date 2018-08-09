@@ -67,6 +67,27 @@ Kubernetres虽然很好但是安装部署很复杂,为了业务的稳定和健�
 * Rancher官方地址: [https://www.cnrancher.com/](https://www.cnrancher.com/)  
 * 本系列中使用 KubernetesV1.9 RancherV1.6.14.
 
+Rancher Server当前版本:
+* rancher/server:latest 此标签是最新一次开发的构建版本。这些构建已经被CI框架自动验证测试。但这些release并不代表可以在生产环境部署。
+* rancher/server:stable 此标签最新一个稳定的release构建。这个标签代表推荐在生产环境中使用的版本。
+
+开始安装Rancher:
+```bash
+> docker pull rancher/server:v1.6.14
+```
+启动一个单实例的Rancher:
+```bash
+> docker run -d --restart=unless-stopped -p 8080:8080 rancher/server:v1.6.14
+```
+这里需要关闭防火墙(主节点端口通讯需要关闭防火墙)):
+```bash
+> systemctl stop firewalld.service    # 关闭firewall
+> systemctl disable firewalld.service # 禁止firewall开机启动
+```
+然后访问:http://120.92.150.39:8080就可以看到:
+<p align="center">
+<img width="100%" align="center" src="../../images/18.jpg" />
+</p>
 
 
 #### Pod的整个生命阶段：
