@@ -26,6 +26,44 @@ Apache Mesos能够在同样的集群机器上运行多种分布式系统类型�
 
 大部分的应用程序我们在部署的时候都会适当的添加监控，对于运行载体容器则更应该如此。kubernetes提供了 liveness probes来检查我们的应用程序。它是由节点上的kubelet定期执行的。
 
+#### Docker部署方案
+首先安装docker环境，这个可以根据电脑系统的不同，选择不同的安装方式。
+
+* [Mac安装](https://docs.docker.com/docker-for-mac/install/)
+* [Unbantu安装](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+* [Windows安装](https://docs.docker.com/docker-for-windows/install/)
+* [centos安装](https://docs.docker.com/install/linux/docker-ce/centos/)
+
+不过我这里是用脚本直接在centos上直接安装的:
+
+```bash
+yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo;
+
+yum-config-manager --enable docker-ce-edge;
+
+yum-config-manager --disable docker-ce-edge;
+
+yum install docker-ce;
+
+systemctl start docker.service;
+systemctl enable docker.service;
+```
+
+
+#### 服务器配置
+
+| 主机名      | IP            | 部署服务            | 数据盘挂载            |
+| ---- | ------------------------------- |----------------- |----------------- |
+|host1| 120.92.150.39|主机1|/data|
+|host2| 120.92.163.32|主机2|/data|
+|host3| 120.92.172.35 |主机3|/data|
+|host4| 120.92.169.191|主机4|/data|
+|host5| 120.92.165.229|主机5|/data|
+
+
+
 #### Pod的整个生命阶段：
 
 * Pending
