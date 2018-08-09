@@ -89,13 +89,13 @@ Rancher Server当前版本:
 然后访问: http://120.92.150.39:8080 就可以看到:
 
 <p align="center">
-<img width="100%" align="center" src="../../images/18.jpg" />
+<img width="100%" align="center" src="../../images/1.png" />
 </p>
 
 通过右下角可以编辑语言切换成简体中文:
 
 <p align="center">
-<img width="100%" align="center" src="../../images/19.jpg" />
+<img width="100%" align="center" src="../../images/2.png" />
 </p>
 
 
