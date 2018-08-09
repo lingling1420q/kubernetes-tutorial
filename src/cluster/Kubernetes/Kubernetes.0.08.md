@@ -53,14 +53,19 @@ systemctl enable docker.service;
 
 
 #### 服务器配置
+这里我用三台机器来搭建kubernetes集群,配置的服务器信息如下:
 
 | 主机名      | IP            | 部署服务            | 数据盘挂载            |
 | ---- | ------------------------------- |----------------- |----------------- |
 |host1| 120.92.150.39|主机1|/data|
 |host2| 120.92.163.32|主机2|/data|
 |host3| 120.92.172.35 |主机3|/data|
-|host4| 120.92.169.191|主机4|/data|
-|host5| 120.92.165.229|主机5|/data|
+
+
+Kubernetres虽然很好但是安装部署很复杂,为了业务的稳定和健壮性考虑,我们这里使用Rancher来搭建管理Kubernetes集群.
+
+* Rancher官方地址: [https://www.cnrancher.com/](https://www.cnrancher.com/)  
+* 本系列中使用 KubernetesV1.9 RancherV1.6.14.
 
 
 
