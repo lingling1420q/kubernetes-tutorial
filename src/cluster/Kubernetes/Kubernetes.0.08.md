@@ -43,9 +43,7 @@ yum-config-manager \
 
 yum-config-manager --enable docker-ce-edge;
 
-yum-config-manager --disable docker-ce-edge;
-
-yum install docker-ce;
+yum -y install docker-ce-17.03.1.ce;
 
 systemctl start docker.service;
 systemctl enable docker.service;
@@ -65,13 +63,13 @@ systemctl enable docker.service;
 Kubernetres虽然很好但是安装部署很复杂,为了业务的稳定和健壮性考虑,我们这里使用Rancher来搭建管理Kubernetes集群.
 
 * Rancher官方地址: [https://www.cnrancher.com/](https://www.cnrancher.com/)  
-* 本系列中使用 KubernetesV1.9 RancherV1.6.14.
+* 本系列中使用 Kubernetes v1.8.10 RancherV1.6.14.
 
 Rancher Server当前版本:
 * rancher/server:latest 此标签是最新一次开发的构建版本。这些构建已经被CI框架自动验证测试。但这些release并不代表可以在生产环境部署。
 * rancher/server:stable 此标签最新一个稳定的release构建。这个标签代表推荐在生产环境中使用的版本。
 
-开始安装Rancher:
+开始安装Rancher,这里使用Cenos7.4,并且安装好Docker-17.03.2-ce版本,在拉取稳定的Rancher-v1.6.14版本
 ```bash
 > docker pull rancher/server:v1.6.14
 ```
@@ -84,10 +82,30 @@ Rancher Server当前版本:
 > systemctl stop firewalld.service    # 关闭firewall
 > systemctl disable firewalld.service # 禁止firewall开机启动
 ```
-然后访问:http://120.92.150.39:8080就可以看到:
+然后访问: http://120.92.150.39:8080 就可以看到:
+
 <p align="center">
 <img width="100%" align="center" src="../../images/18.jpg" />
 </p>
+
+通过右下角可以编辑语言切换成简体中文:
+
+<p align="center">
+<img width="100%" align="center" src="../../images/19.jpg" />
+</p>
+
+
+#### 权限设置
+刚刚登录rancher的时候大家都可以看到没有任何的权限,但是一个系统我们肯定要设置权限的,而rancher也提供了这样的权限功能.在rancher访问控制中我们可以设置好权限控制,然后设置用户名和密码.
+
+
+#### 配置kubernetes环境
+
+如果我们直接创建一个kubernetes的环境会发现根本无法初始化,这里的原因是kubernetes的Docker包存放到gcr.io下面,https://cloud.google.com/container-registry , 在国内访问google是不能直接访问的,所以这里的第一件事情就要解决无法访问带来的痛苦,所以我们需要使用国内的K8S源.
+
+这里先进入到环境管理:
+
+
 
 
 #### Pod的整个生命阶段：
