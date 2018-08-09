@@ -37,14 +37,18 @@ Apache Mesos能够在同样的集群机器上运行多种分布式系统类型�
 不过我这里是用脚本直接在centos上直接安装的:
 
 ```bash
-yum-config-manager \
-    --add-repo \
-    https://download.docker.com/linux/centos/docker-ce.repo;
+install -y yum-utils device-mapper-persistent-data lvm2; #配置阿里云Docker Yum源
 
-yum-config-manager --enable docker-ce-edge;
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo;#使用 Aliyun Docker
 
-yum -y install docker-ce-17.03.1.ce;
+yum list docker-ce --showduplicates;#查看Docker版本
 
+#安装较旧版本（比如Docker 17.03.2) 时需要指定完整的rpm包的包名，并且加上--setopt=obsoletes=0 参数：
+yum install -y --setopt=obsoletes=0 \
+   docker-ce-17.03.2.ce-1.el7.centos.x86_64 \
+   docker-ce-selinux-17.03.2.ce-1.el7.centos.noarch;
+  
+#启动Docker服务
 systemctl start docker.service;
 systemctl enable docker.service;
 ```
@@ -55,9 +59,9 @@ systemctl enable docker.service;
 
 | 主机名      | IP            | 部署服务            | 数据盘挂载            |
 | ---- | ------------------------------- |----------------- |----------------- |
-|host1| 120.92.150.39|主机1|/data|
-|host2| 120.92.163.32|主机2|/data|
-|host3| 120.92.172.35 |主机3|/data|
+|host1| 191.234.163.251|主机1|/data|
+|host2| 13.66.208.115|主机2|/data|
+|host3| 40.121.33.101 |主机3|/data|
 
 
 Kubernetres虽然很好但是安装部署很复杂,为了业务的稳定和健壮性考虑,我们这里使用Rancher来搭建管理Kubernetes集群.
