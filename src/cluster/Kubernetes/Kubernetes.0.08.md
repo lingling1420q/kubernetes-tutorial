@@ -198,6 +198,9 @@ Rancher Server当前版本:
 
 #### 核心组件解析
 
+kubernetes的核心组件构成，它们之间协同工作从而完成整个集群的管理，分别为API Server、Controller Manager、Scheduler、Kubelet、Etcd。
+一个简单的Pod工作流出发，涉及到架构中的组件并深入讲解其工作机制，这里解释下kubernetes中组件和资源对象的基本概念。
+
 1、Pod：kubernetes中运行应用或服务的最小单元，其设计理念是支持多个容器在一个Pod中共享网络地址和文件系统
 
 2、Service：访问Pod的代理抽象服务，主要用于集群内部的服务发现和负载均衡
