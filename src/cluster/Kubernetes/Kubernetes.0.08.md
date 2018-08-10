@@ -161,6 +161,8 @@ Rancher Server当前版本:
 <p align="center">
 <img width="100%" align="center" src="../../images/15.png" />
 </p>
+这里需要修改下配置项,更换K8S源,AAONS组件命名空间,kubernetes-helm命名空间,最后保存!
+
 
 #### Pod的整个生命阶段：
 
