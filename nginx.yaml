@@ -30,5 +30,5 @@ spec:   #specification of the resource content 指定该资源的内容
        app: nginx
     spec:
       containers:
-      - name: mean  #容器的名字
+      - name: nginx  #容器的名字
         image: nginx
