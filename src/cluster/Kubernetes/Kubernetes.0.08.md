@@ -129,12 +129,38 @@ Rancher Server当前版本:
 <img width="100%" align="center" src="../../images/17.png" />
 </p>
 
-点击编辑环境:
+添加一个新的环境模板,点击编辑环境:
 <p align="center">
 <img width="100%" align="center" src="../../images/18.png" />
 </p>
 
+<p align="center">
+<img width="100%" align="center" src="../../images/9.png" />
+</p>
 
+<p align="center">
+<img width="100%" align="center" src="../../images/10.png" />
+</p>
+
+<p align="center">
+<img width="100%" align="center" src="../../images/11.png" />
+</p>
+
+<p align="center">
+<img width="100%" align="center" src="../../images/12.png" />
+</p>
+
+<p align="center">
+<img width="100%" align="center" src="../../images/13.png" />
+</p>
+
+<p align="center">
+<img width="100%" align="center" src="../../images/14.png" />
+</p>
+
+<p align="center">
+<img width="100%" align="center" src="../../images/15.png" />
+</p>
 
 #### Pod的整个生命阶段：
 
