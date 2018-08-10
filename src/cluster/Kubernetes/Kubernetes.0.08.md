@@ -186,6 +186,8 @@ Rancher Server当前版本:
 <img width="100%" align="center" src="../../images/6.png" />
 </p>
 
+如果单台的kuberente这里就可以不用配置脚本,如果要配置多台服务器就需要依次把这里的脚本在每个服务上运行下.
+
 #### Pod的整个生命阶段：
 
 * Pending
