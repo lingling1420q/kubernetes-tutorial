@@ -90,7 +90,7 @@ Rancher Server当前版本:
 > systemctl stop firewalld.service    # 关闭firewall
 > systemctl disable firewalld.service # 禁止firewall开机启动
 ```
-然后访问: http://120.92.150.39:8080 就可以看到:
+然后访问:http://120.92.172.35:8080 就可以看到:
 
 <p align="center">
 <img width="100%" align="center" src="../../images/1.png" />
@@ -163,6 +163,15 @@ Rancher Server当前版本:
 <img width="100%" align="center" src="../../images/15.png" />
 </p>
 这里需要修改下配置项,更换K8S源,AAONS组件命名空间,kubernetes-helm命名空间,最后设置下!
+
+点击编辑设置后，在弹出的页面中，更改如下几个参数：
+* Private Registry for Add-Ons and Pod infra Container Images(修改私有仓库地址)：registry.cn-shenzhen.aliyuncs.com
+* Image namespace for Add-ons and Pod infra Container Images(修改AAONS组件命名空间)：rancher_cn
+* Image namespace for kubernetes-helm (修改kubernetes-helm命名空间)：rancher_cn
+* Pod Infra Container Image (修改默认的pause镜像名):rancher_cn/pause-amd64:3.0
+
+#### 添加主机
+因为是第一次添加主机，系统会要求你确认节点注册地址，我们直接点击保存。
 
 
 #### Pod的整个生命阶段：
