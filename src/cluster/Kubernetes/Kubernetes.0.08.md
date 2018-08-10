@@ -195,6 +195,28 @@ Rancher Server当前版本:
 <img width="100%" align="center" src="../../images/22.png" />
 </p>
 
+
+#### 核心组件解析
+
+1、Pod：kubernetes中运行应用或服务的最小单元，其设计理念是支持多个容器在一个Pod中共享网络地址和文件系统
+
+2、Service：访问Pod的代理抽象服务，主要用于集群内部的服务发现和负载均衡
+
+3、Replication Controller：用于伸缩Pod副本数量的组件
+
+4、API Server：对以上1、2、3资源对象进行增、删、改、查的Rest API服务器
+
+5、Scheduler：集群中资源对象的调度控制器
+
+6、Controller Manager：负责集群中资源对象管理同步的组件
+
+7、Etcd：分布式键值对（k,v）存储服务，存储整个集群的状态信息
+
+8、Kubelet：负责维护Pod容器的生命周期
+
+9、Label：用于Service及Replication Controller 与Pod关联的标签
+
+
 #### Pod的整个生命阶段：
 
 * Pending
