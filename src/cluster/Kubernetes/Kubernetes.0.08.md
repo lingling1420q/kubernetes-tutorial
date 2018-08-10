@@ -173,6 +173,18 @@ Rancher Server当前版本:
 #### 添加主机
 因为是第一次添加主机，系统会要求你确认节点注册地址，我们直接点击保存。
 
+<p align="center">
+<img width="100%" align="center" src="../../images/21.png" />
+</p>
+
+<p align="center">
+<img width="100%" align="center" src="../../images/9.png" />
+</p>
+
+
+<p align="center">
+<img width="100%" align="center" src="../../images/6.png" />
+</p>
 
 #### Pod的整个生命阶段：
 
