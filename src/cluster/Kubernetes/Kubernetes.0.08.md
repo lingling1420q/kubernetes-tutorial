@@ -122,6 +122,12 @@ Rancher Server当前版本:
 如果我们直接创建一个kubernetes的环境会发现根本无法初始化,这里的原因是kubernetes的Docker包存放到gcr.io下面,https://cloud.google.com/container-registry , 在国内访问google是不能直接访问的,所以这里的第一件事情就要解决无法访问带来的痛苦,所以我们需要使用国内的K8S源.
 
 这里先进入到环境管理:
+<p align="center">
+<img width="100%" align="center" src="../../images/16.png" />
+</p>
+<p align="center">
+<img width="100%" align="center" src="../../images/17.png" />
+</p>
 
 
 
