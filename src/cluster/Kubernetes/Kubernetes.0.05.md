@@ -135,7 +135,7 @@ test-nodeport-service    NodePort    10.43.101.60   <none>        80:30080/TCP  
 
 此时在宿主机上的30080端口就可以访问到我们的两个Nginx容器了,如果机器绑定的有IP的话就可以直接访问或者在使用负载均衡对外放出服务
 
-> 只有在KUbernetes中才会受到Kube-DNS的影响,在宿主机上无法使用test-nodeport-service访问Service只能通过NodePort进行访问  
+> 只有在Kubernetes中才会受到Kube-DNS的影响,在宿主机上无法使用test-nodeport-service访问Service只能通过NodePort进行访问  
 
 ```
 [root@k8s-m ~]# curl 127.0.0.1:30080
