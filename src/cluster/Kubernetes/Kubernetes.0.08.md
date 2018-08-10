@@ -200,25 +200,79 @@ Rancher Server当前版本:
 
 kubernetes的核心组件构成，它们之间协同工作从而完成整个集群的管理，分别为API Server、Controller Manager、Scheduler、Kubelet、Etcd。
 一个简单的Pod工作流出发，涉及到架构中的组件并深入讲解其工作机制，这里解释下kubernetes中组件和资源对象的基本概念。
+* Pod
+kubernetes中运行应用最小单元，Pod封装了一个或多个应用程序的容器(比如nginx等),存储资源,唯一的网络IP以及管理容器的一些选项 Pod标示的是一个部署单元,可以理解为Kubernetes中的应用程序的单个实例,它可能由单个容器组成,也可能由少量紧密耦合并共享资源的容器组成。
 
-1、Pod：kubernetes中运行应用或服务的最小单元，其设计理念是支持多个容器在一个Pod中共享网络地址和文件系统
+* Replication Controller
 
-2、Service：访问Pod的代理抽象服务，主要用于集群内部的服务发现和负载均衡
+Replication Controller是Kubernetes系统中的核心概念，用于管理Pod的生命周期。在Master内，Controller Manager进程通过RC的定义来完成Pod的创建、监控、启停等操作,负责维护集群的状态，比如故障检测、自动扩展、滚动更新等.
 
-3、Replication Controller：用于伸缩Pod副本数量的组件
+Kubernetes通过RC中定义的Label筛选出对应的Pod实例并实时监控其状态和数量，如果实例数量少于定义的副本数量，则会根据RC中定义的Pod模板来创建一个新的Pod，然后Scheduler将此Pod调度到合适的Node上启动运行，直到Pod实例数量达到预定目标。这个过程完全是自动化的。
 
-4、API Server：对以上1、2、3资源对象进行增、删、改、查的Rest API服务器
+* Service
 
-5、Scheduler：集群中资源对象的调度控制器
+Service服务为一组Pod提供单一稳定的名称和地址。他们作为基本负载均衡器而存在。是一系列Pod以及这些Pod的访问策略的抽象。访问Pod的代理抽象服务，主要用于集群内部的服务发现和负载均衡.
 
-6、Controller Manager：负责集群中资源对象管理同步的组件
+Service具有如下特征：
+1. 拥有一个唯一指定的名字
 
-7、Etcd：分布式键值对（k,v）存储服务，存储整个集群的状态信息
+2. 拥有一个虚拟IP和端口号
 
-8、Kubelet：负责维护Pod容器的生命周期
+3. 能够提供某种远程服务能力
 
-9、Label：用于Service及Replication Controller 与Pod关联的标签
+4. 被映射到提供这种服务能力的一组容器上
 
+5. Service的服务进程目前都基于socket通信方式对外提供服务
+
+Service的服务进程目前都基于socket通信方式对外提供服务，Kubernetes内置了透明的负载均衡以及故障恢复的机制。
+
+* Deployment
+
+Deployment集成了上线部署、滚动升级、创建副本、暂停上线任务，恢复上线任务，回滚到以前某一版本(成功/稳定)的Deployment等功能，在某种程度上，Deployment可以帮我们实现无人值守的上线，大大降低我们的上线过程的复杂沟通、操作风险。
+
+Deployment的使用场景
+
+1. 使用Deployment来启动（上线/部署）一个Pod或者ReplicaSet
+
+2. 检查一个Deployment是否成功执行
+
+3. 更新Deployment来重新创建相应的Pods
+
+4. 如果目前的Deployment不稳定，那么回滚到一个早期的稳定的Deployment版本
+
+* Label(标签)
+
+Label(标签)是一组附加在对象上的键值对，主要解决Service与Pod之间的关联问题。
+
+标签常用来从一组对象中选取符合条件的对象，这也是Kubernates中目前为止最重要的节点分组方法。标签的本质是附属在对象上的非系统属性类的元数据， 即它不是名字、Id以及对象的硬件属性，而是一些附加的键值对。
+
+* Annotation(注解)
+
+Annotation与Label类似，也使用key/value键值对的形式进行定义。Label具有严格的命名规则，它定义的是Kubernetes对象的元数据（Metadata），并且用于Label Selector。Annotation则是用户任意定义的”附加”信息，以便于外部工具进行查找。
+
+* Scheduler
+
+负责资源的调度，按照预定的调度策略将Pod调度到相应的机器上.
+
+* Volume(容器共享存储卷)
+
+Volume是Pod中能够被多个容器访问的共享目录。Kubernetes的Volume概念与Docker的Volume比较类似，但不完全相同。Kubernetes中的Volume与Pod生命周期相同，但与容器的生命周期不相关。当容器终止或者重启时，Volume中的数据也不会丢失。另外，Kubernetes支持多种类型的Volume，并且一个Pod可以同时使用任意多个Volume。
+
+* Persistent Volume(持久卷)
+
+Persistent Volume(PV)是集群之中的一块网络存储。跟Node一样，也是集群的资源。PV跟Volume (卷)类似，不过会有独立于Pod的生命周期。
+
+* Kubelet
+
+负责维护容器的生命周期，同时也负责Volume（CVI）和网络（CNI）的管理.
+
+* kube-proxy
+
+负责为Service提供cluster内部的服务发现和负载均衡.
+
+* Etcd
+
+分布式键值对（k,v）存储服务，存储了个集群的状态信息.
 
 #### Pod的整个生命阶段：
 
@@ -230,10 +284,13 @@ kubernetes的核心组件构成，它们之间协同工作从而完成整个集�
 
 * Succeeded
 所有Pod中的container都已经终止成功，并且没有处于重启的container；
+
 #### Failed
+
 所有的Pod中的container都已经终止了，但是至少还有一个container没有被正常的终止(其终止时的退出码不为0)
 
 * 对于liveness 
+
 probes的结果也有几个固定的可选项值：
 
 ```
