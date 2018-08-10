@@ -94,6 +94,15 @@ Rancher Server当前版本:
 
 通过右下角可以编辑语言切换成简体中文:
 
+
+<p align="center">
+<img width="100%" align="center" src="../../images/2.png" />
+</p>
+
+
+#### 权限设置
+刚刚登录rancher的时候大家都可以看到没有任何的权限,但是一个系统我们肯定要设置权限的,而rancher也提供了这样的权限功能.在rancher访问控制中我们可以设置好权限控制,然后设置用户名和密码.
+
 <p align="center">
 <img width="100%" align="center" src="../../images/3.png" />
 </p>
@@ -106,13 +115,6 @@ Rancher Server当前版本:
 <img width="100%" align="center" src="../../images/7.png" />
 </p>
 
-
-#### 权限设置
-刚刚登录rancher的时候大家都可以看到没有任何的权限,但是一个系统我们肯定要设置权限的,而rancher也提供了这样的权限功能.在rancher访问控制中我们可以设置好权限控制,然后设置用户名和密码.
-
-<p align="center">
-<img width="100%" align="center" src="../../images/2.png" />
-</p>
 
 
 #### 配置kubernetes环境
