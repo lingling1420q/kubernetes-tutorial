@@ -322,5 +322,9 @@ spec:
           imagePullPolicy: Always
 
 ```
+然后查看kuberentes的dashboard:
+<p align="center">
+<img width="100%" align="center" src="../../images/24.png" />
+</p>
 
 
