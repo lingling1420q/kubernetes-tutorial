@@ -111,9 +111,6 @@ Rancher Server当前版本:
 <img width="100%" align="center" src="../../images/3.png" />
 </p>
 
-<p align="center">
-<img width="100%" align="center" src="../../images/8.png" />
-</p>
 
 <p align="center">
 <img width="100%" align="center" src="../../images/7.png" />
