@@ -178,15 +178,21 @@ Rancher Server当前版本:
 </p>
 
 <p align="center">
-<img width="100%" align="center" src="../../images/9.png" />
-</p>
-
-
-<p align="center">
 <img width="100%" align="center" src="../../images/6.png" />
 </p>
 
 如果单台的kuberente这里就可以不用配置脚本,如果要配置多台服务器就需要依次把这里的脚本在每个服务上运行下.
+
+然后进入kuebernetes仪表盘:
+
+<p align="center">
+<img width="100%" align="center" src="../../images/23.png" />
+</p>
+
+这就是kubernetes的 dashboard:
+<p align="center">
+<img width="100%" align="center" src="../../images/22.png" />
+</p>
 
 #### Pod的整个生命阶段：
 
@@ -211,7 +217,6 @@ Failure：表示没有通过检测
 
 Unknown：表示检测没有正常进行
 ```
-
 
 #### Liveness Probe的种类：
 
