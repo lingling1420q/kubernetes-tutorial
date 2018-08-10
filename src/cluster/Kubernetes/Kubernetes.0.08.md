@@ -49,8 +49,9 @@ yum install -y --setopt=obsoletes=0 \
    docker-ce-selinux-17.03.2.ce-1.el7.centos.noarch;
   
 #启动Docker服务
-systemctl start docker.service;
-systemctl enable docker.service;
+systemctl start docker.service;#重启dokcer
+systemctl enable docker.service;#开机自动启动docker
+
 ```
 
 
