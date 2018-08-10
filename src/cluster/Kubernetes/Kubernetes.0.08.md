@@ -129,6 +129,10 @@ Rancher Server当前版本:
 <img width="100%" align="center" src="../../images/17.png" />
 </p>
 
+点击编辑环境:
+<p align="center">
+<img width="100%" align="center" src="../../images/18.png" />
+</p>
 
 
 
