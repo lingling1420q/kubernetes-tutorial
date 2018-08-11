@@ -54,7 +54,6 @@ systemctl enable docker.service;#开机自动启动docker
 
 ```
 
-
 #### 服务器配置
 这里我用三台机器来搭建kubernetes集群,配置的服务器信息如下:
 
@@ -70,7 +69,7 @@ Kubernetres虽然很好但是安装部署很复杂,为了业务的稳定和健�
 * Rancher官方地址: [https://www.cnrancher.com/](https://www.cnrancher.com/)  
 * 本系列中使用 Kubernetes v1.8.10 RancherV1.6.14.
 <p align="center">
-<img width="100%" align="center" src="../../images/18.png" />
+<img width="100%" align="center" src="../../images/19.png" />
 </p>
 
 
