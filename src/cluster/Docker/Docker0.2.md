@@ -13,7 +13,6 @@
 - docker rm 删除一个或更多的容器
 - docker pause 暂停一个容器的所有进程
 - docker unpaunse 恢复一个容器的所有进程
-
 #### docker容器操作运维
 
 - docker ps 列出容器
