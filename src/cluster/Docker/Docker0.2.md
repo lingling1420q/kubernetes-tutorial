@@ -4,6 +4,7 @@
 <img width="200" align="center" src="../../images/12.jpg" />
 </p>
 #### docker容器生命周期管理
+
 - docker run 在一个新的容器执行一个命令
 - docker start 开一个或者更多已经停止的容器
 - docker stop 停止一个运行的容器
