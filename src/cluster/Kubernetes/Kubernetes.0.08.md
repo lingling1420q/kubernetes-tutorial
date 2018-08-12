@@ -30,7 +30,7 @@ Apache Mesos能够在同样的集群机器上运行多种分布式系统类型�
 首先安装docker环境，这个可以根据电脑系统的不同，选择不同的安装方式。
 
 * [Mac安装](https://docs.docker.com/docker-for-mac/install/)
-* [Unbantu安装](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+* [Ubantu安装](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 * [Windows安装](https://docs.docker.com/docker-for-windows/install/)
 * [centos安装](https://docs.docker.com/install/linux/docker-ce/centos/)
 
