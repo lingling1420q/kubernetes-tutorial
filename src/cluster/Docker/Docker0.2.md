@@ -3,6 +3,7 @@
 <p align="center">
 <img width="200" align="center" src="../../images/12.jpg" />
 </p>
+
 #### docker容器生命周期管理
 
 - docker run 在一个新的容器执行一个命令
@@ -13,6 +14,7 @@
 - docker rm 删除一个或更多的容器
 - docker pause 暂停一个容器的所有进程
 - docker unpaunse 恢复一个容器的所有进程
+
 #### docker容器操作运维
 
 - docker ps 列出容器
