@@ -3,7 +3,6 @@
 <p align="center">
 <img width="200" align="center" src="../../images/12.jpg" />
 </p>
-
 #### 1. 为什么Docker会火
 - 截止到现在Docker在github上的star数有48570
 - 阿里云,腾讯云,AWS,都推出了自己的Docker平台
