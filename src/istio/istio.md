@@ -14,6 +14,7 @@ Istio 是一个开放式平台，可用于连接、管理和保护微服务。 �
 > curl -L https://git.io/getLatestIstio | sh -
 ```
 然后把istio环境变量添加到系统中:
+
 ```bash
 > cd istio-1.0.0/
 > export PATH=$PWD/bin:$PATH
