@@ -57,3 +57,25 @@ istio-tracing-75d76fb9f-mzjpf               1/1       Running   0          2d
 prometheus-884dbbcd5-p7wv7                  1/1       Running   0          2d
 servicegraph-646bbc8cb4-6kvdb               1/1       Running   0          2d
 ```
+```bash
+> > kubectl get svc -n istio-system
+NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                                                                                                     AGE
+grafana                    ClusterIP      10.43.125.188   <none>          3000/TCP                                                                                                    2d
+istio-citadel              ClusterIP      10.43.84.200    <none>          8060/TCP,9093/TCP                                                                                           2d
+istio-egressgateway        ClusterIP      10.43.97.201    <none>          80/TCP,443/TCP                                                                                              2d
+istio-galley               ClusterIP      10.43.127.149   <none>          443/TCP,9093/TCP                                                                                            2d
+istio-ingressgateway       LoadBalancer   10.43.120.83    120.92.172.35   80:31380/TCP,443:31390/TCP,31400:31400/TCP,15011:30182/TCP,8060:30819/TCP,15030:32142/TCP,15031:31067/TCP   2d
+istio-pilot                ClusterIP      10.43.216.64    <none>          15010/TCP,15011/TCP,8080/TCP,9093/TCP                                                                       2d
+istio-policy               ClusterIP      10.43.45.54     <none>          9091/TCP,15004/TCP,9093/TCP                                                                                 2d
+istio-sidecar-injector     ClusterIP      10.43.37.12     <none>          443/TCP                                                                                                     2d
+istio-statsd-prom-bridge   ClusterIP      10.43.93.131    <none>          9102/TCP,9125/UDP                                                                                           2d
+istio-telemetry            ClusterIP      10.43.69.34     <none>          9091/TCP,15004/TCP,9093/TCP,42422/TCP                                                                       2d
+jaeger-agent               ClusterIP      None            <none>          5775/UDP,6831/UDP,6832/UDP                                                                                  2d
+jaeger-collector           ClusterIP      10.43.90.61     <none>          14267/TCP,14268/TCP                                                                                         2d
+jaeger-query               ClusterIP      10.43.150.244   <none>          16686/TCP                                                                                                   2d
+prometheus                 ClusterIP      10.43.142.240   <none>          9090/TCP                                                                                                    2d
+servicegraph               ClusterIP      10.43.224.250   <none>          8088/TCP                                                                                                    2d
+tracing                    ClusterIP      10.43.7.11      <none>          80/TCP                                                                                                      2d
+zipkin                     ClusterIP      10.43.136.215   <none>          9411/TCP                                                                                                    2d
+```
+
