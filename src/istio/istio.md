@@ -24,3 +24,36 @@ Istio 是一个开放式平台，可用于连接、管理和保护微服务。 �
 > cd istio-1.0.0/
 > export PATH=$PWD/bin:$PATH
 ```
+其中安装文件在install目录下，istioctl执行文件在bin目录下，一些应用文件在samples目录下。
+
+我们可以先安装下istio的应用:
+```bash
+> kubectl apply -f install/kubernetes/istio-demo.yaml
+```
+运行查看service和pod:
+```bash
+> kubectl get pod -n istio-system
+NAME                                        READY     STATUS    RESTARTS   AGE
+grafana-6dd4cb7ffd-n87q4                    1/1       Running   0          2d
+istio-citadel-b874fd9f5-kk6vs               1/1       Running   0          2d
+istio-egressgateway-ddcdd644c-6ppq4         1/1       Running   0          2d
+istio-egressgateway-ddcdd644c-7kgrc         1/1       Running   0          2d
+istio-egressgateway-ddcdd644c-9n2df         1/1       Running   0          2d
+istio-egressgateway-ddcdd644c-bx94h         1/1       Running   0          2d
+istio-egressgateway-ddcdd644c-sd2pj         1/1       Running   0          2d
+istio-galley-8985546b8-lblnm                1/1       Running   0          2d
+istio-ingressgateway-7565c689cb-52zdw       1/1       Running   0          2d
+istio-ingressgateway-7565c689cb-czvgb       1/1       Running   0          2d
+istio-ingressgateway-7565c689cb-gm4w8       1/1       Running   0          2d
+istio-ingressgateway-7565c689cb-pqxlb       1/1       Running   0          2d
+istio-ingressgateway-7565c689cb-vqxhg       1/1       Running   0          2d
+istio-pilot-58b5d5f-mvzrr                   2/2       Running   0          2d
+istio-policy-686ff55f4f-kl4hn               2/2       Running   0          2d
+istio-policy-686ff55f4f-l5q8d               2/2       Running   0          2d
+istio-sidecar-injector-5d4b7b4957-lpfkr     1/1       Running   0          2d
+istio-statsd-prom-bridge-58f8596c67-tfbwx   1/1       Running   0          2d
+istio-telemetry-6bff9755fd-pkht9            2/2       Running   0          2d
+istio-tracing-75d76fb9f-mzjpf               1/1       Running   0          2d
+prometheus-884dbbcd5-p7wv7                  1/1       Running   0          2d
+servicegraph-646bbc8cb4-6kvdb               1/1       Running   0          2d
+```
