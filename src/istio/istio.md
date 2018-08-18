@@ -79,3 +79,24 @@ tracing                    ClusterIP      10.43.7.11      <none>          80/TCP
 zipkin                     ClusterIP      10.43.136.215   <none>          9411/TCP                                                                                                    2d
 ```
 
+#### 部署Istio应用
+
+在部署Istio应用之前，需要先查看下kubernetes的命名空间namespaces:
+```bash
+> kubectl get namespaces
+NAME           STATUS    AGE
+default        Active    8d
+dev            Active    8d
+istio-system   Active    2d
+kube-public    Active    8d
+kube-system    Active    8d
+```
+这里你也可以自己在新建一个命名空间test:
+```bash
+> kubectl create namespace test
+namespace "test" created
+```
+但是这里我选择的是在istio-system里面部署Istio中自带的samples里的bookinfo应用：
+```bash
+kubectl label namespace istio-system istio-injection=enabled
+```
