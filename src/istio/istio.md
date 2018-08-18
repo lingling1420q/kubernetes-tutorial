@@ -104,4 +104,8 @@ namespace "test" created
 ```bash
 > istioctl create -f samples/bookinfo/networking/bookinfo-gateway.yaml 
 ```
-查看创建的应用:
+通过 http://120.92.172.35:31380/productpage 访问bookinfo应用:
+<p align="center">
+<img width="600" align="center" src="../images/67.jpg" />
+</p>
+到这里就可以看到部署的Istio应用成功了！
