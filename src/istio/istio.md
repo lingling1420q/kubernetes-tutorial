@@ -104,3 +104,4 @@ namespace "test" created
 ```bash
 > istioctl create -f samples/bookinfo/networking/bookinfo-gateway.yaml 
 ```
+查看创建的应用:
