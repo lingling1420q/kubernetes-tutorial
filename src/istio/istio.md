@@ -98,5 +98,9 @@ namespace "test" created
 ```
 但是这里我选择的是在istio-system里面部署Istio中自带的samples里的bookinfo应用：
 ```bash
-kubectl label namespace istio-system istio-injection=enabled
+>kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n istio-system 
+```
+创建应用的ingress gateway:
+```bash
+> istioctl create -f samples/bookinfo/networking/bookinfo-gateway.yaml 
 ```
