@@ -150,9 +150,10 @@ namespace "test" created
 ```
 创建应用的ingress gateway:
 ```bash
-> istioctl create -f samples/bookinfo/networking/bookinfo-gateway.yaml 
+> kubectl create -f samples/bookinfo/networking/bookinfo-gateway.yaml -n istio-system 
 ```
 通过 http://120.92.172.35:31380/productpage 访问bookinfo应用:
+
 <p align="center">
 <img width="600" align="center" src="../images/67.jpg" />
 </p>
