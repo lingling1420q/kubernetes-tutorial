@@ -8,8 +8,8 @@ Istio 是一个开放式平台，可用于连接、管理和保护微服务。 �
 <p align="center">
 <img width="600" align="center" src="../images/66.jpg" />
 </p>
-组件介绍:
 
+组件介绍:
 * Envoy
 
 Istio 使用 Envoy 代理的扩展版本，Envoy 是以 C++ 开发的高性能代理，用于调解服务网格中所有服务的所有入站和出站流量。在 Istio 中会以Sidecar 方式跟应用运行在同一 Pod 内，一方面可以接收并执行关于规则、流量拆分等方面的指令，另一方面能够产生各种指标用于监控和跟踪。
