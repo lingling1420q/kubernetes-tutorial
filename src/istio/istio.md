@@ -106,7 +106,7 @@ prometheus-884dbbcd5-p7wv7                  1/1       Running   0          2d
 servicegraph-646bbc8cb4-6kvdb               1/1       Running   0          2d
 ```
 ```bash
-> > kubectl get svc -n istio-system
+> kubectl get svc -n istio-system
 NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                                                                                                     AGE
 grafana                    ClusterIP      10.43.125.188   <none>          3000/TCP                                                                                                    2d
 istio-citadel              ClusterIP      10.43.84.200    <none>          8060/TCP,9093/TCP                                                                                           2d
@@ -146,7 +146,7 @@ namespace "test" created
 ```
 但是这里我选择的是在istio-system里面部署Istio中自带的samples里的bookinfo应用：
 ```bash
->kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n istio-system 
+> kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n istio-system 
 ```
 创建应用的ingress gateway:
 ```bash
