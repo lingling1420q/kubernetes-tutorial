@@ -152,9 +152,35 @@ namespace "test" created
 ```bash
 > kubectl create -f samples/bookinfo/networking/bookinfo-gateway.yaml -n istio-system 
 ```
-通过 http://120.92.172.35:31380/productpage 访问bookinfo应用:
+确认所有的服务是否已经正确的定义和启动：
+```bash
+> kubectl get services
+NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+details       ClusterIP   10.43.131.128   <none>        9080/TCP   4d
+kubernetes    ClusterIP   10.43.0.1       <none>        443/TCP    10d
+productpage   ClusterIP   10.43.114.24    <none>        9080/TCP   4d
+ratings       ClusterIP   10.43.90.126    <none>        9080/TCP   4d
+reviews       ClusterIP   10.43.57.62     <none>        9080/TCP   4d
+```
+查看Pods详情:
+```bash
+> kubectl get pods
+NAME                                READY     STATUS    RESTARTS   AGE
+details-v1-68db9bb8df-5rcxh         1/1       Running   0          4d
+nginx-deployment-68fcbc9696-9qwp4   1/1       Running   0          10d
+nginx-deployment-68fcbc9696-g99d2   1/1       Running   0          6d
+nginx-deployment-68fcbc9696-rvvfr   1/1       Unknown   1          10d
+productpage-v1-66b9bfc74c-2plvw     1/1       Running   0          4d
+ratings-v1-dcf5694b9-r2gqj          1/1       Running   0          4d
+reviews-v1-68658cc84b-dzqd2         1/1       Running   0          4d
+reviews-v2-9f8987966-wn742          1/1       Running   0          4d
+reviews-v3-84b78bbd86-clvjc         1/1       Running   0          4d
+```
+
+然后就可以通过 http://120.92.172.35:31380/productpage 访问bookinfo应用:
 
 <p align="center">
 <img width="600" align="center" src="../images/67.jpg" />
 </p>
+
 到这里就可以看到部署的Istio应用成功了！
