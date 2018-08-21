@@ -156,25 +156,23 @@ namespace "test" created
 ```bash
 > kubectl get services
 NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-details       ClusterIP   10.43.131.128   <none>        9080/TCP   4d
-kubernetes    ClusterIP   10.43.0.1       <none>        443/TCP    10d
-productpage   ClusterIP   10.43.114.24    <none>        9080/TCP   4d
-ratings       ClusterIP   10.43.90.126    <none>        9080/TCP   4d
-reviews       ClusterIP   10.43.57.62     <none>        9080/TCP   4d
+details       ClusterIP   10.43.179.70    <none>        9080/TCP   4h
+kubernetes    ClusterIP   10.43.0.1       <none>        443/TCP    11d
+productpage   ClusterIP   10.43.144.63    <none>        9080/TCP   4h
+ratings       ClusterIP   10.43.147.152   <none>        9080/TCP   4h
+reviews       ClusterIP   10.43.44.250    <none>        9080/TCP   4h
 ```
 查看Pods详情:
 ```bash
 > kubectl get pods
-NAME                                READY     STATUS    RESTARTS   AGE
-details-v1-68db9bb8df-5rcxh         1/1       Running   0          4d
-nginx-deployment-68fcbc9696-9qwp4   1/1       Running   0          10d
-nginx-deployment-68fcbc9696-g99d2   1/1       Running   0          6d
-nginx-deployment-68fcbc9696-rvvfr   1/1       Unknown   1          10d
-productpage-v1-66b9bfc74c-2plvw     1/1       Running   0          4d
-ratings-v1-dcf5694b9-r2gqj          1/1       Running   0          4d
-reviews-v1-68658cc84b-dzqd2         1/1       Running   0          4d
-reviews-v2-9f8987966-wn742          1/1       Running   0          4d
-reviews-v3-84b78bbd86-clvjc         1/1       Running   0          4d
+NAME                              READY     STATUS    RESTARTS   AGE
+details-v1-68db9bb8df-lm746       1/1       Running   0          4h
+productpage-v1-66b9bfc74c-qlnvf   1/1       Running   0          4h
+ratings-v1-dcf5694b9-zmmjm        1/1       Running   0          4h
+reviews-v1-68658cc84b-sfjdm       1/1       Running   0          4h
+reviews-v2-9f8987966-dch9b        1/1       Running   0          4h
+reviews-v3-84b78bbd86-qdfsq       1/1       Running   0          4h
+
 ```
 查看kubernetes的dashboard仪表盘可以看到:
 <p align="center">
