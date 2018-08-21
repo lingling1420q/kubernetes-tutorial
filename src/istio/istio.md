@@ -176,11 +176,16 @@ reviews-v1-68658cc84b-dzqd2         1/1       Running   0          4d
 reviews-v2-9f8987966-wn742          1/1       Running   0          4d
 reviews-v3-84b78bbd86-clvjc         1/1       Running   0          4d
 ```
+查看kubernetes的dashboard仪表盘可以看到:
+<p align="center">
+<img width="100%" align="center" src="../images/68.jpg" />
+</p>
+
 
 然后就可以通过 http://120.92.172.35:31380/productpage 访问bookinfo应用:
 
 <p align="center">
-<img width="600" align="center" src="../images/67.jpg" />
+<img width="100%" align="center" src="../images/67.jpg" />
 </p>
 
 到这里就可以看到部署的Istio应用成功了！
