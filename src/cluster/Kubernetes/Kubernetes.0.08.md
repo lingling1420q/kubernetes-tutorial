@@ -27,6 +27,7 @@ Apache Mesos能够在同样的集群机器上运行多种分布式系统类型�
 大部分的应用程序我们在部署的时候都会适当的添加监控，对于运行载体容器则更应该如此。kubernetes提供了 liveness probes来检查我们的应用程序。它是由节点上的kubelet定期执行的。
 
 #### Docker部署方案
+
 首先安装docker环境，这个可以根据电脑系统的不同，选择不同的安装方式。
 
 * [Mac安装](https://docs.docker.com/docker-for-mac/install/)
