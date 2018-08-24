@@ -74,6 +74,11 @@ Istio的主要特点是:
 ```
 其中安装文件在install目录下，istioctl执行文件在bin目录下，一些应用文件在samples目录下。
 
+设置自动injection，自动为命名空间为default中的pod挂上Istio的sidecar：
+```bash
+>kubectl label namespace default istio-injection=enabled
+```
+
 我们可以先安装下istio的应用:
 ```bash
 > kubectl apply -f install/kubernetes/istio-demo.yaml
