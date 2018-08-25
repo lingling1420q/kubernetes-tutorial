@@ -85,6 +85,7 @@ Istio的主要特点是:
 > kubectl apply -f install/kubernetes/istio-demo.yaml
 ```
 运行查看service和pod:
+
 ```bash
 > kubectl get pod -n istio-system
 NAME                                        READY     STATUS    RESTARTS   AGE
