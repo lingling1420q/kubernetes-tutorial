@@ -74,6 +74,13 @@ Istio的主要特点是:
 > cd istio-1.0.0/
 > export PATH=$PWD/bin:$PATH
 ```
+在istio-1.0.0中,安装目录包含：
+
+* install/目录下的Kubernetes的安装文件.yaml
+* samples/目录中的示例应用程序
+* bin/目录中的istioctl客户端二进制文件。istioctl在手动注入Envoy作为附属代理并创建路由规则和策略时使用。
+* istio.VERSION配置文件
+
 其中安装文件在install目录下，istioctl执行文件在bin目录下，一些应用文件在samples目录下。
 
 设置自动injection，自动为命名空间为default中的pod挂上Istio的sidecar：
