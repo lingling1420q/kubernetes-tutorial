@@ -158,10 +158,10 @@ kube-system    Active    8d
 > kubectl create namespace test
 namespace "test" created
 ```
-但是这里我选择的是在默认的default里面部署Istio中自带的samples里的bookinfo应用，并且在sidecars之间不启用相互TLS验证:
+但是这里我选择的是在默认的default里面部署Istio中自带的samples里的bookinfo应用，并且在sidecars之间不启用相互TLS验证,而且由于没有安装Istio-Initializer，这里必须使用istioctl kube-inject在应用程序窗口中手动注入Envoy容器，然后再部署它们：
 
 ```bash
-> kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
+> kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
 service "details" unchanged
 deployment.extensions "details-v1" configured
 service "ratings" unchanged
