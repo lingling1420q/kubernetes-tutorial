@@ -84,7 +84,7 @@ Istio的主要特点是:
 
 设置自动injection，自动为命名空间为default中的pod挂上Istio的sidecar：
 ```bash
->kubectl label namespace default istio-injection=enabled
+> kubectl label namespace default istio-injection=enabled
 ```
 
 我们可以先安装下istio的应用:
