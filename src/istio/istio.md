@@ -141,9 +141,9 @@ tracing                    ClusterIP      10.43.7.11      <none>          80/TCP
 zipkin                     ClusterIP      10.43.136.215   <none>          9411/TCP                                                                                                    2d
 ```
 
-#### 部署Istio应用
+#### 部署Istio　Bookinfo应用
 
-在部署Istio应用之前，需要先查看下kubernetes的命名空间namespaces:
+在部署Istio Bookinfo应用之前，需要先查看下kubernetes的命名空间namespaces:
 ```bash
 > kubectl get namespaces
 NAME           STATUS    AGE
@@ -157,14 +157,28 @@ kube-system    Active    8d
 ```bash
 > kubectl create namespace test
 namespace "test" created
-```
-但是这里我选择的是在istio-system里面部署Istio中自带的samples里的bookinfo应用：
+``
+但是这里我选择的是在默认的default里面部署Istio中自带的samples里的bookinfo应用，并且在sidecars之间不启用相互TLS验证:
 ```bash
-> kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml 
+> kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
+service "details" unchanged
+deployment.extensions "details-v1" configured
+service "ratings" unchanged
+deployment.extensions "ratings-v1" configured
+service "reviews" unchanged
+deployment.extensions "reviews-v1" configured
+deployment.extensions "reviews-v2" configured
+deployment.extensions "reviews-v3" configured
+service "productpage" unchanged
+deployment.extensions "productpage-v1" configured
+
 ```
 创建应用的ingress gateway:
 ```bash
-> kubectl create -f samples/bookinfo/networking/bookinfo-gateway.yaml 
+> kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+gateway.networking.istio.io "bookinfo-gateway" created
+virtualservice.networking.istio.io "bookinfo" created
+
 ```
 确认所有的服务是否已经正确的定义和启动：
 ```bash
