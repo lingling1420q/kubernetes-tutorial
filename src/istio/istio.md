@@ -157,8 +157,9 @@ kube-system    Active    8d
 ```bash
 > kubectl create namespace test
 namespace "test" created
-``
+```
 但是这里我选择的是在默认的default里面部署Istio中自带的samples里的bookinfo应用，并且在sidecars之间不启用相互TLS验证:
+
 ```bash
 > kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
 service "details" unchanged
