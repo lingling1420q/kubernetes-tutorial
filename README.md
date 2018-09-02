@@ -1,5 +1,4 @@
 #### kubernetes-tutorial 
-
 <p align="center">
 <img width="280" align="center" src="src/images/11.jpg" />
 </p>
