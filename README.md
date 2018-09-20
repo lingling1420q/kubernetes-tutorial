@@ -347,8 +347,11 @@ http://127.0.0.1:30000/
 
 #### kubernetes集群
 
-觉得此文章不错，支持我的话可以给我star,:star:！如果有问题可以加我的微信**Sen0676**,加入我们的交流群一起交流学习！
-
+觉得此文章不错，支持我的话可以给我star,:star:！如果有问题可以加我的微信,也可以加入我们的交流群一起交流学习！
+<p align="center">
+<img width="300" align="center" src="https://github.com/KeKe-Li/micro-Services-Tutorial/blob/master/src/images/12.jpg" />
+<img width="300" align="center" src="https://github.com/KeKe-Li/micro-Services-Tutorial/blob/master/src/images/13.jpg" />
+</p>
 
 License
 This is free software distributed under the terms of the MIT license
