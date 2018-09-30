@@ -16,7 +16,8 @@ Kubernetes是为生产环境而设计的容器调度管理系统，对于负载�
 </p>
 一个K8s集群是由分布式存储（etcd）、服务节点（Minion，etcd现在称为Node）和控制节点（Master）构成的。所有的集群状态都保存在etcd中，Master节点上则运行集群的管理控制模块。Node节点是真正运行应用容器的主机节点，在每个Minion节点上都会运行一个Kubelet代理，控制该节点上的容器、镜像和存储卷等。
 
-首先我们先来了解下Kubernetes中的主要概念：
+首先我们先来了解下Kubernetes中的组件：
+
 1. Cluster : 集群是指由Kubernetes使用一系列的物理机、虚拟机和其他基础资源来运行你的应用程序。
 2. Node : 一个node就是一个运行着Kubernetes的物理机或虚拟机，并且pod可以在其上面被调度.
 3. Pod : 一个pod对应一个由相关容器和卷组成的容器组.
