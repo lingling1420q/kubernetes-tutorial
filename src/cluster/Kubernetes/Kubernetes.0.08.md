@@ -38,7 +38,7 @@ Apache Mesos能够在同样的集群机器上运行多种分布式系统类型�
 不过我这里是用脚本直接在centos上直接安装的:
 
 ```bash
-install -y yum-utils device-mapper-persistent-data lvm2; #配置阿里云Docker Yum源
+yum install -y yum-utils device-mapper-persistent-data lvm2; #配置阿里云Docker Yum源
 
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo;#使用 Aliyun Docker
 
