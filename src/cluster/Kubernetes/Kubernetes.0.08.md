@@ -1,5 +1,4 @@
 #### Kubernetes从入门到精通应用
-
 <p align="center">
 <img width="260" align="center" src="../../images/11.jpg" />
 </p>
