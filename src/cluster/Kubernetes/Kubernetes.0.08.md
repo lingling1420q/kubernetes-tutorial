@@ -1,6 +1,6 @@
 #### Kubernetes从入门到精通应用
 <p align="center">
-<img width="260" align="center" src="../../images/11.jpg" />
+<img width="270" align="center" src="../../images/11.jpg" />
 </p>
 
 当今三大主流调度系统的比较与分析,为何选择kubernetes作为调度系统:
