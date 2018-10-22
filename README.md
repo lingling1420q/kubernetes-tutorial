@@ -256,7 +256,7 @@ kubectl: Correctly Configured: pointing to minikube-vm at 127.0.0.1
 #### 重新启动服务
 这里我增加了 –image-pull-policy=IfNotPresent 参数，这个表明优先使用本地镜像，不从远端拉取
 ```bash
-> sudo kubectl run kube-nginx999 --image=nginx:latest --port=80 --image-pull-policy=IfNotPresent
+> sudo kubectl run kube-nginx --image=nginx:latest --port=80 --image-pull-policy=IfNotPresent
 ```
 如果提示已经存在，换个名字重新执行。这时候查看服务状态应该是如下Running状态代表创建成功，但此时还不能访问容器。
 
