@@ -216,3 +216,6 @@ reviews-v3-84b78bbd86-qdfsq       1/1       Running   0          4h
 </p>
 
 到这里就可以看到部署的Istio应用成功了！
+
+#### 参看文档
+* [istio中文文档](https://preliminary.istio.io/zh/docs/setup/kubernetes/quick-start)
