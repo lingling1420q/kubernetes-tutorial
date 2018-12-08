@@ -4,7 +4,7 @@
 <img width="200" align="center" src="../../images/12.jpg" />
 </p>
 
-#### 1.docker-compose 安装
+#### 1. 安装docker-compose
 
 ```
 > curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
@@ -16,7 +16,7 @@
 > pip install -U docker-compose
 ```
 
-安装完成查看版本
+安装完成后查看版本
 
 ```
 > docker-compose -v
