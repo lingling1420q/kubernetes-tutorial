@@ -82,6 +82,7 @@ redis:
 部署Gitlab需要三个程序(gitlab,redis,postgresql),如果使用docker run的方式完成以上镜像的构建特别麻烦,而且在有一点点需要更新的时候修改镜像也成为一个问题,使用docker-compose只需要写好编排一个命令就能运行起来
 
 启动
+
 ```
 > vim docker-compose.yml
 # -d 是后台运行  -f 指定文件
