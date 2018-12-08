@@ -22,8 +22,6 @@
 > docker-compose -v
 docker-compose version 1.21.0, build 5920eb0
 ```
-
-
 #### 2.使用docker-compose编排镜像
 
 这里以GitLab作为例子如下:
