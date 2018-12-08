@@ -16,7 +16,7 @@
 > pip install -U docker-compose
 ```
 
-安装完成后查看版本
+安装完成后查看docker-compose版本
 
 ```
 > docker-compose -v
