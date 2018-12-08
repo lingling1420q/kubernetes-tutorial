@@ -81,7 +81,7 @@ redis:
 
 部署Gitlab需要三个程序(gitlab,redis,postgresql),如果使用docker run的方式完成以上镜像的构建特别麻烦,而且在有一点点需要更新的时候修改镜像也成为一个问题,使用docker-compose只需要写好编排一个命令就能运行起来
 
-启动
+启动docker-compose:
 
 ```
 > vim docker-compose.yml
@@ -94,17 +94,20 @@ b9026534481d        registry.cn-hangzhou.aliyuncs.com/acs-sample/postgresql-same
 84a222af6c9e        registry.cn-hangzhou.aliyuncs.com/acs-sample/redis-sameersbn:latest        "/sbin/entrypoint.sh"    6 minutes ago       Up 25 seconds       6379/tcp                                                root_redis_1
 ```
 
-修改更新
+修改更新docker-compose:
+
 ```
 > vim  docker-compose.yml
 ...
   ports:
     - "10080:8080"
 ...
+
 > docker-compose up -d
 root_redis_1 is up-to-date
 root_postgresql_1 is up-to-date
 Recreating root_gitlab_1 ... done
+
 > docker ps
 CONTAINER ID        IMAGE                                                                      COMMAND                  CREATED             STATUS              PORTS                                                             NAMES
 4416b7e4d262        registry.cn-hangzhou.aliyuncs.com/acs-sample/gitlab-sameersbn:latest       "/sbin/entrypoint...."   16 seconds ago      Up 15 seconds       80/tcp, 443/tcp, 0.0.0.0:10022->22/tcp, 0.0.0.0:10080->8080/tcp   root_gitlab_1
