@@ -16,6 +16,7 @@
 最后一个是定时任务，它是一个上级控制器，和 Deployment 有些类似，当一个定时任务触发的时候，它会去创建一个 Job ，具体的任务实际上是由 Job 来负责执行的,cronjob就是定时调度的资源。
 
 他们之间的关系如下图：
+
 <p align="center">
 <img width="700" align="center" src="../images/9.jpg" />
 </p>
