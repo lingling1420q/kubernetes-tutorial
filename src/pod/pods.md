@@ -6,7 +6,6 @@ K8s有很多技术概念，同时对应很多API对象，最重要的也是最�
 
 Pod是K8s集群中所有业务类型的基础，可以看作运行在K8s集群中的小机器人，不同类型的业务就需要不同类型的小机器人去执行。目前K8s中的业务主要可以分为长期伺服型（long-running）、批处理型（batch）、节点后台支撑型（node-daemon）和有状态应用型（stateful application）；分别对应的小机器人控制器为Deployment、Job、DaemonSet和StatefulSet;
 
-
 <p align="center">
 <img width="700" align="center" src="../images/8.jpg" />
 </p>
