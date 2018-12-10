@@ -31,6 +31,8 @@ Pods包含多个容器，是连接在一起的容器组合并共享文件卷。�
 Pod可以单独创建。由于Pods没有可控的生命周期，如果他们进程死掉了，他们将不会重新创建。出于这个原因，建议您使用复制控制器。
 
 #### Pods定义详解
+
+一个Pods中的yaml：
 ```bash
 kind: Deployment  #指定创建资源的角色/类型
 apiVersion: extensions/v1beta1 #指定api版本，此值必须在kubectl apiversion中
