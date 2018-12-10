@@ -28,7 +28,7 @@
 * 守护型应用 = Services + Volumes + DaemonSet;
 * 批处理应用 = Services + Volumes + CronJob/Job ;
 
-我们来考虑这么一个简单的例子，一个需要使用到数据库的 API 服务在 Kubernetes 中应该如何表示: 
+我们可以来考虑下一个简单的例子，一个需要使用到数据库的 API 服务在 Kubernetes 中应该如何表示: 
 
 客户端程序通过 Ingress 来访问到内部的 API Service, API Service 将流量导流到 API Server Deployment 管理的其中一个 Pod 中，这个 Server 还需要访问数据库服务，它通过 DB Service 来访问 DataBase StatefulSet 的有状态副本。由定时任务 CronJob 来定期备份数据库，通过 DaemonSet 的 Logging 来采集日志，Monitoring 来负责收集监控指标。
 
