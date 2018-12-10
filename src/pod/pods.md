@@ -32,7 +32,8 @@ Pod可以单独创建。由于Pods没有可控的生命周期，如果他们进�
 
 #### Pods定义详解
 
-一个Pods中的yaml：
+一个Pods中的yaml详解：
+
 ```bash
 kind: Deployment  #指定创建资源的角色/类型
 apiVersion: extensions/v1beta1 #指定api版本，此值必须在kubectl apiversion中
