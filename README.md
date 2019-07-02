@@ -292,7 +292,7 @@ dashboard是kubernetes提供的容器服务管理后台，可视化界面，用�
 如果初次可能会报下面的两种错误之一：
 ```bash
 # 第一种错误
-Could not find finalized endpoint being pointed to by kubernetes-dashboard: Error validating service: Error getting service kubernetes-dashboard: services "kubernetes-dashboard" not found
+Could not find finalized endpoint being pointed to by kubernetes-dashboard: Error validating service: Error getting service kubernetes-dashboard: services "Kubernetes" not found
 
 # 第二种错误
 Waiting, endpoint for service is not ready yet...
