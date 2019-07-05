@@ -213,7 +213,6 @@ Secret是用来保存和传递密码、密钥、认证凭证这些敏感信息�
 
 名字空间为K8s集群提供虚拟的隔离作用，K8s集群初始有两个名字空间，分别是默认名字空间default和系统名字空间kube-system，除此以外，管理员可以创建新的名字空间满足需要。
 
-
 #### pods 
 
 ```bash
@@ -272,6 +271,8 @@ spec:
    progressDeadlineSeconds: 600
 
 ```
+
+#### 
 
 
 License
