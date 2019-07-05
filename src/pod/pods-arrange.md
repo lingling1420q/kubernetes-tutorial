@@ -53,7 +53,7 @@ service和replicationController只是建立在pod之上的抽象，最终是要�
 
 
 <p align="center">
-<img width="500" align="center" src="../images/25.png" />
+<img width="600" align="center" src="../images/25.png" />
 </p>
 
 
@@ -62,7 +62,7 @@ service和replicationController只是建立在pod之上的抽象，最终是要�
 Kubenetes整体框架如下图，主要包括kubecfg、Master API Server、Kubelet、Minion(Host)以及Proxy。
 
 <p align="center">
-<img width="500" align="center" src="../images/26.png" />
+<img width="600" align="center" src="../images/26.png" />
 </p>
 
 1. Master
@@ -80,6 +80,68 @@ Master由API Server、Scheduler以及Registry等组成。从下图可知Master�
 * 将处理的结果存入高可用键值存储系统Etcd中。
 * 在API Server响应Kubecfg的请求后，Scheduler会根据Kubernetes Client获取集群中运行Pod及Minion信息。
 * 依据从Kubernetes Client获取的信息，Scheduler将未分发的Pod分发到可用的Minion节点上。
+
+Master的主要构件的详细介绍。
+
+* Minion Registry
+
+Minion Registry负责跟踪Kubernetes 集群中有多少Minion(Host)。Kubernetes封装Minion Registry成实现Kubernetes API Server的RESTful API接口REST，通过这些API，我们可以对Minion Registry做Create、Get、List、Delete操作，由于Minon只能被创建或删除，所以不支持Update操作，并把Minion的相关配置信息存储到etcd。除此之外，Scheduler算法根据Minion的资源容量来确定是否将新建Pod分发到该Minion节点。
+
+* Pod Registry
+
+Pod Registry负责跟踪Kubernetes集群中有多少Pod在运行，以及这些Pod跟Minion是如何的映射关系。将Pod Registry和Cloud Provider信息及其他相关信息封装成实现Kubernetes API Server的RESTful API接口REST。通过这些API，我们可以对Pod进行Create、Get、List、Update、Delete操作，并将Pod的信息存储到etcd中，而且可以通过Watch接口监视Pod的变化情况，比如一个Pod被新建、删除或者更新。
+
+* Service Registry
+
+Service Registry负责跟踪Kubernetes集群中运行的所有服务。根据提供的Cloud Provider及Minion Registry信息把Service Registry封装成实现Kubernetes API Server需要的RESTful API接口REST。利用这些接口，我们可以对Service进行Create、Get、List、Update、Delete操作，以及监视Service变化情况的watch操作，并把Service信息存储到etcd。
+
+* Controller Registry
+
+Controller Registry负责跟踪Kubernetes集群中所有的Replication Controller，Replication Controller维护着指定数量的pod 副本(replicas)拷贝，如果其中的一个容器死掉，Replication Controller会自动启动一个新的容器，如果死掉的容器恢复，其会杀死多出的容器以保证指定的拷贝不变。通过封装Controller Registry为实现Kubernetes API Server的RESTful API接口REST， 利用这些接口，我们可以对Replication Controller进行Create、Get、List、Update、Delete操作，以及监视Replication Controller变化情况的watch操作，并把Replication Controller信息存储到etcd。
+
+* Endpoints Registry
+
+Endpoints Registry负责收集Service的endpoint，比如Name："mysql"，Endpoints: ["10.10.1.1:1909"，"10.10.2.2:8834"]，同Pod Registry，Controller Registry也实现了Kubernetes API Server的RESTful API接口，可以做Create、Get、List、Update、Delete以及watch操作。
+
+* Binding Registry
+
+Binding包括一个需要绑定Pod的ID和Pod被绑定的Host，Scheduler写Binding Registry后，需绑定的Pod被绑定到一个host。Binding Registry也实现了Kubernetes API Server的RESTful API接口，但Binding Registry是一个write-only对象，所有只有Create操作可以使用， 否则会引起错误。
+
+* Scheduler
+
+Scheduler收集和分析当前Kubernetes集群中所有Minion节点的资源(内存、CPU)负载情况，然后依此分发新建的Pod到Kubernetes集群中可用的节点。由于一旦Minion节点的资源被分配给Pod，那这些资源就不能再分配给其他Pod， 除非这些Pod被删除或者退出， 因此，Kubernetes需要分析集群中所有Minion的资源使用情况，保证分发的工作负载不会超出当前该Minion节点的可用的资源范围。具体来说，Scheduler做以下工作：
+
+1. 实时监测Kubernetes集群中未分发的Pod。
+2. 实时监测Kubernetes集群中所有运行的Pod，Scheduler需要根据这些Pod的资源状况安全地将未分发的Pod分发到指定的Minion节点上。
+3. Scheduler也监测Minion节点信息，由于会频繁查找Minion节点，Scheduler会缓存一份最新的信息在本地。
+4. Scheduler在分发Pod到指定的Minion节点后，会把Pod相关的信息Binding写回API Server。
+
+#### kubelet
+
+<p align="center">
+<img width="500" align="center" src="../images/28.png" />
+</p>
+
+Kubelet是Kubernetes集群中每个Minion和Master API Server的连接点，Kubelet运行在每个Minion上，是Master API Server和Minion之间的桥梁，接收Master API Server分配给它的commands和work，与持久性键值存储etcd、file、server和http进行交互，读取配置信息。Kubelet的主要工作是管理Pod和容器的生命周期，其包括Docker Client、Root Directory、Pod Workers、Etcd Client、Cadvisor Client以及Health Checker组件，具体工作如下：
+
+1. 通过Worker给Pod异步运行特定的Action
+2. 设置容器的环境变量
+3. 给容器绑定Volume
+4. 给容器绑定Port
+5. 根据指定的Pod运行一个单一容器
+6. kill杀死容器
+7. 给指定的Pod创建network 容器
+8. 删除Pod的所有容器
+9. 同步Pod的状态
+10. 从cAdvisor获取container info、 pod info、 root info、 machine info
+11. 检测Pod的容器健康状态信息
+12. 在容器中运行命令。
+
+#### Proxy
+
+Proxy是为了解决外部网络能够访问跨机器集群中容器提供的应用服务而设计的，运行在每个Minion上。Proxy提供TCP/UDP sockets的proxy，每创建一种Service，Proxy主要从etcd获取Services和Endpoints的配置信息（也可以从file获取），然后根据配置信息在Minion上启动一个Proxy的进程并监听相应的服务端口，当外部请求发生时，Proxy会根据Load Balancer将请求分发到后端正确的容器处理。
+
+所以Proxy不但解决了同一主宿机相同服务端口冲突的问题，还提供了Service转发服务端口对外提供服务的能力，Proxy后端使用了随机、轮询负载均衡算法。
 
 
 License
