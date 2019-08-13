@@ -391,3 +391,44 @@ $ KUBE_EDITOR="nano" kubectl edit svc/docker-registry   # 使用 alternative 编
 # 如果带有该键和效果的污点已经存在，则将按指定的方式替换其值
 > kubectl taint nodes foo dedicated=special-user:NoSchedule
 ```    
+
+18. 启动dashboard
+```bash
+> kubectl --namespace=kube-system get deployment kubernetes-dashboard
+> sudo kubectl proxy                                                                                       --  只能本地访问
+> sudo kubectl proxy --address='0.0.0.0' --accept-hosts='^*$'     --外部可访问
+```    
+19. 生成admin-user的登录令牌
+```bash
+> sudo kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+```    
+20. 查看service
+```bash
+> kubectl apply -f http://mirror.faasx.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+secret/kubernetes-dashboard-certs created
+serviceaccount/kubernetes-dashboard created
+role.rbac.authorization.k8s.io/kubernetes-dashboard-minimal created
+rolebinding.rbac.authorization.k8s.io/kubernetes-dashboard-minimal created
+deployment.apps/kubernetes-dashboard created
+service/kubernetes-dashboard created
+```
+
+```bash
+> kubectl --namespace=kube-system get deployment kubernetes-dashboard
+NAME                   READY   UP-TO-DATE   AVAILABLE   AGE
+kubernetes-dashboard   1/1     1            1           31s
+```
+
+```bash
+> kubectl --namespace=kube-system get service kubernetes-dashboard
+NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+kubernetes-dashboard   ClusterIP   10.106.255.205   <none>        443/TCP   4m36s
+```
+
+21. 访问dashboard
+
+如果Kubernetes API服务器是公开的，可以从外部访问的，就可以用API Server来访问。
+访问的地址为:
+```gotemplate
+https://<master-ip>:<apiserver-port>/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+```
