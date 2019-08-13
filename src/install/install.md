@@ -393,11 +393,131 @@ $ KUBE_EDITOR="nano" kubectl edit svc/docker-registry   # 使用 alternative 编
 ```    
 
 18. 启动dashboard
+
+Kubernetes提供了以下四种访问服务的方式：
+
+* kubectl proxy
+
+kubectl proxy它在你的服务器与Kubernetes API之间创建一个代理，默认情况下，只能从本地访问（启动它的机器）。
 ```bash
 > kubectl --namespace=kube-system get deployment kubernetes-dashboard
-> sudo kubectl proxy                                                                                       --  只能本地访问
-> sudo kubectl proxy --address='0.0.0.0' --accept-hosts='^*$'     --外部可访问
+> sudo kubectl proxy                                              # 只能本地访问,
+Starting to serve on 127.0.0.1:8001
+```
+我们也可以使用`--address`和`--accept-hosts`参数来允许外部访问：
+```
+> sudo kubectl proxy --address='0.0.0.0' --accept-hosts='^*$'     # 外部可访问
 ```    
+
+然后我们在外网访问`http://<master-ip>:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/`，可以成功访问到登录界面，但是却无法登录，这是因为Dashboard只允许`localhost`和`127.0.0.1`使用HTTP连接进行访问，而其它地址只允许使用HTTPS。
+因此，如果需要在非本机访问Dashboard的话，只能选择其他访问方式。
+
+
+* NodePort
+
+NodePort是将节点直接暴露在外网的一种方式，只建议在开发环境，单节点的安装方式中使用。
+
+启用NodePort很简单，只需执行`kubectl edit`命令进行编辑：
+```bash
+> sudo kubectl -n kube-system edit service kubernetes-dashboard
+```
+输出如下：
+```bash
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"k8s-app":"kubernetes-dashboard"},"name":"kubernetes-dashboard","namespace":"kube-system"},"spec":{"ports":[{"port":443,"targetPort":8443}],"selector":{"k8s-app":"kubernetes-dashboard"}}}
+  creationTimestamp: 2018-05-01T07:23:41Z
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+  resourceVersion: "1750"
+  selfLink: /api/v1/namespaces/kube-system/services/kubernetes-dashboard
+  uid: 9329577a-4d10-11e8-a548-00155d000529
+spec:
+  clusterIP: 10.103.5.139
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 8443
+  selector:
+    k8s-app: kubernetes-dashboard
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+```
+然后我们将上面的 `type: ClusterIP` 修改为 `type: NodePort` ,保存后使用`kubectl get service`命令来查看自动生产的端口：
+```bash
+> kubectl -n kube-system get service kubernetes-dashboard
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   4d11h
+```
+
+如上所示，`Dashboard`已经在31795端口上公开，现在可以在外部使用`https://<cluster-ip>:31795`进行访问。
+需要注意的是，在多节点的集群中，必须找到运行`Dashboard`节点的IP来访问，而不是Master节点的IP，在本文的示例，我部署了两台服务器，MatserIP为192.168.10.8，ClusterIP为192.168.10.10。
+
+遗憾的是，由于证书问题，我们无法访问，需要在部署Dashboard时指定有效的证书，才可以访问。
+由于在正式环境中，并不推荐使用NodePort的方式来访问Dashboard，因此,关于如何为Dashboard配置证书可参考：(Certificate management)[https://github.com/kubernetes/dashboard/wiki/Certificate-management]。
+
+
+* API Server
+
+如果Kubernetes API服务器是公开的，并可以从外部访问，那我们可以直接使用API Server的方式来访问，也是比较推荐的方式。
+
+Dashboard的访问地址为：
+```markdown
+https://<master-ip>:<apiserver-port>/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+```
+但是返回的结果可能如下：
+```bash
+{
+  "kind": "Status",
+  "apiVersion": "v1",
+  "metadata": {
+    
+  },
+  "status": "Failure",
+  "message": "services \"https:kubernetes-dashboard:\" is forbidden: User \"system:anonymous\" cannot get services/proxy in the namespace \"kube-system\"",
+  "reason": "Forbidden",
+  "details": {
+    "name": "https:kubernetes-dashboard:",
+    "kind": "services"
+  },
+  "code": 403
+}
+```
+这是因为最新版的k8s默认启用了RBAC，并为未认证用户赋予了一个默认的身份：`anonymous`。
+
+对于API Server来说，它是使用证书进行认证的，我们需要先创建一个证书：
+
+* 首先找到kubectl命令的配置文件，默认情况下为`/etc/kubernetes/admin.conf`，在 上一篇 中，我们已经复制到了`$HOME/.kube/config中`。
+
+* 然后我们使用`client-certificate-data`和`client-key-data`生成一个p12文件，可使用下列命令：
+
+```bash
+# 生成client-certificate-data
+> grep 'client-certificate-data' ~/.kube/config | head -n 1 | awk '{print $2}' | base64 -d >> kubecfg.crt
+
+# 生成client-key-data
+> grep 'client-key-data' ~/.kube/config | head -n 1 | awk '{print $2}' | base64 -d >> kubecfg.key
+
+# 生成p12
+> openssl pkcs12 -export -clcerts -inkey kubecfg.key -in kubecfg.crt -out kubecfg.p12 -name "kubernetes-client"
+```
+
+我们可以使用一开始创建的admin-user用户的token进行登录，一切OK。
+
+注意:对于生产系统，我们应该为每个用户应该生成自己的证书，因为不同的用户会有不同的命名空间访问权限。
+   
+* Ingress
+
+Ingress将开源的反向代理负载均衡器（如 Nginx、Apache、Haproxy等）与k8s进行集成，并可以动态的更新Nginx配置等，是比较灵活，更为推荐的暴露服务的方式.
+
+
 19. 生成admin-user的登录令牌
 ```bash
 > sudo kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
@@ -432,3 +552,14 @@ kubernetes-dashboard   ClusterIP   10.106.255.205   <none>        443/TCP   4m36
 ```gotemplate
 https://<master-ip>:<apiserver-port>/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
 ```
+
+22. 检查Kubernetes配置是否正确，集群是否可以访问
+```bash
+> kubectl cluster-info
+Kubernetes master is running at https://192.168.157.193:6443
+KubeDNS is running at https://192.168.157.193:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+```
+
+
