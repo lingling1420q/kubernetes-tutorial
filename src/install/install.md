@@ -494,7 +494,7 @@ https://<master-ip>:<apiserver-port>/api/v1/namespaces/kube-system/services/http
 
 对于API Server来说，它是使用证书进行认证的，我们需要先创建一个证书：
 
-* 首先找到kubectl命令的配置文件，默认情况下为`/etc/kubernetes/admin.conf`，在 上一篇 中，我们已经复制到了`$HOME/.kube/config中`。
+* 首先找到kubectl命令的配置文件，默认情况下为`/etc/kubernetes/admin.conf`，，我们已经复制到了`$HOME/.kube/config中`。
 
 * 然后我们使用`client-certificate-data`和`client-key-data`生成一个p12文件，可使用下列命令：
 
