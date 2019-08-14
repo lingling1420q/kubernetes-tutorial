@@ -142,7 +142,7 @@ es-102            Ready    <none>   4d9h    v1.15.2
 ```
 
 nginx部署的YAML配置文件：
-```yaml
+```markdown
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
