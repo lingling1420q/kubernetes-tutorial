@@ -405,7 +405,8 @@ kubectl proxy它在你的服务器与Kubernetes API之间创建一个代理，�
 Starting to serve on 127.0.0.1:8001
 ```
 我们也可以使用`--address`和`--accept-hosts`参数来允许外部访问：
-```
+
+```bash
 > sudo kubectl proxy --address='0.0.0.0' --accept-hosts='^*$'     # 外部可访问
 ```    
 
@@ -555,11 +556,21 @@ https://<master-ip>:<apiserver-port>/api/v1/namespaces/kube-system/services/http
 
 22. 检查Kubernetes配置是否正确，集群是否可以访问
 ```bash
-> kubectl cluster-info
+> sudo kubectl cluster-info
 Kubernetes master is running at https://192.168.157.193:6443
 KubeDNS is running at https://192.168.157.193:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 ```
 
+23. 列出使用的端口
+```bash
 
+> lsof -i :8080
+```
+24. kubectl proxy外界访问代理
+
+如果不做kubectl proxy 则意味着外界访问api没任何限制,加上后可以做一些限制.
+```bash
+> kubectl proxy -h
+```
