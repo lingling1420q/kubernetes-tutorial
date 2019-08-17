@@ -574,3 +574,31 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 ```bash
 > kubectl proxy -h
 ```
+25. 查询Linux暴露出来的端口
+```bash
+> netstat -tnlp
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
