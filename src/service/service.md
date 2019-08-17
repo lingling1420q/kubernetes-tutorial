@@ -22,6 +22,20 @@ kubernetes正是通过Service(虚拟Cluster IP+Service Port)连接到指定的Se
 
 
 #### Service定义详解
+Kubernetes中的服务（Service）是一个抽象的概念，它定义了包含多个Pod逻辑上的组，以及访问它遵从的策略。服务在独立的Pod之间建立了松散的耦合关系。
+和Kubernetes其他对象一样，服务使用YAML或者JSON定义。通常服务通过LabelSelector来指定哪些Pod在集合中。
+
+尽管每个Pod都有自己的独立IP，但是这些IP并不暴露给外部，只有通过服务才能将它们暴露出去。服务让你的应用可以和外部通讯。
+
+有好几种方式实现，方法是设置ServiceSpec的type属性：
+
+* ClusterIP（默认） 通过一个内部IP地址暴露服务，只能在集群内访问
+* NodePort 使用NAT，通过与Node相同的出口暴露服务。通过<NodeIP>:<NodePort>在集群外访问Service。是ClusterIP的超集。
+* LoadBalancer 创建一个外部负载均衡器，给服务分配一个固定的外部地址。是NodePort的超集
+* ExternalName 使用externalName参数给服务起一个任意的名称，自动返回一个该名称的CNAME。需要版本V1.7及以上的kube-dns。
+
+
+
 yaml格式的Service定义文件的完整内容：
 
 ```bash
