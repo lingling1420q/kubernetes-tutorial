@@ -565,7 +565,6 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 
 23. 列出使用的端口
 ```bash
-
 > lsof -i :8080
 ```
 24. kubectl proxy外界访问代理
