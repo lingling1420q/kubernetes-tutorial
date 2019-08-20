@@ -578,6 +578,16 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 > netstat -tnlp
 ```
 
+26. kubernetes的所有资源
+
+kubernetes的所有资源都可以抽象为对象，分为几大类：
+
+* 工作负载(workload)：Pod、ReplicaSet、Deployment、StatefulSet、DaemonSet、Job、Cronjob
+* 服务发现和负载均衡：Service、Ingress
+* 配置与存储：Volume、CSI、ConfigMap、Secret、DownwardAPI
+* 集群级资源：Namespace、Node、Role、ClusterRole、RoleBinding、ClusterRoleBinding
+* 元数据资源：HPA、PodTemplate、LimitRange
+
 
 
 
