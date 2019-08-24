@@ -48,6 +48,7 @@ Kubernetes集群是由分布式存储（etcd）、服务节点（Minion，etcd�
 * [Pods](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/pod/pods.md)
 * [Arrange](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/service/arrange.md)
 * [Drone配置](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/drone/drone.md)
+* [kubernetes组件和架构](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/pod/pods-arrange.md)
 * [kubernetes安装运行Istio应用](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/istio/istio.md)
 * [kubernetes-cluster集群搭建](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/cluster/kubernetes-cluster.md)
 
@@ -292,7 +293,7 @@ dashboard是kubernetes提供的容器服务管理后台，可视化界面，用�
 如果初次可能会报下面的两种错误之一：
 ```bash
 # 第一种错误
-Could not find finalized endpoint being pointed to by kubernetes-dashboard: Error validating service: Error getting service kubernetes-dashboard: services "kubernetes-dashboard" not found
+Could not find finalized endpoint being pointed to by kubernetes-dashboard: Error validating service: Error getting service kubernetes-dashboard: services "Kubernetes" not found
 
 # 第二种错误
 Waiting, endpoint for service is not ready yet...
