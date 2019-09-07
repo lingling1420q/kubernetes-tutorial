@@ -589,6 +589,84 @@ kubernetes的所有资源都可以抽象为对象，分为几大类：
 * 元数据资源：HPA、PodTemplate、LimitRange
 
 
+27. quest
+```yaml
+apiVersion: extensions/v1beta1                  # K8S对应的API版本
+kind: Deployment                                # 对应的类型
+metadata:
+  name: test-go-service-deployment
+  labels:
+    name: test-go-service-deployment
+  namespace: test                                # namespace
+spec:
+  replicas: 1                                   # 镜像副本数量
+  template:
+    metadata:
+      labels:                                   # 容器的标签 可和service关联
+        app: test-go-service
+    spec:
+      containers:
+        - name: test-go-service             # 容器名和镜像
+          image: registry-vpc.cn-hangzhou.aliyuncs.com/go-service:test
+          imagePullPolicy: Always
+          env:                                  # 环境变量
+          - name: RUN_TIME
+            value: test
+          resources:                            # 资源限制
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+      imagePullSecrets:                         # 获取镜像需要的用户名密码
+        - name: vpcregsecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: test                                # 在哪个命名空间中创建
+  name: test-go-service-service             # 名称
+  labels:
+    name: test-go-service-service
+spec:
+  type: ClusterIP                               # 开发端口的类型
+  selector:                                     # service负载的容器需要有同样的labels
+    app: test-go-service
+  ports:
+  - name: test-go-service-10001
+    port: 10001                                    # 通过service来访问的端口
+    targetPort: 10001                              # 对应容器的端口
+```
+
+
+28. 查看各组件信息
+```bash
+> kubectl get componentstatuses
+```
+29. 查看kubelet进程启动参数
+```bash
+> ps -ef| grep kubelet
+```
+
+30. 查看日志
+```bash
+> journalctl -u kubelet -f
+```
+
+31. 设为不可调度状态：
+```bash
+> kubectl cordon node1
+```
+32. 将pod赶到其他节点：
+```bash
+kubectl drain node1
+```
+
+33. 解除不可调度状态
+```bash
+kubectl uncordon node1
+```
 
 
 
