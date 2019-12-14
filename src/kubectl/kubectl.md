@@ -14,7 +14,7 @@ Kubernetes API 是一个 HTTP REST API 服务，该 API 服务才是 Kubernetes 
 所以，kubectl 最主要的工作就是执行 Kubernetes API 的 HTTP 请求：
 
 <p align="center">
-<img width="300" align="center" src="../images/69.jpg" />
+<img width="500" align="center" src="../images/69.jpg" />
 </p>
 
 ```markdown
@@ -65,7 +65,7 @@ Node 节点上最重要的组件：
 为了了解这些组件之间是如何协同工作的，我们再来看下上面的例子，假如我们执行了上面的kubectl create -f replicaset.yaml命令，kubectl 对创建 ReplicaSet 的 API Endpoint 发起了一个 HTTP POST 请求，这个时候我们的集群有什么变化呢？看下面的演示：
 
 <p align="center">
-<img width="300" align="center" src="../images/70.jpg" />
+<img width="500" align="center" src="../images/70.jpg" />
 </p>
 
 ```markdown
@@ -99,7 +99,7 @@ Node 节点上最重要的组件：
 在下图中我们可以看到使用 kubectl 命令自动补全的相关演示：
 
  <p align="center">
- <img width="300" align="center" src="../images/5.gif" />
+ <img width="500" align="center" src="../images/5.gif" />
  </p>
 
 命令补全可用于 [Bash](https://www.gnu.org/software/bash/) 和 [Zsh](https://www.zsh.org) shell终端。
