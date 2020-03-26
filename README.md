@@ -52,6 +52,8 @@ Kubernetes集群是由分布式存储（etcd）、服务节点（Minion，etcd�
 * [kubernetes组件和架构](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/pod/pods-arrange.md)
 * [kubernetes安装运行Istio应用](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/istio/istio.md)
 * [kubernetes-cluster集群搭建](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/cluster/kubernetes-cluster.md)
+* [kubernetes集群手动更新版本]()
+
 
 #### 安装Docker 
 <p align="center">
