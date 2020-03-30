@@ -177,12 +177,114 @@ Static pod: kube-scheduler-ydzs-master hash: 2acb197d598c4730e3f5b159b241a81b
 [upgrade/kubelet] Now that your control plane is upgraded, please proceed with upgrading your kubelets if you haven't already done so.
 ```
 由于上面我们已经更新过 kubectl 了，现在我们用 kubectl 来查看下版本信息：
+
 ```bash
 > kubectl version
 Client Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.16.0", GitCommit:"f6278300bebbb750328ac16ee6dd3aa7d3549568", GitTreeState:"clean", BuildDate:"2019-08-05T09:23:26Z", GoVersion:"go1.12.5", Compiler:"gc", Platform:"linux/amd64"}
 Server Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.16.0", GitCommit:"4485c6f18cee9a5d3c3b4e523bd27972b1b53892", GitTreeState:"clean", BuildDate:"2019-07-18T09:09:21Z", GoVersion:"go1.12.5", Compiler:"gc", Platform:"linux/amd64"}
 ```
 
+可以看到现在 Server 端和 Client 端都已经是 v1.16.0 版本了，然后查看下 Pod 信息：
+```bash
+> kubectl get pods -n kube-system
+NAME                                             READY     STATUS    RESTARTS   AGE
+authproxy-oauth2-proxy-798cff85fc-pc8x5          1/1       Running   0          12d
+cert-manager-796fb45d79-wcrfp                    1/1       Running   2          12d
+coredns-7f6746b7f-2cs2x                          1/1       Running   0          5m
+coredns-7f6746b7f-clphf                          1/1       Running   0          5m
+etcd-ydzs-master                                 1/1       Running   0          10m
+kube-apiserver-ydzs-master                       1/1       Running   0          7m
+kube-controller-manager-ydzs-master              1/1       Running   0          7m
+kube-flannel-ds-amd64-jxzq9                      1/1       Running   8          20d
+kube-flannel-ds-amd64-r56r9                      1/1       Running   3          20d
+kube-flannel-ds-amd64-xw9fx                      1/1       Running   2          20d
+kube-proxy-gqvdg                                 1/1       Running   0          3m
+kube-proxy-sn7xb                                 1/1       Running   0          3m
+kube-proxy-vbrr7                                 1/1       Running   0          2m
+kube-scheduler-ydzs-master                       1/1       Running   0          6m
+nginx-ingress-controller-587b4c68bf-vsqgm        1/1       Running   2          31d
+nginx-ingress-default-backend-64fd9fd685-lmxhw   1/1       Running   1          31d
+```
+#### 更新 kubelet
 
+可以看到我们之前的 kube-dns 服务已经被 coredns 取代了，这是因为在 v1.16.0 版本后就默认使用 coredns 了，我们也可以访问下集群中的服务看是否有影响，然后查看下集群的 Node 信息：
+```bash
+> kubectl get nodes
+NAME              STATUS   ROLES    AGE    VERSION
+keke-001          Ready    master   100d   v1.15.2
+keke-002          Ready    master   100d   v1.15.2
+keke-003          Ready    master   100d   v1.15.2
+keke-004          Ready    <none>   99d    v1.15.2
+keke-005          Ready    <none>   99d    v1.15.2
+keke-006          Ready    <none>   99d    v1.15.3
+```
+可以看到版本并没有更新，这是因为节点上的 kubelet 还没有更新的，我们可以通过 kubelet 查看下版本：
 
+```bash
+> kubelet --version
+Kubernetes v1.15.2
+```
+这个时候我们去手动更新下 kubelet：
+```bash
+> yum install -y kubelet-1.16.0-0
+# 安装完成后查看下版本
+> kubelet --version
+Kubernetes v1.16.0
+# 然后重启 kubelet 服务
+> systemctl daemon-reload
+> systemctl restart kubelet
+> kubectl get nodes
+NAME              STATUS   ROLES    AGE    VERSION
+keke-001          Ready    master   100d   v1.16.0
+keke-002          Ready    master   100d   v1.16.0
+keke-003          Ready    master   100d   v1.16.0
+keke-004          Ready    <none>   99d    v1.16.0
+keke-005          Ready    <none>   99d    v1.16.0
+keke-006          Ready    <none>   99d    v1.16.0
+```
+这里需要注意下:
 
+1. 如果节点上 swap 没有关掉重启 kubelet 服务会报错，所以最好是关掉 swap，执行命令：`swapoff -a`即可。
+2. Kubernetes v1.16.0 版本的 kubelet 默认使用的pod-infra-container-image镜像名称为：`k8s.gcr.io/pause:3.1`，所以最好先提前查看下集群节点上是否有这个镜像，因为我们之前 v1.15.0 版本的集群默认的名字为`k8s.gcr.io/pause-amd64:3.1`，所以如果节点上还是之前的 pause 镜像的话，需要先重新打下镜像 tag：
+```bash
+> docker tag k8s.gcr.io/pause-amd64:3.1 k8s.gcr.io/pause:3.1
+```
+没有的话可以提前下载到节点上也可以通过配置参数进行指定，在文件`/var/lib/kubelet/kubeadm-flags.env`中添加如下参数信息：
+```bash
+> KUBELET_KUBEADM_ARGS=--cgroup-driver=cgroupfs --cni-bin-dir=/opt/cni/bin --cni-conf-dir=/etc/cni/net.d --network-plugin=cni --pod-infra-container-image=cnych/pause-amd64:3.1
+```
+可以看到我们更新了 kubelet 的节点版本信息已经更新了，同样的方式去把另外5个节点 kubelet 更新即可。
+
+另外需要注意的是最好在节点上的 kubelet 更新之前将节点设置为不可调度，更新完成后再设置回来，可以避免不必要的错误。
+
+最后看下升级后的集群：
+```bash
+> kubectl get nodes
+NAME              STATUS   ROLES    AGE    VERSION
+keke-001          Ready    master   100d   v1.16.0
+keke-002          Ready    master   100d   v1.16.0
+keke-003          Ready    master   100d   v1.16.0
+keke-004          Ready    <none>   99d    v1.16.0
+keke-005          Ready    <none>   99d    v1.16.0
+keke-006          Ready    <none>   99d    v1.16.0
+```
+到这里我们的集群就升级成功了，我们可以用同样的方法将集群升级到 v1.17.x、v1.18.0 版本，而且升级过程中是不会影响到现有业务的。
+
+更新集群后遇到一个问题是，其中一个节点上的 Pod 的 IP 没有使用 cni0 网桥的网段，而是使用的 docker0 的网段，比较奇怪，我们使用的 CNI 模式，而且查看了 Flannel 的相关配置参数都没有问题的，重新将虚拟网络设备重置了，然后重启该节点的 Pod 后:
+```bash
+> ifconfig cni0 down
+> ip link delete cni0
+> ifconfig flannel.1 down
+> ip link delete flannel.1
+> rm -rf /var/lib/cni/
+```
+所以最后是重新使用 kubeadm reset 了，重新加入集群才解决这个问题：
+
+```bash
+> kubeadm reset
+# 使用下面命令获取加入节点的命令
+> kubeadm token create --print-join-command
+I0523 23:28:11.496418   18560 feature_gate.go:230] feature gates: &{map[]}
+kubeadm join 10.151.30.11:6443 --token r7ilky.ppyy90a4ernkq7pj --discovery-token-ca-cert-hash sha256:e605d68721e7cf
+```
+重新执行上面的 join 命令，重新加入节点后恢复正常。
