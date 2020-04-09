@@ -1,4 +1,4 @@
-# kubernetes pods
+## kubernetes pods
 
 在Kubernetes中，能够被创建、调度和管理的最小部署单元是Pod，而非单个容器。
 
@@ -45,19 +45,18 @@ metadata:   #资源的元数据/属性
     deployment.kubernetes.io/revision: '1'  #自定义注解名字
 spec:   #specification of the resource content 指定该资源的内容
   replicas: 1 #副本数量* etcd保存了整个集群的状态;
-* apiserver提供了资源操作的唯一入口，并提供认证、授权、访问控制、API注册和发现等机制；
-* controller manager负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；
-* scheduler负责资源的调度，按照预定的调度策略将Pod调度到相应的机器上；
-* kubelet负责维持容器的生命周期，同时也负责Volume（CVI）和网络（CNI）的管理；
-* Container runtime负责镜像管理以及Pod和容器的真正运行（CRI）；
-* kube-proxy负责为Service提供cluster内部的服务发现和负载均衡；
-* kube-dns负责为整个集群提供DNS服务;
-* Ingress Controller为服务提供外网入口;
-* Heapster提供资源监控;
-* Dashboard提供GUI;
-* Federation提供跨可用区的集群;
-* Fluentd-elasticsearch提供集群日志采集、存储与查询
-
+  apiserver提供了资源操作的唯一入口，并提供认证、授权、访问控制、API注册和发现等机制；
+  controller manager负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；
+  scheduler负责资源的调度，按照预定的调度策略将Pod调度到相应的机器上；
+  kubelet负责维持容器的生命周期，同时也负责Volume（CVI）和网络（CNI）的管理；
+  Container runtime负责镜像管理以及Pod和容器的真正运行（CRI）；
+  kube-proxy负责为Service提供cluster内部的服务发现和负载均衡；
+  kube-dns负责为整个集群提供DNS服务;
+  Ingress Controller为服务提供外网入口;
+  Heapster提供资源监控;
+  Dashboard提供GUI;
+  Federation提供跨可用区的集群;
+  Fluentd-elasticsearch提供集群日志采集、存储与查询  
   selector:
     matchLabels:
       app: mean
@@ -136,7 +135,6 @@ status:
 * Federation提供跨可用区的集群;
 * Fluentd-elasticsearch提供集群日志采集、存储与查询
 
-
 #### 分层架构
 
 * 核心层：Kubernetes最核心的功能，对外提供API构建高层的应用，对内提供插件式应用执行环境;
@@ -146,7 +144,6 @@ status:
 * 生态系统：在接口层之上的庞大容器集群管理调度的生态系统，可以划分为两个范畴;
   * Kubernetes外部：日志、监控、配置管理、CI、CD、Workflow、FaaS、OTS应用、ChatOps等;
   * Kubernetes内部：CRI、CNI、CVI、镜像仓库、Cloud Provider、集群自身的配置和管理等;
-
 
 #### 复制控制器（Replication Controller，RC）
 
