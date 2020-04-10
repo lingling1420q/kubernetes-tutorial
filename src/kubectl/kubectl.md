@@ -2,7 +2,6 @@
 
 我们知道在使用 Kubernetes 的过程中，kubectl 工具可能是最常用的工具了（可能还没有之一），所以当我们花费大量的时间在使用 kubectl 上面的时候，那么我们就非常有必要去了解下如何高效的使用它了。
 
-
 #### 什么是 kubectl?
 
 在学习如何更高效地使用 kubectl 之前，我们应该去了解下 kubectl 是什么已经它是如何工作的。
@@ -21,9 +20,7 @@ Kubernetes API 是一个 HTTP REST API 服务，该 API 服务才是 Kubernetes 
 Kubernetes 是一个完全以资源为中的系统，Kubernetes 维护资源的内部状态，所有 Kubernetes 的操作都是对这些资源的 CRUD 操作，你可以通过操作这些资源来完全控制 Kubernetes（Kubernetes 会根据当前的资源状态来确定需要做什么）。
 ```
 
-比如下面的例子。
-
-假如现在我们想要创建一个 ReplicaSet 的资源，然后创建一个名为 replicaset.yaml 的资源文件来定义 ReplicaSet，然后运行下面的命令：
+比如下面的例子, 假如现在我们想要创建一个 ReplicaSet 的资源，然后创建一个名为 replicaset.yaml 的资源文件来定义 ReplicaSet，然后运行下面的命令：
 
 ```bash
 > kubectl create -f replicaset.yaml
@@ -46,7 +43,6 @@ Kubernetes 具有创建 ReplicaSet 的操作，并且和其他 Kubernetes 操作
 ```
 
 这些是 kubectl 的最基础的知识点，但是每个 kubectl 操作者还有很多 Kubernetes API 的知识点需要了解，所以我们这里再简要介绍一下 Kubernetes 的内部结构。
-
 
 #### Kubernetes 架构
 
@@ -92,7 +88,7 @@ Node 节点上最重要的组件：
 
 接下来就让我们来看一看 kubectl 的一系列具体的使用技巧，以帮助我们提供 kubectl 的使用生产力。
 
-#### 1. 命令提示
+#### 1.命令提示
 
 命令提示（补全）是提高生产力最有用但也是经常被忽略的技巧之一。命令补全允许你使用 tab 键自动补全 kubectl 的相关命令，包括子命令、选项和参数，以及资源名称等一些复杂的内容。
 
@@ -180,6 +176,7 @@ Bash 的命令补全脚本依赖[bash-completion](https://github.com/scop/bash-c
 ```
 
 brew 安装命令完成会输出一段提示信息，其中包含将下面内容添加到~/.bash_profile文件中的说明：
+
 ```markdown
 export BASH_COMPLETION_COMPAT_DIR=/usr/local/etc/bash_completion.d
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
