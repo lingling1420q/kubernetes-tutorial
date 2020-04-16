@@ -32,6 +32,7 @@ Kubernetes集群是由分布式存储（etcd）、服务节点（Minion，etcd�
 12. Annotation : 相对于label来说可以容纳更大的键值对，它对我们来说可能是不可读的数据，只是为了存储不可识别的辅助数据，尤其是一些被工具或系统扩展用来操作的数据。
 
 #### 搭建目录
+
 * [安装Docker](#安装Docker)
 * [Docker命令详解](https://github.com/KeKe-Li/docker-directive/blob/master/README.md)
 * [安装Minikube](#安装Minikube)
@@ -54,11 +55,12 @@ Kubernetes集群是由分布式存储（etcd）、服务节点（Minion，etcd�
 * [kubernetes-cluster集群搭建](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/cluster/kubernetes-cluster.md)
 * [kubernetes集群手动更新版本](https://github.com/KeKe-Li/kubernetes-tutorial/blob/master/src/update/update.md)
 
-
 #### 安装Docker 
+
 <p align="center">
 <img width="300" align="center" src="src/images/2.jpg" />
 </p>
+
 Docker在2016年很早的时候就明确了将会在企业级方面重点跟进。而在短短的一年时间之内推出的1.12和1.13的版本在功能上确实是很大的进步。而在2017年的3月1号之后，Docker的版本命名开始发生变化，同时将CE版本和EE版本进行分开，而这些也是突然发现docker1.13的安装脚本不好用了才发现的，一起简单来看一下具体情况吧。
 
 但是Docker企业版(EE)和Docker社区版(CE)版本有何不同呢？
