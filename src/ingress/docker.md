@@ -1,5 +1,6 @@
 
 #### Dockerfile
+
 ```dockerfile
 #母镜像
 FROM golang:latest as build
@@ -124,12 +125,6 @@ USER nobody:nobody
 
 # Run the compiled binary.
 ENTRYPOINT ["/app"]
-```
-
-```dockerfile
-
-
-
 ```
 
 go mod vendor

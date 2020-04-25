@@ -67,8 +67,10 @@ Kubenetes整体框架如下图，主要包括kubecfg、Master API Server、Kubel
 
 1. Master
 
-Master定义了Kubernetes 集群Master/API Server的主要声明，包括Pod Registry、Controller Registry、Service Registry、Endpoint Registry、Minion Registry、Binding Registry、RESTStorage以及Client, 是client(Kubecfg)调用Kubernetes API，管理Kubernetes主要构件Pods、Services、Minions、容器的入口。
+Master定义了Kubernetes 集群Master API Server的主要声明，包括Pod Registry、Controller Registry、Service Registry、Endpoint Registry、Minion Registry、Binding Registry、RESTStorage以及Client, 是client(Kubecfg)调用Kubernetes API，管理Kubernetes主要构件Pods、Services、Minions、容器的入口。
+
 Master由API Server、Scheduler以及Registry等组成。从下图可知Master的工作流主要分以下步骤：
+
 <p align="center">
 <img width="500" align="center" src="../images/27.png" />
 </p>
@@ -136,7 +138,6 @@ Kubelet是Kubernetes集群中每个Minion和Master API Server的连接点，Kube
 10. 从cAdvisor获取container info、 pod info、 root info、 machine info
 11. 检测Pod的容器健康状态信息
 12. 在容器中运行命令。
-
 
 * API Server资源操作入口
 
@@ -210,8 +211,8 @@ Endpoint Controller 负责监听 Service 和对应的 Pod 副本的变化。定�
 (2). 同步 Pod 的状态，从 cAdvisor 获取 Container Info、 Pod Info、 Root Info、 Machine info。
 (3). 在容器中运行命令、杀死容器、删除 Pod 的所有容器。
 
-
 #### Proxy
+
 Proxy是为了解决外部网络能够访问跨机器集群中容器提供的应用服务而设计的，运行在每个Minion或者Node上。
 
 Proxy提供TCP/UDP sockets的proxy，每创建一种Service，Proxy主要从etcd获取Services和Endpoints的配置信息（也可以从file获取），然后根据配置信息在Minion或者Node上启动一个Proxy的进程并监听相应的服务端口，当外部请求发生时，Proxy会根据Load Balancer将请求分发到后端正确的容器处理。
