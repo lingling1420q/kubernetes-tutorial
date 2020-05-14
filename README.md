@@ -4,6 +4,7 @@
 </p>
 
 #### 搭建本地kubernetes集群
+
 Kubernetes是Google开源的一个容器集群管理系统，用于管理云平台中多个主机上的容器化的应用。Kubernetes的目标是让部署容器化的应用简单并且高效（powerful）,Kubernetes提供了应用部署，规划，更新，维护的一种机制。
 
 Kubernetes中的一个核心的特点就是能够自主的管理容器来保证云平台中的容器按照用户的期望状态运行着（比如用户想让一个服务稳定运行，用户不需要关心怎么去做，Kubernetes会自动去监控，然后去重启，新建等操作，让服务始终稳定运行），管理员可以加载一个微型服务，让规划器来找到合适的位置，同时Kubernetes系统提升工具以及人性化方面，让用户能够方便的部署自己的应用（就像canary deployments）。
@@ -365,10 +366,7 @@ http://127.0.0.1:30000/
 
 #### kubernetes集群
 
-觉得此文章不错，支持我的话可以给我star,:star:！如果有问题可以加我的微信,也可以加入我们的交流群一起交流学习！
-<p align="center">
-<img width="300" align="center" src="https://github.com/KeKe-Li/micro-Services-Tutorial/blob/master/src/images/12.jpg" />
-</p>
+觉得此文章不错，支持我的话可以给我star,:star:！如果有问题也可以直接给我提issues,我会及时回复的.
 
 License
 This is free software distributed under the terms of the MIT license
