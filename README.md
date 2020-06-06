@@ -4,6 +4,7 @@
 </p>
 
 #### 搭建本地kubernetes集群
+
 Kubernetes是Google开源的一个容器集群管理系统，用于管理云平台中多个主机上的容器化的应用。Kubernetes的目标是让部署容器化的应用简单并且高效（powerful）,Kubernetes提供了应用部署，规划，更新，维护的一种机制。
 
 Kubernetes中的一个核心的特点就是能够自主的管理容器来保证云平台中的容器按照用户的期望状态运行着（比如用户想让一个服务稳定运行，用户不需要关心怎么去做，Kubernetes会自动去监控，然后去重启，新建等操作，让服务始终稳定运行），管理员可以加载一个微型服务，让规划器来找到合适的位置，同时Kubernetes系统提升工具以及人性化方面，让用户能够方便的部署自己的应用（就像canary deployments）。
@@ -79,6 +80,7 @@ Docker EE是Docker CE，在某些系统上获得authentication，并由Docker In
 <p align="center">
 <img width="600" align="center" src="src/images/3.jpg" />
 </p>
+
 实际上Docker从17.03开始分为企业版与社区版，社区版并非阉割版，而是改了个名称；企业版则提供了一些收费的高级特性。EE版本维护期1年；CE的stable版本三个月发布一次，维护期四个月；另外CE还有edge版，一个月发布一次。个人用社区版开发完全可以满足开发要求！
 
 首先安装docker环境，这个可以根据电脑系统的不同，选择不同的安装方式。
@@ -88,6 +90,7 @@ Docker EE是Docker CE，在某些系统上获得authentication，并由Docker In
 * [centos安装](https://docs.docker.com/install/linux/docker-ce/centos/)
 
 #### 安装Minikube
+
 MiniKube 是使用 Go 语言开发的，所以安装其实很方便，一是通过下载基于不同平台早已编译好的二级制文件安装，二是可以编译源文件安装。
 
 * Mac安装
@@ -111,7 +114,7 @@ MiniKube 是使用 Go 语言开发的，所以安装其实很方便，一是通�
 
 #### 安装Kubectl
 
-kubernetes通过kube-apiserver作为整个集群管理的入口。Apiserver是整个集群的主管理节点，用户通过Apiserver配置和组织集群，同时集群中各个节点同etcd存储的交互也是通过Apiserver进行交互。Apiserver实现了一套RESTfull的接口，用户可以直接使用API同Apiserver交互。但是官方提供了一个客户端kubectl随工具集打包，用于可直接通过kubectl以命令行的方式同集群交互。
+kubernetes通过 `kube-apiserver` 作为整个集群管理的入口。Apiserver是整个集群的主管理节点，用户通过Apiserver配置和组织集群，同时集群中各个节点同etcd存储的交互也是通过Apiserver进行交互。Apiserver实现了一套RESTfull的接口，用户可以直接使用API同Apiserver交互。但是官方提供了一个客户端kubectl随工具集打包，用于可直接通过kubectl以命令行的方式同集群交互。
 
 因而kubectl是一个用于操作kubernetes集群的命令行接口,通过利用kubectl的各种命令可以实现各种功能,是在使用kubernetes中非常常用的工具。
 
@@ -365,10 +368,7 @@ http://127.0.0.1:30000/
 
 #### kubernetes集群
 
-觉得此文章不错，支持我的话可以给我star,:star:！如果有问题可以加我的微信,也可以加入我们的交流群一起交流学习！
-<p align="center">
-<img width="300" align="center" src="https://github.com/KeKe-Li/micro-Services-Tutorial/blob/master/src/images/12.jpg" />
-</p>
+觉得此文章不错，支持我的话可以给我star,:star:！如果有问题也可以直接给我提issues,我会及时回复的.
 
 License
 This is free software distributed under the terms of the MIT license
